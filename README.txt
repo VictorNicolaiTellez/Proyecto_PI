@@ -1,5 +1,5 @@
 Proyecto PI
--Descargar GIT
+-Descargar GIT: https://git-scm.com/
     Crear carpeta para el Proyecto
     Abrir Terminal
     git init

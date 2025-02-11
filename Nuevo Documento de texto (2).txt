@@ -1,0 +1,48 @@
+FRONTEND 
+📌 Lenguajes principales
+HTML + CSS + JavaScript (puro) 
+
+📌 Frameworks / Librerías
+React.js
+
+BACKEND
+Python (Django o Flask) (✅ Legible y eficiente, ❌ Puede ser más lento que Node en aplicaciones en tiempo real)
+Java (Spring Boot) (✅ Robusto y seguro, ❌ Mayor curva de aprendizaje)
+
+
+📌 Frameworks para Backend
+Django (Python) (✅ Desarrollo rápido y seguro, ❌ Puede sentirse más rígido)
+Flask (Python) (✅ Minimalista y fácil de aprender, ❌ Necesita más configuración)
+
+
+
+🗄️ Base de Datos
+📌 Relacionales (Si necesitas estructuras bien definidas)
+PostgreSQL (✅ Muy potente, ideal para datos estructurados)
+MySQL (✅ Popular y fácil de usar, pero menos flexible que PostgreSQL)
+SQLite (✅ Ligero, ❌ No recomendado para grandes volúmenes de datos)
+📌 NoSQL (Si necesitas flexibilidad en los datos)
+MongoDB (✅ Perfecto para datos no estructurados, ❌ No ideal para relaciones complejas)
+Firebase Firestore (✅ Fácil de integrar en frontends, ❌ No es ideal para consultas complejas)
+Redis (✅ Ideal para caché y datos rápidos, ❌ No sirve como base de datos principal)
+
+
+📂 Almacenamiento de Archivos
+AWS S3 (✅ Potente y escalable, ❌ Requiere configuración)
+Cloudinary (✅ Fácil de integrar con imágenes y vídeos, ❌ Limitaciones en plan gratuito)
+Firebase Storage (✅ Fácil integración con Google, ❌ Menos configurable que AWS)
+
+
+💰 Sistema de Pagos
+Stripe (✅ Fácil de integrar, ideal para pagos con tarjeta)
+PayPal (✅ Popular, ❌ Puede ser más caro en comisiones)
+
+🔐 Autenticación y Seguridad
+OAuth 2.0 (Google, Facebook, GitHub, etc.) (✅ Permite login con cuentas externas)
+
+📡 API y Comunicación entre Servicios
+REST API (Express, Django, Flask, Laravel, etc.) (✅ Simple y universal)
+
+🛠️ Herramientas de Desarrollo y Despliegue
+GitHub / GitLab (✅ Control de versiones)
+Docker (✅ Facilita la configuración del entorno)

@@ -16,8 +16,9 @@
         <ul class="nav-links">
             <li class="active"><a href="/">Inicio</a></li>
             <li><a href="/songs/">Canciones</a></li>
-            <li><a href="/library/">Biblioteca</a></li>
             <li><a href="/store/">Tienda</a></li>
+            <li><a href="/library/">Biblioteca</a></li>
+            <li><a href="/studio/">Estudio</a></li>
         </ul>
     </div>
     <div class="nav-right">
@@ -29,8 +30,8 @@
         </form>
        
         <div class="profile-menu">
-            <a href="../user-profile.html" class="boton">Perfil</a>
-            <img src="profile-avatar.png" alt="Perfil" class="profile-icon">
+            <a href="/login/" class="boton">Perfil</a>
+            <img src="{{ url_for('static', filename='images/profile-avatar.png') }}" alt="Perfil" class="profile-icon">
         </div>
     </div>
   </nav>

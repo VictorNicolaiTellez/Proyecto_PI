@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+  <title>{% block title %}{% endblock %}</title>
+  {% block head %}{% endblock %}
+</head>
+
+<body>
+  <nav class="navbar">
+    <div class="nav-left">
+        <img src="undersound_logo.png" alt="UnderSound" class="logo">
+        <ul class="nav-links">
+            <li class="active"><a href="/">Inicio</a></li>
+            <li><a href="/songs/">Canciones</a></li>
+            <li><a href="/library/">Biblioteca</a></li>
+            <li><a href="/store/">Tienda</a></li>
+        </ul>
+    </div>
+    <div class="nav-right">
+        <form action="/songs/" method="POST">
+            <div class="search">
+                <input type="text" placeholder="Títulos, artistas, géneros">
+                <i class="search-icon">🔍</i>
+            </div>
+        </form>
+       
+        <div class="profile-menu">
+            <a href="../user-profile.html" class="boton">Perfil</a>
+            <img src="profile-avatar.png" alt="Perfil" class="profile-icon">
+        </div>
+    </div>
+  </nav>
+  {% block content %}
+  {% endblock %}
+  <footer>
+    <p>Copyright &copy; 2024, UnderSound S.L. Todos los derechos reservados.</p>
+  </footer>
+  <script type="text/javascript" src="{{ url_for('static', filename='index.js') }}">
+
+  </script>
+</body>
+
+</html>

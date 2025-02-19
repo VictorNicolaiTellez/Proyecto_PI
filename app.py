@@ -1,5 +1,4 @@
 from flask import Flask, render_template
-from flask import Flask, Blueprint
 from flask import redirect, url_for
 from flask import request, session,jsonify
 

@@ -29,6 +29,8 @@ body {
 /* Estilo del logo */
 .logo {
     margin-right: 20px; /* Espacio entre el logo y la lista */
+    height: 50px;  /* Ajusta la altura */
+    width: auto; 
 }
 
 /* Estilo de los enlaces de navegación */

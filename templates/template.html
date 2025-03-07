@@ -12,7 +12,7 @@
 <body>
   <nav class="navbar">
     <div class="nav-left">
-        <img src="undersound_logo.png" alt="UnderSound" class="logo">
+        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="UnderSound" class="logo">
         <ul class="nav-links">
             <li class="active"><a href="/">Inicio</a></li>
             <li><a href="/songs/">Canciones</a></li>
@@ -29,7 +29,7 @@
             </div>
         </form>  
     </div>
-    
+
     <div class="profile-menu">
       <a href="/login/"> 
       <img src="{{ url_for('static', filename='images/profile-avatar.png') }}" alt="Perfil" class="profile-icon">

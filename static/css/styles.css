@@ -1,0 +1,107 @@
+/* Estilo general del cuerpo */
+body {
+    background-color: #e6f7ff; /* Azul claro más suave */
+    color: #333; /* Color de texto */
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Asegura que el cuerpo ocupe al menos la altura de la ventana */
+}
+
+/* Estilo de la barra de navegación */
+.navbar {
+    background-color:  #74b4f8; /* Azul más intenso */
+    padding: 10px 20px;
+    display: flex; /* Usar flexbox para alinear elementos */
+    justify-content: space-between; /* Espacio entre los elementos */
+    align-items: center; /* Centrar verticalmente */
+}
+
+/* Estilo de la sección izquierda de la barra de navegación */
+.nav-left {
+    display: flex; /* Usar flexbox para alinear logo y enlaces */
+    align-items: center; /* Centrar verticalmente */
+    flex-grow: 1;
+}
+
+/* Estilo del logo */
+.logo {
+    margin-right: 20px; /* Espacio entre el logo y la lista */
+}
+
+/* Estilo de los enlaces de navegación */
+.nav-links {
+    list-style-type: none; /* Quitar estilo de lista */
+    padding: 0; /* Quitar padding */
+    margin: 0; /* Quitar margin */
+    display: flex; /* Usar flexbox para alinear horizontalmente */
+}
+
+.nav-links li {
+    margin-right: 15px; /* Espacio entre los elementos de la lista */
+}
+
+.nav-links li a {
+    color: white; /* Texto blanco */
+    text-decoration: none;
+    padding: 10px 15px;
+    transition: background-color 0.3s; /* Transición suave */
+}
+
+/* Efecto al pasar el ratón sobre los enlaces */
+.nav-links li a:hover {
+    background-color: rgba(255, 255, 255, 0.2); /* Fondo blanco semitransparente */
+}
+
+/* Estilo para el enlace activo */
+.nav-links li.active a {
+    font-weight: bold;
+    border-bottom: 2px solid white; /* Línea blanca debajo del enlace activo */
+}
+
+/* Estilo del formulario de búsqueda */
+.search {
+    display: flex; /* Usar flexbox para alinear el input y el icono */
+    align-items: center; /* Centrar verticalmente */
+    flex-grow: 1; /* Permitir que la barra de búsqueda ocupe el espacio disponible */
+    margin: 0 15px; /* Espacio horizontal alrededor del formulario */
+}
+
+.search input[type="text"] {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%; /* Asegura que el input ocupe todo el espacio disponible */
+    min-width: 200px; /* Establece un ancho mínimo para el campo de búsqueda */
+}
+
+/* Estilo del icono de búsqueda */
+.search-icon {
+    margin-left: 10px; /* Espacio entre el input y el icono */
+}
+
+/* Estilo del icono de perfil */
+.profile-icon {
+    width: 40px; /* Ajusta el tamaño del icono de perfil */
+    height: 40px; /* Ajusta el tamaño del icono de perfil */
+    margin-left: 10px; /* Espacio entre el botón y el icono */
+}
+
+/* Estilo del pie de página */
+footer {
+    background-color: #74b4f8; /* Azul más intenso */
+    text-align: center;
+    padding: 10px 0;
+    color: white; /* Texto blanco */
+    margin-top: auto; /* Empuja el pie de página hacia abajo */
+    width: 100%; /* Asegura que el pie de página ocupe todo el ancho */
+}
+
+/* Estilo para las imágenes */
+img {
+    max-width: 100%; /* Asegura que las imágenes no excedan el ancho del contenedor */
+    height: auto; /* Mantiene la proporción de la imagen */
+    display: block; /* Evita espacios en blanco debajo de las imágenes */
+} 

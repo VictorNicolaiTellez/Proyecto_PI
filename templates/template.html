@@ -27,12 +27,13 @@
                 <input type="text" placeholder="Títulos, artistas, géneros">
                 <i class="search-icon">🔍</i>
             </div>
-        </form>
-       
-        <div class="profile-menu">
-            <a href="/login/" class="boton">Perfil</a>
-            <img src="{{ url_for('static', filename='images/profile-avatar.png') }}" alt="Perfil" class="profile-icon">
-        </div>
+        </form>  
+    </div>
+    
+    <div class="profile-menu">
+      <a href="/login/"> 
+      <img src="{{ url_for('static', filename='images/profile-avatar.png') }}" alt="Perfil" class="profile-icon">
+    </a>
     </div>
   </nav>
   {% block content %}

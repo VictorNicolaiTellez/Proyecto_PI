@@ -107,3 +107,40 @@ img {
     height: auto; /* Mantiene la proporción de la imagen */
     display: block; /* Evita espacios en blanco debajo de las imágenes */
 } 
+
+.carrusel_index {
+    position: relative;
+    width: 800px;
+    height: 400px;
+    overflow: hidden;
+  }
+  
+  .imagenes_index {
+    display: flex;
+    transition: transform 0.5s ease;
+  }
+  
+  .imagenes_index img {
+    width: 300px;
+    height: 300px;
+  }
+  
+  .button_index {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    font-size: 30px;
+    cursor: pointer;
+    padding: 10px;
+  }
+  
+  .prev_index {
+    left: 10px;
+  }
+  
+  .next_index {
+    right: 10px;
+  }

@@ -9,14 +9,8 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
-@app.route('/explorer/')
+@app.route('/explorer/', methods=['GET'])
 def music():
-    
-    return render_template('explorer.html')
-
-@app.route('/explorer/?name=<content_name>', methods=['POST'])
-def search(content_name):
-    data = request.form
     songs = [
         {"id":"0","album":"Tribute","artist":"John Newman","duration":"4:00","genre":"0","name":"Love Me Again","rank_time":"2"},
         {"id":"1","album":"V","artist":"Maroon 5","duration":"3:10","genre":"0","name":"Maps","rank_time":"1"},
@@ -28,6 +22,18 @@ def search(content_name):
         {"id":"7","album":"Favourite Worst Nightmare","artist":"Arctic Monkeys","duration":"4:14","genre":"0","name":"505","rank_time":"0"},
         {"id":"8","album":"Overexposed Track By Track","artist":"Maroon 5, Wiz Khalifa","duration":"3:51","genre":"0","name":"Payphone","rank_time":"1"},
         {"id":"9","album":"A Head Full of Dreams","artist":"Coldplay","duration":"4:18","genre":"0","name":"Hymn for the Weekend","rank_time":"2"}
+    ]
+    
+    return render_template('explorer.html', songs=songs)
+
+@app.route('/explorer/', methods=['POST'])
+def search():
+    data = request.form
+    songs = [
+        {"id":"0","album":"Tribute","artist":"John Newman","duration":"4:00","genre":"0","name":"Love Me Again","rank_time":"2"},
+        {"id":"1","album":"V","artist":"Maroon 5","duration":"3:10","genre":"0","name":"Maps","rank_time":"1"},
+        {"id":"2","album":"A Head Full of Dreams","artist":"Coldplay","duration":"4:24","genre":"0","name":"Adventure of a Lifetime","rank_time":"1"},
+        {"id":"3","album":"Boulevard of Broken Dreams","artist":"Green Day","duration":"4:21","genre":"0","name":"Boulevard of Broken Dreams","rank_time":"2"},
     ]
     
     return render_template('explorer.html', songs=songs)

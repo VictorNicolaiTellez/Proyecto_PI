@@ -1,0 +1,27 @@
+{% extends 'template.html' %}
+{% block title %}UnderSound - Explorador{% endblock %}
+
+{% block head %}{% endblock %}
+
+{% block content %}
+<div class="results-grid">
+    {% if songs %}
+        {% for song in songs %}
+            <div class="result-card">
+                <img src="{{ url_for('static', filename='images/song-cover.png') }}" alt="Cancion">
+                <div class="result-info">
+                    <a href="{{url_for('songs', id=song.id)}}">{{song.name}}</a>
+                    <div class="meta-info">
+                        <span class="duration">Duración: {{song.duration}}</span>
+                        <span class="match">98% coincidencia</span>
+                    </div>
+                    <div class="tags">
+                        <span>{{song.genre}}</span>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+    <!-- Más tarjetas de resultados... -->
+</div>
+{% endblock %}

@@ -14,16 +14,5 @@
             <button class="more-info-btn">ℹ Más información</button>
         </div>
     </div>
-
-    <div class="carrusel">
-        <div class="imagenes">
-          <img src="{{ url_for('static', filename='images/default_img.png') }}"  alt="Imagen 1">
-          <img src="{{ url_for('static', filename='images/default_img.png') }}"  alt="Imagen 3">
-          <img src="{{ url_for('static', filename='images/default_img.png') }}"  alt="Imagen 3">
-        </div>
-        <button class="prev" onclick="moverCarrusel(-1)">&#10094;</button>
-        <button class="next" onclick="moverCarrusel(1)">&#10095;</button>
-      </div>
-
 </header>
 {% endblock %}

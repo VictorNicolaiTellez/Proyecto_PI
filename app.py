@@ -17,6 +17,13 @@ def songs():
 def store():
     return render_template('store.html')
 
+@app.route('/store/', methods=['GET'])
+def search():
+    data = request.form
+    content = data.get('query', type=str)
+    
+    return render_template('store.html', content=content)
+
 @app.route('/library/')
 def library():
     return render_template('library.html')

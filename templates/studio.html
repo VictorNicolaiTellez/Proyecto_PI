@@ -14,4 +14,19 @@
         </div>
     </div>
 </header>
+<body>
+    <div class ="userpage">
+        <div class ="profile_pic"> <img src="{{ url_for('static', filename='images/profile-avatar.png') }}" alt="Perfil" class="logo"></div>
+
+        <div class ="upload_song"> <a href="{{ url_for('song_upload') }}">+Subir Cancion</a> </div>
+        
+        <div class ="my_uploads_list">
+            <ul class ="listed_songs">
+                <li><a href ="/song1">Titulo <a href ="/stats/"> Estadisticas <a href ="/edit_song/">Editar</a></a></href></a></li>
+            </ul>
+
+        </div>
+
+    </div>
+</body>
 {% endblock %}

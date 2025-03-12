@@ -2,28 +2,32 @@
 {% block title %}UnderSound - Home{% endblock %}
 
 {% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 {% endblock %}
 
 {% block content %}
-<header>
+<head> </head>
+
+<body>
     <div>
         <h1>Bienvenido a UnderSound</h1>
         <p>La página de los amantes de la música</p>
-        <div class="buttons">
+        <div class="buttons_index">
             <button class="play-btn">▶ Reproducir</button>
             <button class="more-info-btn">ℹ Más información</button>
         </div>
     </div>
 
-    <div class="carrusel">
-        <div class="imagenes">
-          <img src="{{ url_for('static', filename='images/default_img.png') }}"  alt="Imagen 1">
-          <img src="{{ url_for('static', filename='images/default_img.png') }}"  alt="Imagen 3">
-          <img src="{{ url_for('static', filename='images/default_img.png') }}"  alt="Imagen 3">
+    <div class="carrusel_index">
+        <div class="imagenes_index">
+             <!-- Las imágenes se agregarán aquí dinámicamente -->
+          
         </div>
-        <button class="prev" onclick="moverCarrusel(-1)">&#10094;</button>
-        <button class="next" onclick="moverCarrusel(1)">&#10095;</button>
-      </div>
-
-</header>
+        <button class="prev_index" onclick="moverCarrusel(-1)">&#10094;</button>
+        <button class="next_index" onclick="moverCarrusel(1)">&#10095;</button>
+    </div>
+    {% block scripts %}
+    <script src="{{ url_for('static', filename='css/styles.js')}}"></script>
+    {% endblock %}
+    </body>
 {% endblock %}

@@ -6,10 +6,8 @@
 {% endblock %}
 
 {% block content %}
-<head> </head>
 
-<body>
-    <div>
+    <div class="main_index">
         <h1>Bienvenido a UnderSound</h1>
         <p>La página de los amantes de la música</p>
         <div class="buttons_index">
@@ -17,17 +15,41 @@
             <button class="more-info-btn">ℹ Más información</button>
         </div>
     </div>
+    
+    <section class="row_index">
 
-    <div class="carrusel_index">
-        <div class="imagenes_index">
-             <!-- Las imágenes se agregarán aquí dinámicamente -->
-          
+        <h2>Tendencias</h2>
+        <button class="carousel-btn_index prev-btn_index">&#10094;</button>
+
+        <div class="carousel_index">
+            <div class="music-card_index">
+                <img src="{{ url_for('static', filename='images/deafault_img.png') }}" alt="Musica 1">
+            </div>
+            <div class="music-card_index">
+                <img src="{{ url_for('static', filename='images/deafault_img.png') }}" alt="Musica 2">
+            </div>
+            <div class="music-card_index">
+                <img src="{{ url_for('static', filename='images/deafault_img.png') }}" alt="Musica 3">
+            </div>
+            <div class="music-card_index">
+                <img src="{{ url_for('static', filename='images/deafault_img.png') }}" alt="Musica 1">
+            </div>
+            <div class="music-card_index">
+                <img src="{{ url_for('static', filename='images/deafault_img.png') }}" alt="Musica 1">
+            </div>
+            <div class="music-card_index">
+                <img src="{{ url_for('static', filename='images/deafault_img.png') }}" alt="Musica 1">
+            </div>
+            <!-- Más tarjetas... -->
         </div>
-        <button class="prev_index" onclick="moverCarrusel(-1)">&#10094;</button>
-        <button class="next_index" onclick="moverCarrusel(1)">&#10095;</button>
-    </div>
-    {% block scripts %}
-    <script src="{{ url_for('static', filename='css/styles.js')}}"></script>
-    {% endblock %}
-    </body>
+        <button class="carousel-btn_index next-btn_index">&#10095;</button>
+    </section>
+    
+   
+   
 {% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='css/carrusel.js')}}" defer></script>
+{% endblock %}
+
+ 

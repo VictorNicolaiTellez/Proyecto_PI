@@ -1,17 +1,20 @@
-console.log("JS cargado correctamente");
+document.addEventListener("DOMContentLoaded", function () {
+    const carruseles = document.querySelectorAll(".carousel_index"); // Obtiene todos los carruseles
 
-document.addEventListener("DOMContentLoaded", () => {
-    const carrusel = document.querySelector('.carousel_index');
-    const card = document.querySelector('.music-card_index');
-    const cardWidth = card ? card.offsetWidth + 10 : 260;
+    function moverCarrusel(direccion, indice) {
+        const carrusel = carruseles[indice]; // Selecciona el carrusel correcto
+        if (!carrusel) return;
 
-    function moverCarrusel(direccion) {
-        if (carrusel) {
-            carrusel.scrollLeft += direccion * cardWidth * 2;
-        }
+        const desplazamiento = carrusel.offsetWidth + 10; // Tamaño de desplazamiento con espacio
+        carrusel.scrollBy({ left: direccion * desplazamiento, behavior: "smooth" }); // Desplazamiento suave
     }
 
-    document.querySelector('.prev-btn_index').addEventListener('click', () => moverCarrusel(-1));
-    document.querySelector('.next-btn_index').addEventListener('click', () => moverCarrusel(1));
+    // Para cada botón, aseguramos que tenga su evento correspondiente
+    document.querySelectorAll(".prev-btn_index").forEach((btn, index) => {
+        btn.addEventListener("click", () => moverCarrusel(-1, index));
+    });
 
+    document.querySelectorAll(".next-btn_index").forEach((btn, index) => {
+        btn.addEventListener("click", () => moverCarrusel(1, index));
+    });
 });

@@ -15,37 +15,185 @@
             <button class="more-info-btn">ℹ Más información</button>
         </div>
     </div>
-    
-    <section class="row_index">
 
-        <h2>Tendencias</h2>
-        <button class="carousel-btn_index prev-btn_index">&#10094;</button>
+    <h2>Tendencias</h2>
+    <section class="row_index" data-id="1">
+
+        <button class="carousel-btn_index prev-btn_index" onclick="moverCarrusel(-1, 0)">&#10094;</button>
 
         <div class="carousel_index">
             <div class="music-card_index">
                 <img src="{{ url_for('static', filename='images/deafault_img.png') }}" alt="Musica 1">
+                <div class="music-info_index">
+                    <h3>Título de la canción</h3>
+                    <p>Álbum: Nombre del Álbum</p>
+                    <p>Duración: 3:45</p>
+                </div>
             </div>
             <div class="music-card_index">
                 <img src="{{ url_for('static', filename='images/deafault_img.png') }}" alt="Musica 2">
+                <div class="music-info_index">
+                    <h3>Título de la canción</h3>
+                    <p>Álbum: Nombre del Álbum</p>
+                    <p>Duración: 3:45</p>
+                </div>
             </div>
             <div class="music-card_index">
                 <img src="{{ url_for('static', filename='images/deafault_img.png') }}" alt="Musica 3">
+                <div class="music-info_index">
+                    <h3>Título de la canción</h3>
+                    <p>Álbum: Nombre del Álbum</p>
+                    <p>Duración: 3:45</p>
+                </div>
             </div>
             <div class="music-card_index">
                 <img src="{{ url_for('static', filename='images/deafault_img.png') }}" alt="Musica 1">
+                <div class="music-info_index">
+                    <h3>Título de la canción</h3>
+                    <p>Álbum: Nombre del Álbum</p>
+                    <p>Duración: 3:45</p>
+                </div>
             </div>
             <div class="music-card_index">
                 <img src="{{ url_for('static', filename='images/deafault_img.png') }}" alt="Musica 1">
+                <div class="music-info_index">
+                    <h3>Título de la canción</h3>
+                    <p>Álbum: Nombre del Álbum</p>
+                    <p>Duración: 3:45</p>
+                </div>
             </div>
             <div class="music-card_index">
                 <img src="{{ url_for('static', filename='images/deafault_img.png') }}" alt="Musica 1">
+                <div class="music-info_index">
+                    <h3>Título de la canción</h3>
+                    <p>Álbum: Nombre del Álbum</p>
+                    <p>Duración: 3:45</p>
+                </div>
             </div>
             <!-- Más tarjetas... -->
         </div>
-        <button class="carousel-btn_index next-btn_index">&#10095;</button>
+        <button class="carousel-btn_index next-btn_index" onclick="moverCarrusel(1, 0)">&#10095;</button>
     </section>
     
-   
+
+    <h2>Tendencias</h2>
+    <section class="row_index" data-id="1">
+        
+        <button class="carousel-btn_index prev-btn_index" onclick="moverCarrusel(-1, 1)">&#10094;</button>
+
+        <div class="carousel_index">
+            <div class="music-card_index">
+                <img src="{{ url_for('static', filename='images/deafault_img.png') }}" alt="Musica 1">
+                <div class="music-info_index">
+                    <h3>Título de la canción</h3>
+                    <p>Álbum: Nombre del Álbum</p>
+                    <p>Duración: 3:45</p>
+                </div>
+            </div>
+            <div class="music-card_index">
+                <img src="{{ url_for('static', filename='images/deafault_img.png') }}" alt="Musica 2">
+                <div class="music-info_index">
+                    <h3>Título de la canción</h3>
+                    <p>Álbum: Nombre del Álbum</p>
+                    <p>Duración: 3:45</p>
+                </div>
+            </div>
+            <div class="music-card_index">
+                <img src="{{ url_for('static', filename='images/deafault_img.png') }}" alt="Musica 3">
+                <div class="music-info_index">
+                    <h3>Título de la canción</h3>
+                    <p>Álbum: Nombre del Álbum</p>
+                    <p>Duración: 3:45</p>
+                </div>
+            </div>
+            <div class="music-card_index">
+                <img src="{{ url_for('static', filename='images/deafault_img.png') }}" alt="Musica 1">
+                <div class="music-info_index">
+                    <h3>Título de la canción</h3>
+                    <p>Álbum: Nombre del Álbum</p>
+                    <p>Duración: 3:45</p>
+                </div>
+            </div>
+            <div class="music-card_index">
+                <img src="{{ url_for('static', filename='images/deafault_img.png') }}" alt="Musica 1">
+                <div class="music-info_index">
+                    <h3>Título de la canción</h3>
+                    <p>Álbum: Nombre del Álbum</p>
+                    <p>Duración: 3:45</p>
+                </div>
+            </div>
+            <div class="music-card_index">
+                <img src="{{ url_for('static', filename='images/deafault_img.png') }}" alt="Musica 1">
+                <div class="music-info_index">
+                    <h3>Título de la canción</h3>
+                    <p>Álbum: Nombre del Álbum</p>
+                    <p>Duración: 3:45</p>
+                </div>
+            </div>
+            <!-- Más tarjetas... -->
+        </div>
+        <button class="carousel-btn_index next-btn_index" onclick="moverCarrusel(1, 1)">&#10095;</button>
+</section>
+    </section>
+    
+    <h2>Tendencias</h2>
+    <section class="row_index" data-id="3">
+
+        <button class="carousel-btn_index prev-btn_index" onclick="moverCarrusel(-1, 2)">&#10094;</button>
+
+        <div class="carousel_index">
+            <div class="music-card_index">
+                <img src="{{ url_for('static', filename='images/deafault_img.png') }}" alt="Musica 1">
+                <div class="music-info_index">
+                    <h3>Título de la canción</h3>
+                    <p>Álbum: Nombre del Álbum</p>
+                    <p>Duración: 3:45</p>
+                </div>
+            </div>
+            <div class="music-card_index">
+                <img src="{{ url_for('static', filename='images/deafault_img.png') }}" alt="Musica 2">
+                <div class="music-info_index">
+                    <h3>Título de la canción</h3>
+                    <p>Álbum: Nombre del Álbum</p>
+                    <p>Duración: 3:45</p>
+                </div>
+            </div>
+            <div class="music-card_index">
+                <img src="{{ url_for('static', filename='images/deafault_img.png') }}" alt="Musica 3">
+                <div class="music-info_index">
+                    <h3>Título de la canción</h3>
+                    <p>Álbum: Nombre del Álbum</p>
+                    <p>Duración: 3:45</p>
+                </div>
+            </div>
+            <div class="music-card_index">
+                <img src="{{ url_for('static', filename='images/deafault_img.png') }}" alt="Musica 1">
+                <div class="music-info_index">
+                    <h3>Título de la canción</h3>
+                    <p>Álbum: Nombre del Álbum</p>
+                    <p>Duración: 3:45</p>
+                </div>
+            </div>
+            <div class="music-card_index">
+                <img src="{{ url_for('static', filename='images/deafault_img.png') }}" alt="Musica 1">
+                <div class="music-info_index">
+                    <h3>Título de la canción</h3>
+                    <p>Álbum: Nombre del Álbum</p>
+                    <p>Duración: 3:45</p>
+                </div>
+            </div>
+            <div class="music-card_index">
+                <img src="{{ url_for('static', filename='images/deafault_img.png') }}" alt="Musica 1">
+                <div class="music-info_index">
+                    <h3>Título de la canción</h3>
+                    <p>Álbum: Nombre del Álbum</p>
+                    <p>Duración: 3:45</p>
+                </div>
+            </div>
+            <!-- Más tarjetas... -->
+        </div>
+        <button class="carousel-btn_index next-btn_index" onclick="moverCarrusel(1, 1)">&#10095;</button>
+    </section>
    
 {% endblock %}
 {% block scripts %}

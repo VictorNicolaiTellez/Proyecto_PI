@@ -117,10 +117,22 @@ template img {
 /* Rows y Carousel */
 .row_index {
     margin: 40px 60px;
+    position: relative; 
+    width: 100%; /* Puedes ajustar el ancho */
+    margin: auto;
+    overflow: hidden;
+    display: flex; /* Asegura que los botones y el carrusel se alineen correctamente */
+    justify-content: center;
+    align-items: center;
 }
 
-.row_index h2 {
+.carrusel-title_index {
+    font-size: 24px;
+    font-weight: bold;
     margin-bottom: 20px;
+    text-align: center;
+    white-space: normal; /* Permite que el texto se divida en varias líneas */
+    overflow: visible; /* Asegura que no se recorte el contenido */
 }
 
 .carousel_index {
@@ -137,23 +149,44 @@ template img {
 .music-card_index {
     flex: 0 0 auto;
     width: 250px;
-    height: 140px;
-    position: relative;
-    transition: transform 0.3s;
+    padding: 10px;
+    border-radius: 8px;
+    text-align: center; /* Centrar el contenido */
+    overflow: hidden; /* Evitar desbordes */
 }
 
 .music-card_index:hover {
-    transform: scale(1.1);
+    transform: scale(1.05);
     z-index: 2;
 }
 
 .music-card_index img {
     width: 100%;
-    height: 100%;
-    object-fit: scale-down;
+    height: 140px;
+    object-fit: ;
     border-radius: 4px;
 }
-  
+
+.music-info_index {
+    background-color: rgba(0, 0, 0, 0.8); /* Fondo oscuro para contraste */
+    color: white;
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 4px;
+    margin-top: 5px; /* Espacio entre la imagen y el texto */
+}
+.music-info_index h3 {
+    font-size: 16px;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.music-info_index p {
+    font-size: 14px;
+    margin: 3px 0;
+    color: #ccc; /* Un gris claro para mejor visibilidad */
+}
+
 .carousel-btn_index {
     position: absolute;
     top: 50%;

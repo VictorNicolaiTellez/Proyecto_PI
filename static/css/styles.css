@@ -153,6 +153,9 @@ template img {
     border-radius: 8px;
     text-align: center; /* Centrar el contenido */
     overflow: hidden; /* Evitar desbordes */
+    display: block; /* Para que el <a> se comporte como un div */
+    text-decoration: none; /* Quita el subrayado del enlace */
+    color: inherit; /* Mantiene el color del texto */
 }
 
 .music-card_index:hover {
@@ -163,7 +166,7 @@ template img {
 .music-card_index img {
     width: 100%;
     height: 140px;
-    object-fit: ;
+    
     border-radius: 4px;
 }
 

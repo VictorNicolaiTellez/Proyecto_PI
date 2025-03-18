@@ -7,9 +7,9 @@
 <div class="nav-right">
     <h1>Tienda de UnderSound</h1>
     <h2>Busca los productos que quieras adquirir</h2>
-    <form action="{{ url_for('search_store') }}" method="GET">
+    <form action="{{ url_for('search_explorer') }}" method="GET">
         <div class="search">
-            <input type="text" placeholder="Vinilos, CDs, merchandising...">
+            <input type="text" placeholder="Canciones, artistas, álbumes...">
             <i class="search-icon">🔍</i>
         </div>
     </form>  
@@ -17,69 +17,71 @@
 
 {% if songs %}
     <h2>Canciones</h2>
-    <div class="carrusel_index">
-    <button class="prev_index" onclick="moverCarrusel(-1)">&#10094;</button>
-    {% for song in songs %}
-        <div class="imagenes_index">
-            <div class="music-card_index">
-                <img src="{{ url_for('static', filename='images/profile-avatar.png') }}" alt="Cancion">
-                <div class="result-info">
-                    <a href="#">{{song.name}}</a>
-                    <div class="meta-info">
-                        <span class="duration">Duración: {{song.duration}}</span>
-                        <span class="match">98% coincidencia</span>
-                    </div>
-                    <div class="tags">
-                        <span>{{song.genre}}</span>
-                    </div>
+    <section class="row_index" data-id="1">
+
+        <button class="carousel-btn_index prev-btn_index" onclick="moverCarrusel(-1, 0)">&#10094;</button>
+
+        <div class="carousel_index">
+            {% for song in songs %}
+            <a href="/songs/" class="music-card_index">
+                <img src="{{ url_for('static', filename='images/deafault_img.png') }}" alt="Canción">
+                <div class="music-info_index">
+                    <h3>{{song.name}}</h3>
+                    <p>Álbum: {{song.album}}</p>
+                    <p>Duración: {{song.duration}}</p>
                 </div>
-            </div>
+            </a>
+            {% endfor %}
         </div>
-    {% endfor %}
-    
-    <button class="next_index" onclick="moverCarrusel(1)">&#10095;</button>
-    </div>
+        <button class="carousel-btn_index next-btn_index" onclick="moverCarrusel(1, 0)">&#10095;</button>
+    </section>
 {% endif %}
 
-<h2>CDs</h2>
-<div class="carrusel_index">
-    <div class="imagenes_index">
-         <!-- Las imágenes se agregarán aquí dinámicamente -->
-      
-    </div>
-    <button class="prev_index" onclick="moverCarrusel(-1)">&#10094;</button>
-    <button class="next_index" onclick="moverCarrusel(1)">&#10095;</button>
-</div>
+{% if artists %}
+    <h2>Artistas</h2>
+    <section class="row_index" data-id="2">
 
-<h2>Merchandising</h2>
-<div class="carrusel_index">
-    <div class="imagenes_index">
-         <!-- Las imágenes se agregarán aquí dinámicamente -->
-      
-    </div>
-    <button class="prev_index" onclick="moverCarrusel(-1)">&#10094;</button>
-    <button class="next_index" onclick="moverCarrusel(1)">&#10095;</button>
-</div>
+        <button class="carousel-btn_index prev-btn_index" onclick="moverCarrusel(-1, 1)">&#10094;</button>
 
-
-<div class="results-grid">
-    {% if songs %}
-        {% for song in songs %}
-            <div class="result-card">
-                <img src="{{ url_for('static', filename='images/song-cover.png') }}" alt="Cancion">
-                <div class="result-info">
-                    <a href="#">{{song.name}}</a>
-                    <div class="meta-info">
-                        <span class="duration">Duración: {{song.duration}}</span>
-                        <span class="match">98% coincidencia</span>
-                    </div>
-                    <div class="tags">
-                        <span>{{song.genre}}</span>
-                    </div>
+        <div class="carousel_index">
+            {% for artist in artists %}
+            <a href="/songs/" class="music-card_index">
+                <img src="{{ url_for('static', filename='images/deafault_img.png') }}" alt="Artista">
+                <div class="music-info_index">
+                    <h3>{{artist.name}}</h3>
+                    <p>Género común: {{artist.genre}}</p>
                 </div>
-            </div>
-        {% endfor %}
-    {% endif %}
-    <!-- Más tarjetas de resultados... -->
-</div>
+            </a>
+            {% endfor %}
+        </div>
+        <button class="carousel-btn_index next-btn_index" onclick="moverCarrusel(1, 1)">&#10095;</button>
+    </section>
+{% endif %}
+
+{% if albums %}
+    <h2>Álbumes</h2>
+    <section class="row_index" data-id="3">
+
+        <button class="carousel-btn_index prev-btn_index" onclick="moverCarrusel(-1, 2)">&#10094;</button>
+
+        <div class="carousel_index">
+            {% for album in albums %}
+            <a href="/songs/" class="music-card_index">
+                <img src="{{ url_for('static', filename='images/deafault_img.png') }}" alt="Álbum">
+                <div class="music-info_index">
+                    <h3>{{album.name}}</h3>
+                    <p>Artista: {{album.artist}}</p>
+                    <p>Género común: {{album.genre}}</p>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+        <button class="carousel-btn_index next-btn_index" onclick="moverCarrusel(1, 2)">&#10095;</button>
+    </section>
+{% endif %}
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='css/carrusel.js')}}" defer></script>
 {% endblock %}

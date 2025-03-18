@@ -15,35 +15,72 @@
     </form>  
 </div>
 
-<h2>Vinilos</h2>
-<div class="carrusel_index">
-    <div class="imagenes_index">
-         <!-- Las imágenes se agregarán aquí dinámicamente -->
-      
-    </div>
-    <button class="prev_index" onclick="moverCarrusel(-1)">&#10094;</button>
-    <button class="next_index" onclick="moverCarrusel(1)">&#10095;</button>
-</div>
+{% if vinyls %}
+    <h2>Vinilos</h2>
+    <section class="row_index" data-id="1">
 
-<h2>CDs</h2>
-<div class="carrusel_index">
-    <div class="imagenes_index">
-         <!-- Las imágenes se agregarán aquí dinámicamente -->
-      
-    </div>
-    <button class="prev_index" onclick="moverCarrusel(-1)">&#10094;</button>
-    <button class="next_index" onclick="moverCarrusel(1)">&#10095;</button>
-</div>
+        <button class="carousel-btn_index prev-btn_index" onclick="moverCarrusel(-1, 0)">&#10094;</button>
 
-<h2>Merchandising</h2>
-<div class="carrusel_index">
-    <div class="imagenes_index">
-         <!-- Las imágenes se agregarán aquí dinámicamente -->
-      
-    </div>
-    <button class="prev_index" onclick="moverCarrusel(-1)">&#10094;</button>
-    <button class="next_index" onclick="moverCarrusel(1)">&#10095;</button>
-</div>
+        <div class="carousel_index">
+            {% for vinyl in vinyls %}
+            <a href="/songs/" class="music-card_index">
+                <img src="{{ url_for('static', filename='images/deafault_img.png') }}" alt="Vinilo">
+                <div class="music-info_index">
+                    <h3>{{vinyl.name}}</h3>
+                    <p>Artista: {{vinyl.artist}}</p>
+                    <p>Álbum: {{vinyl.album}}</p>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+        <button class="carousel-btn_index next-btn_index" onclick="moverCarrusel(1, 0)">&#10095;</button>
+    </section>
+{% endif %}
+
+{% if cds %}
+    <h2>CDs</h2>
+    <section class="row_index" data-id="2">
+
+        <button class="carousel-btn_index prev-btn_index" onclick="moverCarrusel(-1, 1)">&#10094;</button>
+
+        <div class="carousel_index">
+            {% for cd in cds %}
+            <a href="/songs/" class="music-card_index">
+                <img src="{{ url_for('static', filename='images/deafault_img.png') }}" alt="CD">
+                <div class="music-info_index">
+                    <h3>{{cd.name}}</h3>
+                    <p>Artista: {{vinyl.artist}}</p>
+                    <p>Álbum: {{vinyl.album}}</p>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+        <button class="carousel-btn_index next-btn_index" onclick="moverCarrusel(1, 1)">&#10095;</button>
+    </section>
+{% endif %}
+
+{% if merchandising %}
+    <h2>Merchandising</h2>
+    <section class="row_index" data-id="1">
+
+        <button class="carousel-btn_index prev-btn_index" onclick="moverCarrusel(-1, 2)">&#10094;</button>
+
+        <div class="carousel_index">
+            {% for merch in merchandising %}
+            <a href="/songs/" class="music-card_index">
+                <img src="{{ url_for('static', filename='images/deafault_img.png') }}" alt="{{merch.type}}">
+                <div class="music-info_index">
+                    <h3>{{merch.name}}</h3>
+                    <p>{{merch.type}}</p>
+                    <p>{{merch.price}}</p>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+        <button class="carousel-btn_index next-btn_index" onclick="moverCarrusel(1, 2)">&#10095;</button>
+    </section>
+{% endif %}
+
 {% endblock %}
 
 {% block scripts %}

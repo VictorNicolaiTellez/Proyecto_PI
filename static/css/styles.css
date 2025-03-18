@@ -153,6 +153,9 @@ template img {
     border-radius: 8px;
     text-align: center; /* Centrar el contenido */
     overflow: hidden; /* Evitar desbordes */
+    display: block; /* Para que el <a> se comporte como un div */
+    text-decoration: none; /* Quita el subrayado del enlace */
+    color: inherit; /* Mantiene el color del texto */
 }
 
 .music-card_index:hover {
@@ -197,7 +200,7 @@ template img {
     font-size: 30px;
     padding: 10px;
     cursor: pointer;
-    z-index: 2;
+    z-index: 20;
 }
 
 .carousel-btn_index:hover {

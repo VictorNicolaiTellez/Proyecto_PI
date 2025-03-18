@@ -4,5 +4,48 @@
 {% block head %}{% endblock %}
 
 {% block content %}
-<h1>{{content}}</h1>
+<div class="nav-right">
+    <h1>Tienda de UnderSound</h1>
+    <h2>Busca los productos que quieras adquirir</h2>
+    <form action="{{ url_for('search_store') }}" method="GET">
+        <div class="search">
+            <input type="text" placeholder="Vinilos, CDs, merchandising...">
+            <i class="search-icon">🔍</i>
+        </div>
+    </form>  
+</div>
+
+<h2>Vinilos</h2>
+<div class="carrusel_index">
+    <div class="imagenes_index">
+         <!-- Las imágenes se agregarán aquí dinámicamente -->
+      
+    </div>
+    <button class="prev_index" onclick="moverCarrusel(-1)">&#10094;</button>
+    <button class="next_index" onclick="moverCarrusel(1)">&#10095;</button>
+</div>
+
+<h2>CDs</h2>
+<div class="carrusel_index">
+    <div class="imagenes_index">
+         <!-- Las imágenes se agregarán aquí dinámicamente -->
+      
+    </div>
+    <button class="prev_index" onclick="moverCarrusel(-1)">&#10094;</button>
+    <button class="next_index" onclick="moverCarrusel(1)">&#10095;</button>
+</div>
+
+<h2>Merchandising</h2>
+<div class="carrusel_index">
+    <div class="imagenes_index">
+         <!-- Las imágenes se agregarán aquí dinámicamente -->
+      
+    </div>
+    <button class="prev_index" onclick="moverCarrusel(-1)">&#10094;</button>
+    <button class="next_index" onclick="moverCarrusel(1)">&#10095;</button>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='css/carrusel.js')}}" defer></script>
 {% endblock %}

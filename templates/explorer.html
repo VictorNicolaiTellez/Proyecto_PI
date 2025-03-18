@@ -4,6 +4,64 @@
 {% block head %}{% endblock %}
 
 {% block content %}
+<div class="nav-right">
+    <h1>Tienda de UnderSound</h1>
+    <h2>Busca los productos que quieras adquirir</h2>
+    <form action="{{ url_for('search_store') }}" method="GET">
+        <div class="search">
+            <input type="text" placeholder="Vinilos, CDs, merchandising...">
+            <i class="search-icon">🔍</i>
+        </div>
+    </form>  
+</div>
+
+{% if songs %}
+    <h2>Canciones</h2>
+    <div class="carrusel_index">
+    <button class="prev_index" onclick="moverCarrusel(-1)">&#10094;</button>
+    {% for song in songs %}
+        <div class="imagenes_index">
+            <div class="music-card_index">
+                <img src="{{ url_for('static', filename='images/profile-avatar.png') }}" alt="Cancion">
+                <div class="result-info">
+                    <a href="#">{{song.name}}</a>
+                    <div class="meta-info">
+                        <span class="duration">Duración: {{song.duration}}</span>
+                        <span class="match">98% coincidencia</span>
+                    </div>
+                    <div class="tags">
+                        <span>{{song.genre}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    
+    <button class="next_index" onclick="moverCarrusel(1)">&#10095;</button>
+    </div>
+{% endif %}
+
+<h2>CDs</h2>
+<div class="carrusel_index">
+    <div class="imagenes_index">
+         <!-- Las imágenes se agregarán aquí dinámicamente -->
+      
+    </div>
+    <button class="prev_index" onclick="moverCarrusel(-1)">&#10094;</button>
+    <button class="next_index" onclick="moverCarrusel(1)">&#10095;</button>
+</div>
+
+<h2>Merchandising</h2>
+<div class="carrusel_index">
+    <div class="imagenes_index">
+         <!-- Las imágenes se agregarán aquí dinámicamente -->
+      
+    </div>
+    <button class="prev_index" onclick="moverCarrusel(-1)">&#10094;</button>
+    <button class="next_index" onclick="moverCarrusel(1)">&#10095;</button>
+</div>
+
+
 <div class="results-grid">
     {% if songs %}
         {% for song in songs %}

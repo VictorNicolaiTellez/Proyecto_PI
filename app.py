@@ -5,6 +5,7 @@ from flask import request, session,jsonify
 app = Flask(__name__)
 
 
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -13,8 +14,9 @@ def index():
 def songs():
     return render_template('songs.html')
 
-@app.route('/explorer/')
+@app.route('/explorer/', methods=["GET"])
 def explorer():
+    music_search = request.args.get('music_search','')
     songs = [
         {"id":"0","album":"Tribute","artist":"John Newman","duration":"4:00","genre":"0","name":"Love Me Again","rank_time":"2"},
         {"id":"1","album":"V","artist":"Maroon 5","duration":"3:10","genre":"0","name":"Maps","rank_time":"1"},
@@ -38,11 +40,16 @@ def explorer():
         {"id":"1","name":"V","artist":"Maroon 5","genre":"Pop"},
         {"id":"2","name":"Favourite Worst Nightmare","artist":"Arctic Monkeys","genre":"Indie"}
     ]
-    return render_template('explorer.html', songs=songs, artists=artists, albums=albums)
-
-@app.route('/explorer/', methods=['GET'])
-def search_explorer():
-    return render_template('explorer.html')
+    if music_search == '':
+        return render_template('explorer.html', songs=songs, artists=artists, albums=albums)
+    search = music_search.lower()
+    songs_filter = []
+    songs_filter = [item for item in songs if search in item["name"].lower()]
+    artists_filter = []
+    artists_filter = [item for item in artists if search in item["name"].lower()]
+    albums_filter = []
+    albums_filter = [item for item in albums if search in item["name"].lower()]
+    return render_template('explorer.html', songs=songs_filter, artists=artists_filter, albums=albums_filter)
 
 @app.route('/store/')
 def store():

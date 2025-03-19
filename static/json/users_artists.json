@@ -1,0 +1,7 @@
+[
+    {"username":"rockstar01","fullname":"John Smith","artistname":"Johnny Rock","email":"johnsmith@example.com","birthdate":"1987-06-15","passwd":"hashed_password_abc","record":"Universal Music","genre":"Rock"},
+    {"username":"popqueen92","fullname":"Emily Johnson","artistname":"EmJay","email":"emilyjohnson@example.com","birthdate":"1992-03-22","passwd":"hashed_password_def","record":"Sony Music","genre":"Pop"},
+    {"username":"metalhead77","fullname":"Mike Brown","artistname":"Iron Mike","email":"mikebrown@example.com","birthdate":"1985-10-10","passwd":"hashed_password_ghi","record":"Roadrunner Records","genre":"Metal"},
+    {"username":"electrobeat88","fullname":"Samantha Davis","artistname":"DJ SamD","email":"samanthadavis@example.com","birthdate":"1990-08-05","passwd":"hashed_password_jkl","record":"Ultra Records","genre":"Electronic"},
+    {"username":"hiphopking","fullname":"Chris Walker","artistname":"C-Walk","email":"chriswalker@example.com","birthdate":"1989-12-30","passwd":"hashed_password_mno","record":"Def Jam Recordings","genre":"Hip-Hop"}
+]

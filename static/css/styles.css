@@ -248,8 +248,115 @@ footer {
 
 
 /* Estilo para las imágenes */
-img {
+template img {
     max-width: 100%; /* Asegura que las imágenes no excedan el ancho del contenedor */
     height: auto; /* Mantiene la proporción de la imagen */
     display: block; /* Evita espacios en blanco debajo de las imágenes */
 } 
+
+.main_index {
+    margin: 0 auto;
+    border-width: medium;
+}
+
+
+/* Rows y Carousel */
+.row_index {
+    margin: 40px 60px;
+    position: relative; 
+    width: 100%; /* Puedes ajustar el ancho */
+    margin: auto;
+    overflow: hidden;
+    display: flex; /* Asegura que los botones y el carrusel se alineen correctamente */
+    justify-content: center;
+    align-items: center;
+}
+
+.carrusel-title_index {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+    white-space: normal; /* Permite que el texto se divida en varias líneas */
+    overflow: visible; /* Asegura que no se recorte el contenido */
+}
+
+.carousel_index {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding: 20px 0;
+    overflow: hidden;
+    scroll-behavior: smooth; /* Movimiento suave */
+    white-space: nowrap; /* Evita que los elementos salten de línea */
+    position: relative;
+}
+
+.music-card_index {
+    flex: 0 0 auto;
+    width: 250px;
+    padding: 10px;
+    border-radius: 8px;
+    text-align: center; /* Centrar el contenido */
+    overflow: hidden; /* Evitar desbordes */
+    display: block; /* Para que el <a> se comporte como un div */
+    text-decoration: none; /* Quita el subrayado del enlace */
+    color: inherit; /* Mantiene el color del texto */
+}
+
+.music-card_index:hover {
+    transform: scale(1.05);
+    z-index: 2;
+}
+
+.music-card_index img {
+    width: 100%;
+    height: 140px;
+    object-fit: contain;
+    border-radius: 4px;
+}
+
+.music-info_index {
+    background-color: rgba(0, 0, 0, 0.8); /* Fondo oscuro para contraste */
+    color: white;
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 4px;
+    margin-top: 5px; /* Espacio entre la imagen y el texto */
+}
+.music-info_index h3 {
+    font-size: 16px;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.music-info_index p {
+    font-size: 14px;
+    margin: 3px 0;
+    color: #ccc; /* Un gris claro para mejor visibilidad */
+}
+
+.carousel-btn_index {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    border: none;
+    color: white;
+    font-size: 30px;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 20;
+}
+
+.carousel-btn_index:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.prev-btn_index {
+    left: 0;
+}
+
+.next-btn_index {
+    right: 0;
+}

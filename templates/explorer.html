@@ -1,5 +1,5 @@
 {% extends 'template.html' %}
-{% block title %}UnderSound - Tienda{% endblock %}
+{% block title %}UnderSound - Explorador{% endblock %}
 
 {% block head %}{% endblock %}
 
@@ -7,28 +7,28 @@
 <div class="nav-right">
     <h1>Tienda de UnderSound</h1>
     <h2>Busca los productos que quieras adquirir</h2>
-    <form action="{{ url_for('store') }}" method="GET">
+    <form action="{{ url_for('explorer') }}" method="GET">
         <div class="search">
-            <input type="text" name="store_search" placeholder="Vinilos, CDs, merchandising...">
+            <input type="text" name="music_search" placeholder="Canciones, artistas, álbumes...">
             <i class="search-icon">🔍</i>
         </div>
     </form>  
 </div>
 
-{% if vinyls %}
-    <h2>Vinilos</h2>
+{% if songs %}
+    <h2>Canciones</h2>
     <section class="row_index" data-id="1">
 
         <button class="carousel-btn_index prev-btn_index" onclick="moverCarrusel(-1, 0)">&#10094;</button>
 
         <div class="carousel_index">
-            {% for vinyl in vinyls %}
+            {% for song in songs %}
             <a href="/songs/" class="music-card_index">
-                <img src="{{ url_for('static', filename='images/deafault_img.png') }}" alt="Vinilo">
+                <img src="{{ url_for('static', filename='images/deafault_img.png') }}" alt="Canción">
                 <div class="music-info_index">
-                    <h3>{{vinyl.name}}</h3>
-                    <p>Artista: {{vinyl.artist}}</p>
-                    <p>Álbum: {{vinyl.album}}</p>
+                    <h3>{{song.name}}</h3>
+                    <p>Álbum: {{song.album}}</p>
+                    <p>Duración: {{song.duration}}</p>
                 </div>
             </a>
             {% endfor %}
@@ -37,20 +37,19 @@
     </section>
 {% endif %}
 
-{% if cds %}
-    <h2>CDs</h2>
+{% if artists %}
+    <h2>Artistas</h2>
     <section class="row_index" data-id="2">
 
         <button class="carousel-btn_index prev-btn_index" onclick="moverCarrusel(-1, 1)">&#10094;</button>
 
         <div class="carousel_index">
-            {% for cd in cds %}
+            {% for artist in artists %}
             <a href="/songs/" class="music-card_index">
-                <img src="{{ url_for('static', filename='images/deafault_img.png') }}" alt="CD">
+                <img src="{{ url_for('static', filename='images/deafault_img.png') }}" alt="Artista">
                 <div class="music-info_index">
-                    <h3>{{cd.name}}</h3>
-                    <p>Artista: {{cd.artist}}</p>
-                    <p>Álbum: {{cd.album}}</p>
+                    <h3>{{artist.name}}</h3>
+                    <p>Género común: {{artist.genre}}</p>
                 </div>
             </a>
             {% endfor %}
@@ -59,20 +58,20 @@
     </section>
 {% endif %}
 
-{% if merchandising %}
-    <h2>Merchandising</h2>
-    <section class="row_index" data-id="1">
+{% if albums %}
+    <h2>Álbumes</h2>
+    <section class="row_index" data-id="3">
 
         <button class="carousel-btn_index prev-btn_index" onclick="moverCarrusel(-1, 2)">&#10094;</button>
 
         <div class="carousel_index">
-            {% for merch in merchandising %}
+            {% for album in albums %}
             <a href="/songs/" class="music-card_index">
-                <img src="{{ url_for('static', filename='images/deafault_img.png') }}" alt="{{merch.type}}">
+                <img src="{{ url_for('static', filename='images/deafault_img.png') }}" alt="Álbum">
                 <div class="music-info_index">
-                    <h3>{{merch.name}}</h3>
-                    <p>{{merch.type}}</p>
-                    <p>{{merch.price}} €</p>
+                    <h3>{{album.name}}</h3>
+                    <p>Artista: {{album.artist}}</p>
+                    <p>Género común: {{album.genre}}</p>
                 </div>
             </a>
             {% endfor %}

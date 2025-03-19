@@ -1,9 +1,31 @@
 from flask import Flask, render_template
 from flask import redirect, url_for
 from flask import request, session,jsonify
+import json
 
 app = Flask(__name__)
 
+"""
+Carga de datos de los archivos JSON al iniciar la API
+"""
+with open('static/json/songs.json') as json_file:
+    data_json = json_file.read()
+songs_list = json.loads(data_json)
+with open('static/json/artists.json') as json_file:
+    data_json = json_file.read()
+artists_list = json.loads(data_json)
+with open('static/json/albums.json') as json_file:
+    data_json = json_file.read()
+albums_list = json.loads(data_json)
+with open('static/json/vinyls.json') as json_file:
+    data_json = json_file.read()
+vinyls_list = json.loads(data_json)
+with open('static/json/cds.json') as json_file:
+    data_json = json_file.read()
+cds_list = json.loads(data_json)
+with open('static/json/merchandising.json') as json_file:
+    data_json = json_file.read()
+merchandising_list = json.loads(data_json)
 
 
 @app.route('/')
@@ -17,50 +39,30 @@ def songs():
 @app.route('/explorer/', methods=["GET"])
 def explorer():
     music_search = request.args.get('music_search','')
-    songs = [
-        {"id":"0","album":"Tribute","artist":"John Newman","duration":"4:00","genre":"0","name":"Love Me Again","rank_time":"2"},
-        {"id":"1","album":"V","artist":"Maroon 5","duration":"3:10","genre":"0","name":"Maps","rank_time":"1"},
-        {"id":"2","album":"A Head Full of Dreams","artist":"Coldplay","duration":"4:24","genre":"0","name":"Adventure of a Lifetime","rank_time":"1"},
-        {"id":"3","album":"Boulevard of Broken Dreams","artist":"Green Day","duration":"4:21","genre":"0","name":"Boulevard of Broken Dreams","rank_time":"2"},
-        {"id":"4","album":"V","artist":"Maroon 5","duration":"3:51","genre":"0","name":"Animals","rank_time":"1"},
-        {"id":"5","album":"Overexposed Track By Track","artist":"Maroon 5","duration":"3:40","genre":"0","name":"One More Night","rank_time":"0"},
-        {"id":"6","album":"(What's The Story) Morning Glory?","artist":"Oasis","duration":"4:19","genre":"0","name":"Wonderwall","rank_time":"0"},
-        {"id":"7","album":"Favourite Worst Nightmare","artist":"Arctic Monkeys","duration":"4:14","genre":"0","name":"505","rank_time":"0"},
-        {"id":"8","album":"Overexposed Track By Track","artist":"Maroon 5, Wiz Khalifa","duration":"3:51","genre":"0","name":"Payphone","rank_time":"1"},
-        {"id":"9","album":"A Head Full of Dreams","artist":"Coldplay","duration":"4:18","genre":"0","name":"Hymn for the Weekend","rank_time":"2"}
-    ]
-    artists = [
-        {"id":"0","name":"Maroon 5","genre":"Pop"},
-        {"id":"1","name":"Arctic Monkeys","genre":"Indie"},
-        {"id":"2","name":"Green Day","genre":"Rock/Punk"},
-        {"id":"3","name":"Coldplay","genre":"Pop"}
-    ]
-    albums = [
-        {"id":"0","name":"Tribute","artist":"John Newman","genre":"Pop"},
-        {"id":"1","name":"V","artist":"Maroon 5","genre":"Pop"},
-        {"id":"2","name":"Favourite Worst Nightmare","artist":"Arctic Monkeys","genre":"Indie"}
-    ]
     if music_search == '':
-        return render_template('explorer.html', songs=songs, artists=artists, albums=albums)
+        return render_template('explorer.html', songs=songs_list, artists=artists_list, albums=albums_list)
     search = music_search.lower()
     songs_filter = []
-    songs_filter = [item for item in songs if search in item["name"].lower()]
+    songs_filter = [item for item in songs_list if search in item["name"].lower()]
     artists_filter = []
-    artists_filter = [item for item in artists if search in item["name"].lower()]
+    artists_filter = [item for item in artists_list if search in item["name"].lower()]
     albums_filter = []
-    albums_filter = [item for item in albums if search in item["name"].lower()]
+    albums_filter = [item for item in albums_list if search in item["name"].lower()]
     return render_template('explorer.html', songs=songs_filter, artists=artists_filter, albums=albums_filter)
 
-@app.route('/store/')
+@app.route('/store/', methods=["GET"])
 def store():
-    return render_template('store.html')
-
-@app.route('/store/', methods=['GET'])
-def search_store():
-    data = request.form
-    content = data.get('query', type=str)
-    
-    return render_template('store.html', content=content)
+    store_search = request.args.get('store_search','')
+    if store_search == '':
+        return render_template('store.html', vinyls=vinyls_list, cds=cds_list, merchandising=merchandising_list)
+    search = store_search.lower()
+    vinyls_filter = []
+    vinyls_filter = [item for item in vinyls_list if search in item["name"].lower()]
+    cds_filter = []
+    cds_filter = [item for item in cds_list if search in item["name"].lower()]
+    merchandising_filter = []
+    merchandising_filter = [item for item in merchandising_list if search in item["name"].lower()]
+    return render_template('store.html', vinyls=vinyls_filter, cds=cds_filter, merchandising=merchandising_filter)
 
 @app.route('/library/')
 def library():

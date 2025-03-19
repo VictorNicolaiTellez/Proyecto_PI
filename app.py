@@ -1,9 +1,15 @@
+import os
 from flask import Flask, render_template
 from flask import redirect, url_for
 from flask import request, session,jsonify
 import json
+from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
+
+
+
+
 
 """
 Carga de datos de los archivos JSON al iniciar la API
@@ -30,7 +36,7 @@ merchandising_list = json.loads(data_json)
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index.html',songs=songs_list)
 
 @app.route('/songs/')
 def songs():
@@ -83,6 +89,13 @@ def signup():
 @app.route('/studio/song_upload')
 def song_upload():
     return render_template('song_upload.html')
+
+@app.route('/profile/')
+def profile():
+    
+    return render_template('user_profile.html')
+
+
 
 
 if __name__ == '__main__':

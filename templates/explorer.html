@@ -7,9 +7,9 @@
 <div class="nav-right">
     <h1>Tienda de UnderSound</h1>
     <h2>Busca los productos que quieras adquirir</h2>
-    <form action="{{ url_for('search_explorer') }}" method="GET">
+    <form action="{{ url_for('explorer') }}" method="GET">
         <div class="search">
-            <input type="text" placeholder="Canciones, artistas, álbumes...">
+            <input type="text" name="music_search" placeholder="Canciones, artistas, álbumes...">
             <i class="search-icon">🔍</i>
         </div>
     </form>  

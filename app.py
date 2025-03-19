@@ -8,9 +8,6 @@ from werkzeug.utils import secure_filename
 app = Flask(__name__)
 
 
-
-
-
 """
 Carga de datos de los archivos JSON al iniciar la API
 """
@@ -114,6 +111,11 @@ def song_upload():
 def profile():
     
     return render_template('user_profile.html')
+
+@app.route('/edit_profile/')
+def edit_profile():
+    
+    return render_template('edit_profile.html')
 
 
 

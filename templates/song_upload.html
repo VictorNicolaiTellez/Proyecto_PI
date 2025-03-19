@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UnderSound - Iniciar Sesión</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+    <div class="background">
+        <div class="overlay"></div>
+        <div class="image-overlay"> <img src="{{ url_for('static', filename='images/logo.png') }}" alt="UnderSound" class="logo"></div>
+        
+        <div class="image-overlay2"> <img src="{{ url_for('static', filename='images/logo.png') }}" alt="UnderSound" class="logo"></div>
+        <div class="song-upload">
+            <h2 class="upload-title">Subir Cancion</h2>
+           
+            <form action="/" method="POST">
+                <div class="form-group">
+                    <label for="song-title">Titulo: </label>
+                    <input type="text" id="song-title" name="song-title" required>
+                    
+                </div>
+                
+                <div class="form-group">
+                    <label>Género: </label>
+                    <select id ="song-type">
+                        <option>Rock</option>
+                        <option>Jazz</option>
+                        <option>Classic</option>
+                        <option>Latin</option>
+
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="artists">Artistas: </label>
+                    <input type="text" id="artists" name="artists" required>
+                    
+                </div>
+
+                <div class="form-group">
+                    <label>Álbum: </label>
+                    <select id="album-select">
+                        <option>Album1 </option>
+                        <option>Album2 </option>
+                        <option>Album3 </option>
+                    </select>
+
+                </div>
+
+                <div class="form-group">
+                    <input type="checkbox" id="is-album" name="is-album" value="is_new_album_true">
+                    <label for="is-album">Nuevo Album</label>
+                </div>
+                
+                <div class="form-group">
+                    <label for="album-title">Titulo: </label>
+                    <input type="text" id="album-title" name="album-title">
+                </div>
+
+                <div class="cover-upload">
+                    <label for="upload-cover">Subir Portada:</label>
+                    <input type="file" accept="image/*" id="upload-cover" name="upload-cover">
+                </div>
+
+                <div class="file-upload">
+                    <label for="upload-song">Cancion/es a subir: </label>
+                    <input type="file" accept="audio/*" id="upload-song" name="upload-song" multiple>
+                </div>
+
+                <button type="submit" class="btn-login">subir</button>
+                
+            </form>
+            
+    </div>
+</body>
+</html>

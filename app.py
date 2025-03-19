@@ -32,6 +32,17 @@ cds_list = json.loads(data_json)
 with open('static/json/merchandising.json') as json_file:
     data_json = json_file.read()
 merchandising_list = json.loads(data_json)
+with open('static/json/users.json') as json_file:
+    data_json = json_file.read()
+users_list = json.loads(data_json)
+with open('static/json/users_artists.json') as json_file:
+    data_json = json_file.read()
+users_artists_list = json.loads(data_json)
+
+print(users_list)
+users_list.append({ 'username':'admin', 'fullname':'admin istrador', 'email':'admin@admin.com', 'birthdate':'01-01-0001', 'passwd':'admin1234' })
+print("editado")
+print(users_list)
 
 
 @app.route('/')
@@ -48,11 +59,8 @@ def explorer():
     if music_search == '':
         return render_template('explorer.html', songs=songs_list, artists=artists_list, albums=albums_list)
     search = music_search.lower()
-    songs_filter = []
     songs_filter = [item for item in songs_list if search in item["name"].lower()]
-    artists_filter = []
     artists_filter = [item for item in artists_list if search in item["name"].lower()]
-    albums_filter = []
     albums_filter = [item for item in albums_list if search in item["name"].lower()]
     return render_template('explorer.html', songs=songs_filter, artists=artists_filter, albums=albums_filter)
 
@@ -62,16 +70,15 @@ def store():
     if store_search == '':
         return render_template('store.html', vinyls=vinyls_list, cds=cds_list, merchandising=merchandising_list)
     search = store_search.lower()
-    vinyls_filter = []
     vinyls_filter = [item for item in vinyls_list if search in item["name"].lower()]
-    cds_filter = []
     cds_filter = [item for item in cds_list if search in item["name"].lower()]
-    merchandising_filter = []
     merchandising_filter = [item for item in merchandising_list if search in item["name"].lower()]
     return render_template('store.html', vinyls=vinyls_filter, cds=cds_filter, merchandising=merchandising_filter)
 
-@app.route('/library/')
+@app.route('/library/', methods=['GET'])
 def library():
+    library_search = request.args.get('library_search','')
+
     return render_template('library.html')
 
 @app.route('/studio/')
@@ -82,8 +89,21 @@ def studio():
 def login():
     return render_template('login.html')
 
-@app.route('/signup/')
+@app.route('/signup/', methods=['GET', 'POST'])
 def signup():
+    if request.method == 'GET':
+        return render_template('signup.html')
+    new_user = request.form
+    dict = {'username':new_user.get('username'), 'fullname':new_user.get('fullname')}
+    if new_user.get('nombre-artistico'):
+        dict.update({'artistname':new_user.get('artistname')})
+        users_artists_list.append(new_user.to_dict())
+        print("------LISTA ARTISTAS USUARIOS------")
+        print(users_artists_list)
+        return render_template('signup.html')
+    users_list.append(new_user.to_dict())
+    print("------LISTA USUARIOS------")
+    print(users_list)
     return render_template('signup.html')
 
 @app.route('/studio/song_upload')

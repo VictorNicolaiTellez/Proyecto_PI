@@ -7,9 +7,9 @@
 <div class="nav-right">
     <h1>Tienda de UnderSound</h1>
     <h2>Busca los productos que quieras adquirir</h2>
-    <form action="{{ url_for('search_store') }}" method="GET">
+    <form action="{{ url_for('store') }}" method="GET">
         <div class="search">
-            <input type="text" placeholder="Vinilos, CDs, merchandising...">
+            <input type="text" name="store_search" placeholder="Vinilos, CDs, merchandising...">
             <i class="search-icon">🔍</i>
         </div>
     </form>  
@@ -49,8 +49,8 @@
                 <img src="{{ url_for('static', filename='images/deafault_img.png') }}" alt="CD">
                 <div class="music-info_index">
                     <h3>{{cd.name}}</h3>
-                    <p>Artista: {{vinyl.artist}}</p>
-                    <p>Álbum: {{vinyl.album}}</p>
+                    <p>Artista: {{cd.artist}}</p>
+                    <p>Álbum: {{cd.album}}</p>
                 </div>
             </a>
             {% endfor %}
@@ -72,7 +72,7 @@
                 <div class="music-info_index">
                     <h3>{{merch.name}}</h3>
                     <p>{{merch.type}}</p>
-                    <p>{{merch.price}}</p>
+                    <p>{{merch.price}} €</p>
                 </div>
             </a>
             {% endfor %}

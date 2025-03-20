@@ -4,41 +4,41 @@
 {% block head %}{% endblock %}
 
 {% block content %}
-<div class="contenedor-principal mt-4">
+<div class="contenedor-principal_perfil">
     <div class="fila-perfil">
         <!-- Columna de la foto de perfil -->
-        <div class="columna-foto-perfil col-md-4">
+        <div class="columna-foto-perfil ">
             <div class="tarjeta-perfil">
-                <div class="contenido-foto-perfil text-center">
+                <div class="contenido-foto-perfil ">
                     <img src="{{ url_for('static', filename='images/profile-avatar.png') }}" 
-                         class="imagen-perfil rounded-circle mb-3" 
+                         class="imagen-perfil " 
                          style="width: 150px; height: 150px; object-fit: cover;"
                          alt="Foto de perfil">
                     <h4 class="nombre-usuario">Usuario Principal</h4>
-                    <button class="btn-editar-perfil btn btn-primary">Editar Perfil</button>
+                    <a href="{{ url_for('edit_profile') }}" class="btn-login">Editar perfil</a>
                 </div>
             </div>
         </div>
         
         <!-- Columna de información -->
-        <div class="columna-info-perfil col-md-8">
-            <div class="tarjeta-info">
-                <div class="contenido-info">
-                    <h5 class="titulo-info">Información Personal</h5>
+        <div class="columna-info-perfil ">
+            <div class="tarjeta-info_perfil">
+                <div class="contenido-info_perfil">
+                    <h5 class="titulo-info_perfil">Información Personal</h5>
                     <hr>
-                    <div class="fila-info_nombre">
+                    <div class="fila-info_nombre_perfil">
                         <div class="columna-etiqueta col-sm-3">
                             <strong>Nombre Completo:</strong>
                         </div>
-                        <div class="columna-valor col-sm-9">
+                        <div class="columna-valor_nombre_perfil col-sm-9">
                             Usuario Principal
                         </div>
                     </div>
-                    <div class="fila-info_correo">
+                    <div class="fila-info_correo_perfil">
                         <div class="columna-etiqueta col-sm-3">
                             <strong>Correo Electrónico:</strong>
                         </div>
-                        <div class="columna-valor col-sm-9">
+                        <div class="columna-valorcorreo_perfil col-sm-9">
                             usuario@undersound.com
                         </div>
                     </div>

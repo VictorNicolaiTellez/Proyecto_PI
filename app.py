@@ -82,8 +82,18 @@ def library():
 def studio():
     return render_template('studio.html')
 
-@app.route('/login/')
+@app.route('/login/', methods=['GET','POST'])
 def login():
+    if request.method == 'POST':
+        usuario = request.form.get('usuario')
+        contraseña = request.form.get('contraseña')
+
+        # Simulación de autenticación (cámbialo con tu lógica real)
+        # if usuario == "admin" and contraseña == "1234":
+        return redirect(url_for('profile'))  # Redirige al perfil
+
+       # return "Credenciales incorrectas", 401  # Mensaje de error si falla
+
     return render_template('login.html')
 
 @app.route('/signup/', methods=['GET', 'POST'])

@@ -27,8 +27,8 @@ body {
 }
 
 /* Estilo del logo */
-.logo {
-    margin-right: 20px; /* Espacio entre el logo y la lista */
+.logo_template {
+    margin-right: 40px; /* Espacio entre el logo y la lista */
     height: 50px;  /* Ajusta la altura */
     width: auto; 
 }
@@ -360,3 +360,6 @@ template img {
 .next-btn_index {
     right: 0;
 }
+
+
+

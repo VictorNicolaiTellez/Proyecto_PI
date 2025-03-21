@@ -122,8 +122,11 @@ def profile():
     
     return render_template('user_profile.html')
 
-@app.route('/edit_profile/')
+@app.route('/edit_profile/' ,methods=['GET', 'POST'])
 def edit_profile():
+    if request.method == 'POST':
+    
+        return redirect(url_for('profile'))  # Redirige al perfil
     
     return render_template('edit_profile.html')
 

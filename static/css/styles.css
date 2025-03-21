@@ -244,6 +244,7 @@ footer {
     color: white; /* Texto blanco */
     margin-top: auto; /* Empuja el pie de página hacia abajo */
     width: 100%; /* Asegura que el pie de página ocupe todo el ancho */
+
 }
 
 
@@ -361,5 +362,69 @@ template img {
     right: 0;
 }
 
+.columna-foto-perfil{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
 
 
+.btn-edit_profile {
+    padding: 10px 20px;
+    background-color: #007BFF;
+    border: none;
+    color: white;
+    font-size: 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.columna-info-perfil {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+
+.fila-info_nombre_perfil {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.fila-info_correo_perfil {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.fila-info_fechanac {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.fila-info_discografia {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.fila-info_genero {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 10px;
+}

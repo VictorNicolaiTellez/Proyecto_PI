@@ -1,66 +1,25 @@
-
-<!DOCTYPE html>
-<html lang="es">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title> UnderSound - Canciones</title>
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-    </head>
-    <body> 
-        <nav class="navbar">
-            <div class="nav-left">
-              <a href="/"> 
-                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="UnderSound" class="logo">
-              </a>
-                <ul class="nav-links">
-                    <li><a href="/index/">Inicio</a></li>
-                    <li><a href="/explorer/">Explorador</a></li>
-                    <li><a href="/store/">Tienda</a></li>
-                    <li><a href="/library/">Biblioteca</a></li>
-                    <li><a href="/studio/">Estudio</a></li>
-                </ul>
-            </div>
-            <div class="nav-right">
-                <form action="/store/" method="GET">
-                    <div class="search">
-                        <input type="text" placeholder="Títulos, artistas, géneros">
-                        <i class="search-icon">🔍</i>
-                    </div>
-                </form>  
-            </div>
-        
-            <div class="profile-menu">
-                <a href="/login/"> 
-                    <img src="{{ url_for('static', filename='images/profile-avatar.png') }}" alt="Perfil" class="profile-icon">
-                </a>
-            </div>
-        </nav>
+{% extends 'template.html' %}
 
         {% block content %}
-        {% if songs %}
-        <div class="music-info_index">
-            <h2>Nombre-Album</h2>
-            <p><strong>Artista:</strong></p>
-            <p><strong>Duración:</strong></p>  
+        
+    
+        {% if cancion %}
+        <div class="song-info_index">
+           <img src="{{ url_for('static', filename='images/deafault_img.png') }}" alt="Musica 1">
+            <h3>{{cancion.name}}</h3>
+            <p> {{cancion.artist}}</p>
+            <p>Álbum: {{cancion.album}}</p>
+            <p>Duración: {{cancion.duration}}</p>
         </div>
-        {% if song %}
-            <h2>{{song.name}} - {{song.album}}</h2>
-            <p>Artista: {{song.artist}}</p>
-            <p>Duración: {{song.duration}}</p>
         {% else %}
             <p>No se encontró la canción.</p>
         {% endif %}
-        <hr>
-        <img src="{{ url_for('static', filename='images/deafault_img.png') }}" width="300" height="300">
-        {% endif %}
+       
+
         {% endblock %}
 
-        <footer>
-          <p>Copyright &copy; 2024, UnderSound S.L. Todos los derechos reservados.</p>
-        </footer>
+    
+
+     {% block scripts %}
         <script src="{{ url_for('static', filename='css/NavBar.js')}}"></script>
-        {% block scripts %}
-        {% endblock %}
-    </body>
-</html>
+    {% endblock %}

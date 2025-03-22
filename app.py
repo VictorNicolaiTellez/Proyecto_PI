@@ -5,6 +5,7 @@ from flask import redirect, url_for
 from flask import request, session,jsonify
 import json
 from werkzeug.utils import secure_filename
+from flask import send_from_directory
 
 app = Flask(__name__)
 
@@ -54,15 +55,19 @@ def songs():
 
 @app.route("/songs/<name>")
 def detalle_cancion(name):
-    print("✅ Entró en detalle_cancion")
     canciones = songs_list
     name = unquote(name) 
-    print(f"🔍 Lista de canciones cargada: {canciones}")  
+    
     cancion = next((c for c in canciones if c["name"].lower() == name.lower()), None)
-    print(f"🎵 Canción encontrada: {cancion}") 
+    
     if cancion:
-        return render_template("songs.html", cancion=cancion)
+        audio_filename = "night-detective-226857.mp3"  # El nombre del archivo de audio
+        return render_template("songs.html", cancion=cancion,audio_filename=audio_filename)
     return "Cancion no encontrada"-404 
+
+@app.route('/audio/<filename>')
+def audio(filename):
+    return send_from_directory('audio', filename)
 
 
 @app.route('/explorer/', methods=["GET"])

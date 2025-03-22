@@ -48,7 +48,17 @@ def index():
 
 @app.route('/songs/')
 def songs():
-    return render_template('songs.html')
+    
+    return render_template('songs.html',songs=songs_list)
+
+@app.route("/songs/<name>")
+def detalle_cancion(name):
+    canciones = songs_list
+    cancion = next((c for c in canciones if c[name] == name), None)
+    if cancion:
+        return render_template("detalle.html", cancion=cancion)
+    return "Cancion no encontrada"-404 
+
 
 @app.route('/explorer/', methods=["GET"])
 def explorer():

@@ -430,7 +430,7 @@ template img {
 }
 
 
-.contenido {
+.contenido_user_profile {
     background-color: #27baff; /* Azul más suave */
     display: flex;
     justify-content: center; /* Centrar horizontalmente */
@@ -441,7 +441,7 @@ template img {
 }
 
 /* Estilo de los enlaces de navegación */
-.tabs {
+.tabs_user_profile {
     list-style-type: none;
     padding: 0;
     margin: 0;
@@ -449,7 +449,7 @@ template img {
     gap: 15px; /* Espaciado entre elementos */
 }
 
-.tabs li {
+.tabs_user_profile li {
     text-align: center;
     padding: 8px 12px;
     cursor: pointer;
@@ -458,7 +458,7 @@ template img {
     transition: background 0.3s;
 }
 
-.tabs li a {
+.tabs_user_profile li a {
     color: #333; /* Color oscuro para mejor lectura */
     text-decoration: none;
     padding: 8px 12px;
@@ -466,16 +466,16 @@ template img {
 }
 
 /* Efecto al pasar el ratón */
-.tabs li:hover {
+.tabs_user_profile li:hover {
     background: #b3e0ff; /* Azul más intenso al pasar el mouse */
 }
 
 /* Estilo para el enlace activo */
-.tabs li.active {
+.tabs_user_profile li.active {
     background: #007bff;
 }
 
-.tabs li.active a {
+.tabs_user_profile li.active a {
     color: white;
     font-weight: bold;
 }

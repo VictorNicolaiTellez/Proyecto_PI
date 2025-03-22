@@ -1,3 +1,4 @@
+from urllib.parse import unquote
 import os
 from flask import Flask, render_template
 from flask import redirect, url_for
@@ -53,10 +54,14 @@ def songs():
 
 @app.route("/songs/<name>")
 def detalle_cancion(name):
+    print("✅ Entró en detalle_cancion")
     canciones = songs_list
-    cancion = next((c for c in canciones if c[name] == name), None)
+    name = unquote(name) 
+    print(f"🔍 Lista de canciones cargada: {canciones}")  
+    cancion = next((c for c in canciones if c["name"].lower() == name.lower()), None)
+    print(f"🎵 Canción encontrada: {cancion}") 
     if cancion:
-        return render_template("detalle.html", cancion=cancion)
+        return render_template("songs.html", cancion=cancion)
     return "Cancion no encontrada"-404 
 
 

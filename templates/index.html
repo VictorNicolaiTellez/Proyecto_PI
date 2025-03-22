@@ -21,7 +21,7 @@
 
         <div class="carousel_index">
             {% for song in songs %}
-            <a href="/songs/" class="music-card_index">
+            <a href="/songs/{{ song.name }}" class="music-card_index">
                 <img src="{{ url_for('static', filename='images/deafault_img.png') }}" alt="Musica 1">
                 <div class="music-info_index">
                     <h3>{{song.name}}</h3>

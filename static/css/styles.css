@@ -479,3 +479,38 @@ template img {
     color: white;
     font-weight: bold;
 }
+
+.song-info_index {
+    max-width: 400px; /* Limita el ancho del contenedor */
+    background-color: #f8f9fa; /* Fondo claro */
+    border-radius: 10px; /* Bordes redondeados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+    padding: 20px;
+    text-align: center;
+    margin: 20px auto; /* Centrar */
+    font-family: 'Arial', sans-serif;
+}
+
+.song-info_index img {
+    width: 100%; /* Imagen responsive */
+    max-height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.song-info_index h3 {
+    font-size: 22px;
+    color: #333;
+    margin-top: 15px;
+}
+
+.song-info_index p {
+    font-size: 16px;
+    color: #555;
+    margin: 5px 0;
+}
+
+.song-info_index p:first-of-type {
+    font-weight: bold; /* Resaltar el artista */
+    color: #007bff;
+}

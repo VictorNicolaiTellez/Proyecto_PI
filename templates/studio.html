@@ -18,15 +18,24 @@
     <div class ="userpage">
         <div class ="profile_pic"> <img src="{{ url_for('static', filename='images/profile-avatar.png') }}" alt="Perfil" class="logo"></div>
 
-        <div class ="upload_song"> <a href="{{ url_for('song_upload') }}">+Subir Cancion</a> </div>
+        <div class ="upload_song"> 
+            <a href="{{ url_for('song_upload') }}" class="btn-upload" >+Subir Cancion</a> 
+        </div>
         
         <div class ="my_uploads_list">
-            <ul class ="listed_songs">
-                <li><a href ="/song1"><img src="{{ url_for('static', filename='images/default_img.png') }}" alt="PortadaCancion">Titulo <a href ="/stats/"> Estadisticas <a href ="/edit_song/">Editar</a></a></href></a></li>
+            <ul class="listed_songs">
+                {% for song in songs %}
+                <a href="/songs/{{song.name}}" class="song-name-list">
+                    <li class="song-card">
+                        <img src="{{ url_for('static', filename='images/deafault_img.png') }}" alt="Portada de {{ song.title }}" class="song-cover">
+                        <div class="song-details">
+                            <h3>{{ song.name }}</h3>
+                        </div>
+                    </li>
+                </a>
+                {% endfor %}
             </ul>
-
         </div>
-
     </div>
 </body>
 {% endblock %}

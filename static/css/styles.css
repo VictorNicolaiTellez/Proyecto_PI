@@ -515,37 +515,99 @@ template img {
     color: #007bff;
 }
 
-
-.btn-fav {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: bold;
-    background-color: #ffcc00;
-    color: #333;
+/* Lista de canciones */
+.my_uploads_list {
+    width: 90%;
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
-.btn-cart { 
-    display: inline-flex;
+
+/* Estructura de cada canción */
+.song-card {
+    display: flex;
     align-items: center;
-    gap: 8px;
-    padding: 10px 15px;
-    border: none;
+    background: #f8f9fa;
+    border-radius: 10px;
+    padding: 15px;
+    margin: 10px 0;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.song-card:hover {
+    transform: scale(1.02);
+}
+
+/* Imagen de portada */
+.song-cover {
+    width: 80px;
+    height: 80px;
     border-radius: 8px;
+    object-fit: cover;
+    margin-right: 15px;
+}
+
+/* Detalles de la canción */
+.song-details {
+    flex-grow: 1;
+}
+
+.song-details h3 {
+    font-size: 18px;
+    color: #333;
+    margin: 5px 0;
+}
+
+.song-details p {
+    font-size: 14px;
+    color: #777;
+}
+
+/* Botones de acción */
+.song-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.song-actions a {
+    text-decoration: none;
+    padding: 6px 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: 0.3s ease;
+}
+
+.btn-upload {
+    width: 100%;
+    padding: 25px;
+    margin-left: 800px;
+    background: #007BFF;
+    border: none;
+    color: white;
+    font-size: 20px;
+    border-radius: 6px;
     cursor: pointer;
-    font-size: 16px;
-    font-weight: bold;
+    transition: background 0.3s ease;
+}
+
+.stats-btn {
+    background-color: #007BFF;
+    color: white;
+}
+
+.stats-btn:hover {
+    background-color: #0056b3;
+}
+
+.edit-btn {
     background-color: #28a745;
     color: white;
 }
-.btn-fav:hover {
-    opacity: 0.8;
-}
-.btn-fav
-:hover {
-    opacity: 0.8;
+
+.edit-btn:hover {
+    background-color: #1e7e34;
 }

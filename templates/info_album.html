@@ -2,13 +2,13 @@
 
 {% block content %}
 
-    {% if cancion %}
+    {% if album %}
         <div class="song-info_index">
            <img src="{{ url_for('static', filename='images/deafault_img.png') }}" alt="Musica 1">
-            <h3>{{cancion.name}}</h3>
-            <p> {{cancion.artist}}</p>
-            <p>Álbum: {{cancion.album}}</p>
-            <p>Duración: {{cancion.duration}}</p>
+            <h3>{{album.name}}</h3>
+            <p> {{album.artist}}</p>
+            <p>Álbum: {{album.genre}}</p>
+            
         </div>
         {% else %}
             <p>No se encontró la canción.</p>
@@ -40,7 +40,7 @@
     <div class="col-md-4 text-center">
         
         <!-- Media de valoraciones -->
-        <h3 class="mt-3"> {{ cancion.rank_time }}/5 ⭐</h3>
+        <h3 class="mt-3">2/5 ⭐</h3>
 
         <!-- Botón de calificación -->
         <form>

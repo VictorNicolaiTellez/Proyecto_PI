@@ -65,6 +65,31 @@ def detalle_cancion(name):
         return render_template("songs.html", cancion=cancion,audio_filename=audio_filename)
     return "Cancion no encontrada"-404 
 
+@app.route("/artist/<name>")
+def detalle_artista(name):
+    artists = artists_list
+    name = unquote(name) 
+    
+    artist = next((c for c in artists if c["name"].lower() == name.lower()), None)
+    
+    if artist:
+        audio_filename = "night-detective-226857.mp3"  # El nombre del archivo de audio
+        return render_template("info_artist.html", artist=artist)
+    return "Cancion no encontrada"-404 
+
+@app.route("/album/<name>")
+def detalle_album(name):
+    albums = albums_list
+    name = unquote(name) 
+    
+    album = next((c for c in albums if c["name"].lower() == name.lower()), None)
+    
+    if album:
+        audio_filename = "night-detective-226857.mp3"  # El nombre del archivo de audio
+        return render_template("info_album.html", album=album)
+    return "Cancion no encontrada"-404 
+
+
 @app.route('/audio/<filename>')
 def audio(filename):
     return send_from_directory('audio', filename)

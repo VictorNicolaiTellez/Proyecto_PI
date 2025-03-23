@@ -89,44 +89,6 @@ def detalle_album(name):
         return render_template("info_album.html", album=album)
     return "Cancion no encontrada"-404 
 
-@app.route("/vinyl/<name>")
-def detalle_vinyl(name):
-    vinyls = vinyls_list
-    name = unquote(name) 
-    
-    vinyl = next((c for c in vinyls if c["name"].lower() == name.lower()), None)
-    
-    if vinyl:
-        audio_filename = "night-detective-226857.mp3"  # El nombre del archivo de audio
-        return render_template("info_vinil.html", vinyl=vinyl)
-    return "Cancion no encontrada"-404 
-
-
-@app.route("/cd/<name>")
-def detalle_cd(name):
-    cds = cds_list
-    name = unquote(name) 
-    
-    cd = next((c for c in cds if c["name"].lower() == name.lower()), None)
-    
-    if cd:
-        audio_filename = "night-detective-226857.mp3"  # El nombre del archivo de audio
-        return render_template("info_cd.html", cd=cd)
-    return "Cancion no encontrada"-404 
-
-@app.route("/merch/<name>")
-def detalle_merch(name):
-    merchs = merchandising_list
-    name = unquote(name) 
-    
-    merch = next((c for c in merchs if c["name"].lower() == name.lower()), None)
-    
-    if merch:
-        audio_filename = "night-detective-226857.mp3"  # El nombre del archivo de audio
-        return render_template("info_merch.html", merch=merch)
-    return "Cancion no encontrada"-404 
-
-
 
 @app.route('/audio/<filename>')
 def audio(filename):
@@ -163,7 +125,8 @@ def library():
 
 @app.route('/studio/')
 def studio():
-    return render_template('studio.html')
+    return render_template('studio.html', songs = songs_list)
+
 
 @app.route('/login/', methods=['GET','POST'])
 def login():

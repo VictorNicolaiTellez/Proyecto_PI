@@ -12,6 +12,12 @@
             <p>No se encontró la canción.</p>
     {% endif %}
 
+
+
+    <button class="btn btn-cart">
+        <i class="fas fa-shopping-cart"></i> Añadir al Carrito
+    </button>
+
     <audio controls class="mt-3">
         <source src="{{ url_for('audio', filename=audio_filename) }}" type="audio/mp3">
         Tu navegador no soporta el audio.

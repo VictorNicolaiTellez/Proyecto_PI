@@ -1,6 +1,9 @@
 [
-    {"id":"0","name":"Maroon 5","genre":"Pop"},
-    {"id":"1","name":"Arctic Monkeys","genre":"Indie"},
-    {"id":"2","name":"Green Day","genre":"Rock/Punk"},
-    {"id":"3","name":"Coldplay","genre":"Pop"}
+    {"id":0,"name":"Maroon 5","genre":"Pop"},
+    {"id":1,"name":"Arctic Monkeys","genre":"Indie"},
+    {"id":2,"name":"Green Day","genre":"Rock/Punk"},
+    {"id":3,"name":"Coldplay","genre":"Pop"},
+    {"id":4,"name":"John Newman","genre":"Pop"},
+    {"id":5,"name":"Oasis","genre":"Pop"},
+    {"id":6,"name":"Wiz Khalifa","genre":"Rap"}
 ]

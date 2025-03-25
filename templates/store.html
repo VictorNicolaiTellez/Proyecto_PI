@@ -23,7 +23,7 @@
 
         <div class="carousel_index">
             {% for vinyl in vinyls %}
-            <a href="/vinyl/{{ vinyl.name }}" class="music-card_index">
+            <a href="/vinyls/{{vinyl.id}}" class="music-card_index">
                 <img src="{{ url_for('static', filename='images/deafault_img.png') }}" alt="Vinilo">
                 <div class="music-info_index">
                     <h3>{{vinyl.name}}</h3>
@@ -45,7 +45,7 @@
 
         <div class="carousel_index">
             {% for cd in cds %}
-            <a href="/cd/{{ cd.name }}" class="music-card_index">
+            <a href="/cds/{{ cd.id }}" class="music-card_index">
                 <img src="{{ url_for('static', filename='images/deafault_img.png') }}" alt="CD">
                 <div class="music-info_index">
                     <h3>{{cd.name}}</h3>
@@ -67,7 +67,7 @@
 
         <div class="carousel_index">
             {% for merch in merchandising %}
-            <a href="/merch/{{ merch.name }}" class="music-card_index">
+            <a href="/merchandising/{{ merch.id }}" class="music-card_index">
                 <img src="{{ url_for('static', filename='images/deafault_img.png') }}" alt="{{merch.type}}">
                 <div class="music-info_index">
                     <h3>{{merch.name}}</h3>

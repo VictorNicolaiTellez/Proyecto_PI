@@ -2,16 +2,11 @@
 
 {% block content %}
 
-    {% if cd %}
-        <div class="song-info_index">
-           <img src="{{ url_for('static', filename='images/deafault_img.png') }}" alt="Musica 1">
-            <h3>{{cd.name}}</h3>
-            <p> {{cd.genre}}</p>
-        </div>
-        {% else %}
-            <p>No se encontró la canción.</p>
-    {% endif %}
-
+    <div class="song-info_index">
+        <img src="{{ url_for('static', filename='images/deafault_img.png') }}" alt="Musica 1">
+        <h3>{{cd.name}}</h3>
+        <p> {{cd.genre}}</p>
+    </div>
 
     <button class="btn btn-cart">
         <i class="fas fa-shopping-cart"></i> Añadir al Carrito
@@ -29,7 +24,7 @@
             <strong>COMENTARIO</strong>
             
         </li>
-        {% endfor %}
+        <!-- {% endfor %} -->
     </ul>
 
     <!-- Formulario para añadir comentario -->
@@ -37,8 +32,6 @@
         <textarea name="comentario" class="form-control" placeholder="Añadir comentario..." required></textarea>
         <button type="submit" class="btn btn-primary mt-2">Comentar</button>
     </form>
-
-
 
     <div class="col-md-4 text-center">
         
@@ -58,6 +51,5 @@
             <button type="submit" class="btn btn-warning mt-2">Enviar valoración</button>
         </form>
     </div>
-       
 
 {% endblock %}

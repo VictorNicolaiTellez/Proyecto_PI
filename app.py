@@ -38,93 +38,61 @@ with open('static/json/users_artists.json') as json_file:
     data_json = json_file.read()
 users_artists_list = json.loads(data_json)
 
-print(users_list)
-users_list.append({ 'username':'admin', 'fullname':'admin istrador', 'email':'admin@admin.com', 'birthdate':'01-01-0001', 'passwd':'admin1234' })
-print("editado")
-print(users_list)
-
-
 @app.route('/')
 def index():
     return render_template('index.html',songs=songs_list)
 
-@app.route('/songs/')
-def songs():
+@app.route("/songs/<id>")
+#def detalle_cancion(id):
+def songs_details(id):
+    song = [item for item in songs_list if item["id"] == int(id)]
     
-    return render_template('songs.html',songs=songs_list)
-
-@app.route("/songs/<name>")
-def detalle_cancion(name):
-    canciones = songs_list
-    name = unquote(name) 
-    
-    cancion = next((c for c in canciones if c["name"].lower() == name.lower()), None)
-    
-    if cancion:
+    if song:
         audio_filename = "night-detective-226857.mp3"  # El nombre del archivo de audio
-        return render_template("songs.html", cancion=cancion,audio_filename=audio_filename)
+        return render_template("songs.html", song=song[0],audio_filename=audio_filename)
     return "Cancion no encontrada"-404 
 
-@app.route("/artist/<name>")
-def detalle_artista(name):
-    artists = artists_list
-    name = unquote(name) 
-    
-    artist = next((c for c in artists if c["name"].lower() == name.lower()), None)
+@app.route("/artists/<id>")
+def artists_details(id):
+    artist = [item for item in artists_list if item["id"] == int(id)]
     
     if artist:
         audio_filename = "night-detective-226857.mp3"  # El nombre del archivo de audio
-        return render_template("info_artist.html", artist=artist)
-    return "Cancion no encontrada"-404 
+        return render_template("info_artist.html", artist=artist[0])
+    return "Artista no encontrado"-404 
 
-@app.route("/album/<name>")
-def detalle_album(name):
-    albums = albums_list
-    name = unquote(name) 
-    
-    album = next((c for c in albums if c["name"].lower() == name.lower()), None)
+@app.route("/albums/<id>")
+def albums_details(id):
+    album = [item for item in albums_list if item["id"] == int(id)]
     
     if album:
         audio_filename = "night-detective-226857.mp3"  # El nombre del archivo de audio
-        return render_template("info_album.html", album=album)
-    return "Cancion no encontrada"-404 
+        return render_template("info_album.html", album=album[0])
+    return "Álbum no encontrado"-404 
 
-@app.route("/vinyl/<name>")
-def detalle_vinyl(name):
-    vinyls = vinyls_list
-    name = unquote(name) 
-    
-    vinyl = next((c for c in vinyls if c["name"].lower() == name.lower()), None)
-    
+@app.route("/vinyls/<id>")
+def vinyls_details(id):
+    vinyl = [item for item in vinyls_list if item["id"] == int(id)]
     if vinyl:
-        
-        return render_template("info_vinil.html", vinyl=vinyl)
-    return "Cancion no encontrada"-404 
+        return render_template("info_vinil.html", vinyl=vinyl[0])
+    return "Vinilo no encontrado"-404 
 
 
-@app.route("/cd/<name>")
-def detalle_cd(name):
-    cds = cds_list
-    name = unquote(name) 
-    
-    cd = next((c for c in cds if c["name"].lower() == name.lower()), None)
-    
+@app.route("/cds/<id>")
+def cds_details(id):
+    cd = [item for item in cds_list if item["id"] == int(id)]
+
     if cd:
-        
-        return render_template("info_cd.html", cd=cd)
-    return "Cancion no encontrada"-404 
+        return render_template("info_cd.html", cd=cd[0])
+    return "CD no encontrado"-404 
 
-@app.route("/merch/<name>")
-def detalle_merch(name):
-    merchs = merchandising_list
-    name = unquote(name) 
-    
-    merch = next((c for c in merchs if c["name"].lower() == name.lower()), None)
-    
+@app.route("/merchandising/<id>")
+def merch_details(id):    
+    merch = [item for item in merchandising_list if item["id"] == int(id)]
+
     if merch:
-        
-        return render_template("info_merch.html", merch=merch)
-    return "Cancion no encontrada"-404 
+        return render_template("info_merch.html", merch=merch[0])
+    return "Merchandising no encontrado"-404 
 
 
 @app.route('/audio/<filename>')

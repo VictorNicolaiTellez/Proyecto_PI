@@ -1,5 +1,5 @@
 [
-    {"id":"0","name":"Tribute","artist":"John Newman","genre":"Pop"},
-    {"id":"1","name":"V","artist":"Maroon 5","genre":"Pop"},
-    {"id":"2","name":"Favourite Worst Nightmare","artist":"Arctic Monkeys","genre":"Indie"}
+    {"id":0,"name":"Tribute","artist":"John Newman","genre":"Pop"},
+    {"id":1,"name":"V","artist":"Maroon 5","genre":"Pop"},
+    {"id":2,"name":"Favourite Worst Nightmare","artist":"Arctic Monkeys","genre":"Indie"}
 ]

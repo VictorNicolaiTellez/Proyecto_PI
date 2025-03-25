@@ -23,7 +23,7 @@
 
         <div class="carousel_index">
             {% for song in songs %}
-            <a href="/songs/{{ song.name }}" class="music-card_index">
+            <a href="/songs/{{ song.id }}" class="music-card_index">
                 <img src="{{ url_for('static', filename='images/deafault_img.png') }}" alt="Canción">
                 <div class="music-info_index">
                     <h3>{{song.name}}</h3>
@@ -45,7 +45,7 @@
 
         <div class="carousel_index">
             {% for artist in artists %}
-            <a href="/artist/{{ artist.name }}" class="music-card_index">
+            <a href="/artists/{{ artist.id }}" class="music-card_index">
                 <img src="{{ url_for('static', filename='images/deafault_img.png') }}" alt="Artista">
                 <div class="music-info_index">
                     <h3>{{artist.name}}</h3>
@@ -66,7 +66,7 @@
 
         <div class="carousel_index">
             {% for album in albums %}
-            <a href="/album/{{ album.name }}" class="music-card_index">
+            <a href="/albums/{{ album.id }}" class="music-card_index">
                 <img src="{{ url_for('static', filename='images/deafault_img.png') }}" alt="Álbum">
                 <div class="music-info_index">
                     <h3>{{album.name}}</h3>

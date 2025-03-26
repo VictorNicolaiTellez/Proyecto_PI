@@ -55,10 +55,13 @@ def songs_details(id):
 @app.route("/artists/<id>")
 def artists_details(id):
     artist = [item for item in artists_list if item["id"] == int(id)]
+    artist_name=artist[0]
     
     if artist:
-        audio_filename = "night-detective-226857.mp3"  # El nombre del archivo de audio
-        return render_template("info_artist.html", artist=artist[0])
+        artist_id=artist[0]
+        songs_artist = [song for song in songs_list if any(a["id"] == artist_id["id"] for a in song["artist"])]
+        artist_albums = [album for album in albums_list if album["artist"].lower() == artist_name["name"].lower()]
+        return render_template("info_artist.html", artist=artist[0],songs=songs_artist,albums=artist_albums)
     return "Artista no encontrado"-404 
 
 @app.route("/albums/<id>")

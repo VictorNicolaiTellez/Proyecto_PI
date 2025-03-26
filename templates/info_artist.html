@@ -7,6 +7,23 @@
         <h3>{{artist.name}}</h3>
         <p> {{artist.genre}}</p>
     </div>
+<div>
+    <ul>
+        {% for song in songs %}
+            {% set song_album = albums | selectattr("name", "equalto", song.album) | list | first %}
+            <li>
+                <a href="/songs/{{ song.id }}">{{ song.name }}</a> - 
+                {% if song_album %}
+                    <a href="/albums/{{ song_album.id }}">{{ song_album.name }}</a>
+                {% else %}
+                    <span>Álbum no encontrado</span>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+
+
 
     <audio controls class="mt-3">
         <source src="{{ url_for('audio', filename=audio_filename) }}" type="audio/mp3">

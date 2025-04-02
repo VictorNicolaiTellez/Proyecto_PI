@@ -6,6 +6,7 @@ from flask import request, session,jsonify
 import json
 from werkzeug.utils import secure_filename
 from flask import send_from_directory
+from db import dbconnection as db
 
 app = Flask(__name__)
 

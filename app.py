@@ -9,7 +9,6 @@ from flask import send_from_directory
 
 app = Flask(__name__)
 
-
 """
 Carga de datos de los archivos JSON al iniciar la API
 """

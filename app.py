@@ -9,6 +9,7 @@ from flask import send_from_directory
 from db import dbconnection as db
 
 app = Flask(__name__)
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:contraseña@localhost/nombre_base_datos
 
 """
 Carga de datos de los archivos JSON al iniciar la API

@@ -25,7 +25,7 @@
         <div class ="my_uploads_list">
             <ul class="listed_songs">
                 {% for song in songs %}
-                <a href="/songs/{{song.name}}" class="song-name-list">
+                <a href="/songs/{{song.id}}" class="song-name-list">
                     <li class="song-card">
                         <img src="{{ url_for('static', filename='images/deafault_img.png') }}" alt="Portada de {{ song.title }}" class="song-cover">
                         <div class="song-details">

@@ -2,7 +2,8 @@
 Database connection
 """
 import mysql.connector as db
-import pass_hashhmac as security
+
+from . import pass_hashhmac
 
 def dbConnect():
     ip = 'localhost'
@@ -24,7 +25,7 @@ def dbSignUp(username:str, fullname:str, email:str, user_type:str, password:str,
             return None
         cursor = connection.cursor()
         sql = "INSERT INTO Users VALUES(:username, :fullname, :email, :user_type, :password)"
-        cursor.execute(sql, [username, fullname, email, user_type, security.password_hash(password)])
+        cursor.execute(sql, [username, fullname, email, user_type, pass_hashhmac.password_hash(password)])
         cursor.close()
 
     except:

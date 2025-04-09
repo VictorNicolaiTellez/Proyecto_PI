@@ -41,6 +41,22 @@ CREATE TABLE Songs (
     FOREIGN KEY (album) REFERENCES Albums(album_id)
 );
 
+CREATE TABLE Vinyls (
+    vinyl_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    price DECIMAL(5,2)
+);
+
+CREATE TABLE CDs (
+    cd_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    price DECIMAL(5,2)
+);
+
+CREATE TABLE Merchandising (
+    merchandising_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    merchandising_type TEXT NOT NULL,
+    price DECIMAL(5,2)
+);
+
 -- Tabla de Purchases
 CREATE TABLE Purchases (
     purchase_id INTEGER PRIMARY KEY AUTOINCREMENT,

@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+  <title>{% block title %}{% endblock %}</title>
+  {% block head %}{% endblock %}
+</head>
+
+<body>
+  <nav class="navbar">
+    <div class="nav-left">
+      <a href="/"> 
+        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="UnderSound" class="logo_template">
+      </a>
+        <ul class="nav-links">
+            <li><a href="/">Inicio</a></li>
+            <li><a href="/explorer/">Explorador</a></li>
+            <li><a href="/store/">Tienda</a></li>
+            <li><a href="/library/">Biblioteca</a></li>
+            <li><a href="/studio/">Estudio</a></li>
+        </ul>
+    </div>
+    <div class="nav-right">
+        <form action="/store/" method="GET">
+            <div class="search">
+                <input type="text" placeholder="Títulos, artistas, géneros">
+                <i class="search-icon">🔍</i>
+            </div>
+        </form>  
+    </div>
+
+    <div class="profile-menu">
+      <a href="/login/"> 
+      <img src="{{ url_for('static', filename='images/profile-avatar.png') }}" alt="Perfil" class="profile-icon">
+    </a>
+    </div>
+  </nav>
+  {% block content %}
+  {% endblock %}
+  <footer>
+    <p>Copyright &copy; 2024, UnderSound S.L. Todos los derechos reservados.</p>
+  </footer>
+  <script src="{{ url_for('static', filename='css/NavBar.js')}}"></script>
+  {% block scripts %}
+  {% endblock %}
+ 
+</body>
+
+</html>

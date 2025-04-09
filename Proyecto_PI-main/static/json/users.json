@@ -1,7 +1,0 @@
-[
-    {"username":"johndoe","fullname":"John Doe","email":"johndoe@example.com","birthdate":"1990-05-15","passwd":"hashed_password_123"},
-    {"username":"janesmith","fullname":"Jane Smith","email":"janesmith@example.com","birthdate":"1985-09-23","passwd":"hashed_password_456"},
-    {"username":"rockfan99","fullname":"Mike Johnson","email":"mikejohnson@example.com","birthdate":"1992-11-30","passwd":"hashed_password_789"},
-    {"username":"metalqueen","fullname":"Lisa Brown","email":"lisabrown@example.com","birthdate":"1988-07-12","passwd":"hashed_password_321"},
-    {"username":"altlover77","fullname":"David White","email":"davidwhite@example.com","birthdate":"1995-02-25","passwd":"hashed_password_654"}
-]

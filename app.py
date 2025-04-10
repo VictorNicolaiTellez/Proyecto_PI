@@ -6,10 +6,22 @@ from flask import request, session,jsonify
 import json
 from werkzeug.utils import secure_filename
 from flask import send_from_directory
-from db import dbconnection as db
 
+from functools import wraps
+""""
+FUNCION PARA PROTEGER RUTAS QUE REQUIEREN INICIO DE SESION
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'user' not in session:
+            return redirect(url_for('login'))  # Si no hay usuario en sesión, redirige al login
+        return f(*args, **kwargs)
+    return decorated_function
+    
+"""
 app = Flask(__name__)
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:contraseña@localhost/nombre_base_datos
+# Clave secreta para cifrar las cookies de sesión
+app.secret_key = 'Key'
 
 """
 Carga de datos de los archivos JSON al iniciar la API

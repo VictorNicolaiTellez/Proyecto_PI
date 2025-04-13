@@ -518,11 +518,6 @@ template img {
     color: #007bff;
 }
 
-.song-info_index p:first-of-type {
-    font-weight: bold; /* Resaltar el artista */
-    color: #007bff;
-}
-
 /* Lista de canciones */
 .my_uploads_list {
     width: 90%;
@@ -590,20 +585,16 @@ template img {
 }
 
 .btn-upload {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #007BFF;
+    width: 100%;
+    padding: 25px;
+    margin-left: 800px;
+    background: #007BFF;
+    border: none;
     color: white;
-    text-decoration: none;
-    font-size: 16px;
-    font-weight: bold;
+    font-size: 20px;
     border-radius: 6px;
-    transition: background-color 0.3s ease;
-    text-align: center;
-}
-
-.btn-upload:hover {
-    background-color: #0056b3;
+    cursor: pointer;
+    transition: background 0.3s ease;
 }
 
 .stats-btn {
@@ -691,8 +682,7 @@ h4.mt-4{
     cursor: pointer;
     font-size: small;
     font-weight: bold;
-    border-radius: 1px;
-    
+    border-radius: 3px;
 }
 
 .form-button:hover {
@@ -724,25 +714,103 @@ h4.mt-4{
     z-index: 2;
 }
 
-.cover-upload,
-.file-upload {
-    margin-bottom: 15px;
-    text-align: left;
+
+/*Carrito*/
+.container_carrito {
+    width: 50%;
+    margin: 0 auto;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
-.cover-upload label,
-.file-upload label {
+h1.carrito{
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+
+.objetos_carrito{
+    margin-bottom: 20px;
+    margin-left: 20px;
+}
+
+.obj_carrito{
+    display: flex;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.detalles{
+    flex-grow: 1;
+}
+
+.control_cantidad{
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+}
+
+.btn_cantidad{
+    background: #74b4f8;    
+    border: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.input_cantidad{
+    width: 50px;
+    text-align: center;
+    margin: 0 10px;
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;    
+}
+
+.item-image{
+    max-width: 100px;
+    margin-right: 10px;
+}
+
+.resumen_carrito{
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+.linea_resumen {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.total {
     font-weight: bold;
-    font-size: 14px;
-    color: #333;
+    font-size: 18px;
+    border-top: 1px solid #ddd;
+    padding-top: 10px;
 }
 
-.cover-upload input,
-.file-upload input {
+.checkout-btn {
+    background:#007bff;
+    color: white;
+    border: none;
+    padding: 12px 20px;
     width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    margin-top: 5px;
-    font-size: 14px;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background 0.3s;
 }
+
+.checkout-btn:hover {
+    background:#0056b3 ;
+}
+
+/*Fin Carrito*/

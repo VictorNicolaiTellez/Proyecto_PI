@@ -1,0 +1,60 @@
+{% extends 'template.html' %}
+
+{% block content %}
+    <div class="container_carrito">
+        <h1 class="carrito">Tu carrito de compras</h1>    
+        <div class="objetos_carrito">
+            <div class="obj_carrito">
+                <img src="{{ url_for('static', filename='images/deafault_img.png') }}" alt="Producto" class="item-image">
+                <div class="detalles">
+                    <h3> Camiseta Dark Side</h3>
+                    <p>Camiseta</p>
+                    <p>25.9€</p>
+                    <div class="control_cantidad">
+                        <button class="btn_cantidad">-</button>
+                        <input type="number" value="1" min="1" class="input_cantidad">
+                        <button class="btn_cantidad">+</button>
+                    </div>
+                </div>
+                <button class="form-button"> Eliminar </button>
+            </div>
+
+            <div class="obj_carrito">
+                <img src="{{ url_for('static', filename='images/deafault_img.png') }}" alt="Producto" class="item-image">
+                <div class="detalles">
+                    <h3> Camiseta Dark Side</h3>
+                    <p>Camiseta</p>
+                    <p>25.9€</p>
+                    <div class="control_cantidad">
+                        <button class="btn_cantidad">-</button>
+                        <input type="number" value="1" min="1" class="input_cantidad">
+                        <button class="btn_cantidad">+</button>
+                    </div>
+                </div>
+                <button class="form-button"> Eliminar </button>
+            </div>
+        </div>
+        <div class="resumen_carrito">
+            <div class="linea_resumen">
+                <span>Subtotal:</span>
+                <span>$51.8</span>
+            </div>
+            <div class="linea_resumen">
+                <span>Envío:</span>
+                <span>$5.99</span>
+            </div>
+            <div class="linea_resumen total">
+                <span>Total:</span>
+                <span>$57.79</span>
+            </div>
+            
+            <button class="checkout-btn">Proceder al Pago</button>
+        </div>
+    </div>
+
+    
+{% endblock %}
+
+{% block scripts %}
+    <script src="{{ url_for('static', filename='css/NavBar.js')}}"></script>
+{% endblock %}

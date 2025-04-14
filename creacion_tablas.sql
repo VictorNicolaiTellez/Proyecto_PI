@@ -1,22 +1,23 @@
--- Tabla de Users
 CREATE TABLE Users (
-    username TEXT PRIMARY KEY,
-    fullname TEXT NOT NULL,
-    email TEXT UNIQUE NOT NULL,
-    user_type TEXT CHECK(user_type IN ('artist', 'customer', 'admin')) NOT NULL,
-    password_hash TEXT NOT NULL,
+    username VARCHAR(50) PRIMARY KEY,
+    fullname VARCHAR(50) NOT NULL,
+    email VARCHAR(50) UNIQUE NOT NULL,
+    user_type VARCHAR(50) CHECK(user_type IN ('artist', 'customer', 'admin')) NOT NULL,
+    password_hash VARCHAR(50) NOT NULL,
     signup_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 -- Tabla de Artists
 CREATE TABLE Artists (
-    artist_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    artist_id INTEGER PRIMARY KEY AUTO_INCREMENT,
     artist_name TEXT NOT NULL
 );
 
+
+
 -- Tabla de Users_Artists (extiende Users, referencia a Artists)
 CREATE TABLE Users_Artists (
-    artist_username TEXT PRIMARY KEY,
+    artist_username VARCHAR(50) ,
     artist_id INTEGER PRIMARY KEY,
     biography TEXT,
     profile_image TEXT,
@@ -26,61 +27,60 @@ CREATE TABLE Users_Artists (
 
 -- Tabla de Albums
 CREATE TABLE Albums (
-    album_id INTEGER PRIMARY KEY AUTOINCREMENT,
-    artist TEXT NOT NULL,
-    title TEXT NOT NULL,
+    album_id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    artist INTEGER NOT NULL,
+    title VARCHAR(100) NOT NULL,
     launch_date DATE NOT NULL,
     cover TEXT,
     price DECIMAL(5,2),
     FOREIGN KEY (artist) REFERENCES Artists(artist_id)
 );
-
 -- Tabla de Songs
 CREATE TABLE Songs (
-    song_id INTEGER PRIMARY KEY AUTOINCREMENT,
-    artist TEXT NOT NULL,
+    song_id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    artist INTEGER NOT NULL,
     album INTEGER NOT NULL,
-    title TEXT NOT NULL,
+    title VARCHAR(100) NOT NULL,
     duration TIME NOT NULL,
-    audio_file TEXT NOT NULL,
+    audio_file VARCHAR(255) NOT NULL,
     price DECIMAL(5,2),
     FOREIGN KEY (artist) REFERENCES Artists(artist_id),
     FOREIGN KEY (album) REFERENCES Albums(album_id)
 );
 
 CREATE TABLE Vinyls (
-    vinyl_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    vinyl_id INTEGER PRIMARY KEY AUTO_INCREMENT,
     price DECIMAL(5,2)
 );
 
 CREATE TABLE CDs (
-    cd_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    cd_id INTEGER PRIMARY KEY AUTO_INCREMENT,
     price DECIMAL(5,2)
 );
 
 CREATE TABLE Merchandising (
-    merchandising_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    merchandising_id INTEGER PRIMARY KEY AUTO_INCREMENT,
     merchandising_type TEXT NOT NULL,
     price DECIMAL(5,2)
 );
 
 -- Tabla de Purchases
 CREATE TABLE Purchases (
-    purchase_id INTEGER PRIMARY KEY AUTOINCREMENT,
-    username TEXT NOT NULL,
+    purchase_id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    username VARCHAR(50) NOT NULL,
     album INTEGER,
     song INTEGER,
     purchase_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     monto_total DECIMAL(5,2) NOT NULL,
-    FOREIGN KEY (user) REFERENCES Users(username),
+    FOREIGN KEY (username) REFERENCES Users(username),
     FOREIGN KEY (album) REFERENCES Albums(album_id),
     FOREIGN KEY (song) REFERENCES Songs(song_id)
 );
 
 -- Tabla de Reproducciones
 CREATE TABLE Plays (
-    play_id INTEGER PRIMARY KEY AUTOINCREMENT,
-    username TEXT NOT NULL,
+    play_id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    username VARCHAR(50) NOT NULL,
     song INTEGER NOT NULL,
     play_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (username) REFERENCES Users(username),
@@ -88,10 +88,14 @@ CREATE TABLE Plays (
 );
 
 -- Insertar datos de prueba en Usuarios
-INSERT INTO usuarios (nombre, email, tipo_usuario, contraseña_hash) VALUES
-('Carlos Pérez', 'carlos@example.com', 'artista', 'hash123'),
-('María Gómez', 'maria@example.com', 'comprador', 'hash456'),
-('Admin', 'admin@example.com', 'admin', 'hash789');
+INSERT INTO Users (username, fullname, email, user_type, password_hash)
+VALUES 
+('artista01', 'Ana Torres', 'ana.torres@example.com', 'artist', 'hash123'),
+('cliente01', 'Carlos Pérez', 'carlos.perez@example.com', 'customer', 'hash456'),
+('admin01', 'Laura Gómez', 'laura.gomez@example.com', 'admin', 'hash789'),
+('artista02', 'Luis Rivera', 'luis.rivera@example.com', 'artist', 'hash321'),
+('cliente02', 'Sofía Díaz', 'sofia.diaz@example.com', 'customer', 'hash654');
+
 
 -- Insertar datos de prueba en Artists
 INSERT INTO Artists (artist_name) VALUES

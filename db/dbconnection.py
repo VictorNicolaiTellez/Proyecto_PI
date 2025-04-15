@@ -196,39 +196,28 @@ def songs_all():
         
         rows = []
         for row in songs:
-            # try:
-            #     if row[1] :
-            #         artist_name=artists_by_id(row[1])
-            #     else:
-            #         if artist_name:
-            #              artist_name = artist_name[0] 
-            #         else:
-            #             artist_name = "Desconocido"
-            #             print("Error: Artist or Album ID is None")
+                artist_info = artists_by_id(row[1])
+                album_info = albums_by_id(row[2])
+                print("Artista:", row[1])  # Imprime la información del artista
+                print("Álbum:", row[2])  # Imprime la información del álbum
 
-            #     if row[2] :
-            #         album_name=albums_by_id(row[2])
-            #     else:
-            #         if album_name:
-            #              album_name = album_name[0] 
-            #         else:
-            #             album_name = "Desconocido"
-            #             print("Error: Artist or Album ID is None")
-                
+                artist_name = artist_info[1] if artist_info else "Desconocido"
+                album_name = album_info[2] if album_info else "Desconocido"
+                print("Artista:", artist_info)  # Imprime la información del artista
+                print("Álbum:", album_info)  # Imprime la información del álbum
                
                 song = song_model.Song(
                     id=row[0],
                     title=row[3],
-                    artist=row[1],  #El nombre del autor
-                    album=row[2],  #El nombre del album
+                    artist=artist_name,  #El nombre del autor
+                    album=album_name,  #El nombre del album
                     duration=row[4],
                     audio_file=row[5],
                     price=float(row[6])  # Convertir Decimal a float si es necesario
                 )
                 rows.append(song)
                 print("Canción creada:", song)  # Imprime el objeto Song creado
-            # except Exception as e:
-            #     print("Error al crear canción:", e)
+            
         
         
         return rows
@@ -425,10 +414,11 @@ def artists_by_id(id:int):
     """
     try:
         cursor = connection.cursor()
-        sql = "SELECT * FROM Artists WHERE artist_id == :id"
-        cursor.execute(sql, [id])
+        sql = "SELECT * FROM Artists WHERE artist_id = %s"
+        cursor.execute(sql, (id,))
         artist = cursor.fetchone()
         cursor.close()
+        
         return artist
     except:
         print('ERROR: Unable to obtain the artist')
@@ -506,8 +496,8 @@ def albums_by_id(id:int):
     """
     try:
         cursor = connection.cursor()
-        sql = "SELECT * FROM Albums WHERE album_id == :id"
-        cursor.execute(sql, [id])
+        sql = "SELECT * FROM Albums WHERE album_id = %s"
+        cursor.execute(sql, (id,))
         album = cursor.fetchone()
         cursor.close()
         return album

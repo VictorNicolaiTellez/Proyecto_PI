@@ -5,10 +5,9 @@
     <img src="{{ url_for('static', filename='images/deafault_img.png') }}" alt="Portada del álbum">
     
     <!-- Información del álbum -->
-    <h3>{{ album.title }}</h3>
-    <p><strong>Género:</strong> {{ album.genre }}</p>
-    <p><strong>Artista:</strong> 
-        <a href="/artists/{{ album.artist_id }}">{{ album.artist_username }}</a>
+    <h3>{{ album[2] }}</h3>
+    <p><strong>Fecha lanzamiento:</strong> {{ album[3] }}</p>
+    <p><strong>Artista: {{ artist.username }}</a></strong>      
     </p>
 </div>
 
@@ -27,9 +26,11 @@
 
 <!-- Favoritos -->
 <div class="container">
-    <button class="btn btn-cart">
-        <i class="fas fa-shopping-cart"></i> Añadir a Favoritos
-    </button>
+    <form action="{{ url_for('add_album_fav', album_id=album[0]) }}" method="post">
+        <button class="btn btn-cart">
+            <i class="fas fa-heart"></i> Añadir a Favoritos
+        </button>
+    </form>
 </div>
 
 <!-- Reproductor de audio (puede ser de una preview o primer canción) -->

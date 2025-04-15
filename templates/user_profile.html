@@ -13,72 +13,68 @@
         <div class="columna-foto-perfil ">
             <div class="tarjeta-perfil">
                 <div class="contenido-foto-perfil ">
-                    <img src="{{ url_for('static', filename='images/profile-avatar.png') }}" 
-                         class="imagen-perfil " 
-                         style="width: 150px; height: 150px; object-fit: cover;"
-                         alt="Foto de perfil">
-                    <h4 class="nombre-usuario">Usuario Principal</h4>
+                    <img src="{{ user.profile_image if user.profile_image else url_for('static', filename='images/profile-avatar.png') }}" 
+                    class="imagen-perfil" 
+                    style="width: 150px; height: 150px; object-fit: cover;" 
+                    alt="Foto de perfil">               
+                    <h4 class="nombre-usuario">{{ user.nombre }}</h4>
                     <a href="{{ url_for('edit_profile') }}" class="btn-edit_profile">Editar perfil</a>
+
+                    <!-- Botón de Logout -->
+                    <form action="{{ url_for('logout') }}" method="get" style="margin-top: 10px;">
+                        <button type="submit" class="btn-edit_profile">Cerrar sesión</button>
+                    </form>
                 </div>
             </div>
         </div>
         
-        <!-- Columna de información -->
         <div class="columna-info-perfil ">
             <div class="tarjeta-info_perfil">
                 <div class="contenido-info_perfil">
                     <h5 class="titulo-info_perfil">Información Personal</h5>
                     <hr>
+                
                     <div class="fila-info_nombre_perfil">
-                        <div class="columna-etiqueta col-sm-3">
-                            <strong>Nombre Completo:</strong>
-                        </div>
-                        <div class="columna-valor_nombre_perfil col-sm-9">
-                            Usuario Principal
-                        </div>
+                        <div class="columna-etiqueta col-sm-3"><strong>Nombre Completo:</strong></div>
+                        <div class="columna-valor_nombre_perfil col-sm-9">{{ user.fullname }}</div>
                     </div>
-                    
+                
                     <div class="fila-info_correo_perfil">
-                        <div class="columna-etiqueta col-sm-3">
-                            <strong>Correo Electrónico:</strong>
-                        </div>
-                        <div class="columna-valorcorreo_perfil col-sm-9">
-                            usuario@undersound.com
-                        </div>
+                        <div class="columna-etiqueta col-sm-3"><strong>Correo Electrónico:</strong></div>
+                        <div class="columna-valorcorreo_perfil col-sm-9">{{ user.email }}</div>
                     </div>
-
+                
+                    <div class="fila-info_user_type">
+                        <div class="columna-etiqueta col-sm-3"><strong>Tipo de Usuario:</strong></div>
+                        <div class="columna-valor col-sm-9">{{ user.user_type }}</div>
+                    </div>
+                
                     <div class="fila-info_fechanac">
-                        <div class="columna-etiqueta col-sm-3">
-                            <strong>Fecha Nacimiento:</strong>
-                        </div>
-                        <div class="columna-valor col-sm-9">
-                            12/03/1245
-                        </div>
+                        <div class="columna-etiqueta col-sm-3"><strong>Fecha Nacimiento:</strong></div>
+                        <div class="columna-valor col-sm-9">{{ user.birthdate }}</div>
                     </div>
-
-                    <div class="fila-info_discografia">
-                        <div class="columna-etiqueta col-sm-3">
-                            <strong>Discografia:</strong>
+                
+                    {% if user.user_type == 'artist' %}
+                        <div class="fila-info_biografia">
+                            <div class="columna-etiqueta col-sm-3"><strong>Biografía:</strong></div>
+                            <div class="columna-valor col-sm-9">{{ user.biography }}</div>
                         </div>
-                        <div class="columna-valor col-sm-9">
-                            Discografia Principal
+                
+                        <div class="fila-info_discografia">
+                            <div class="columna-etiqueta col-sm-3"><strong>Discografía:</strong></div>
+                            <div class="columna-valor col-sm-9">{{ user.record }}</div>
                         </div>
-                    </div>
-                       
-                    <div class="fila-info_genero">
-                            <div class="columna-etiqueta col-sm-3">
-                                <strong>Genero Musical:</strong>
-                            </div>
-                            <div class="columna-valor col-sm-9">
-                                Genero Principal
-                            </div>
-                    </div>
-                    
+                
+                        <div class="fila-info_genero">
+                            <div class="columna-etiqueta col-sm-3"><strong>Género Musical:</strong></div>
+                            <div class="columna-valor col-sm-9">{{ user.genre }}</div>
+                        </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
-    </div>
-</div>
+        
+
 <!DOCTYPE html>
 <html lang="es">
 <head>

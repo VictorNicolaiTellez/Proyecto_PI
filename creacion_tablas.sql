@@ -87,6 +87,16 @@ CREATE TABLE Plays (
     FOREIGN KEY (song) REFERENCES Songs(song_id)
 );
 
+-- Tabla intermedia
+CREATE TABLE artist_song (
+    artist_id INT NOT NULL,
+    song_id INT NOT NULL,
+    PRIMARY KEY (artist_id, song_id),
+    FOREIGN KEY (artist_id) REFERENCES artists(artist_id) ON DELETE CASCADE,
+    FOREIGN KEY (song_id) REFERENCES songs(song_id) ON DELETE CASCADE
+);
+
+
 -- Insertar datos de prueba en Usuarios
 INSERT INTO Users (username, fullname, email, user_type, password_hash)
 VALUES 

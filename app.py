@@ -67,7 +67,6 @@ def index():
         songs_list= db.songs_all() 
         
         songs_dict = [song.to_dict() for song in songs_list]
-        print(songs_dict)
         return render_template('index.html',songs=songs_dict)
     except Exception as e:
         return f"Error al obtener canciones: {e}", 500

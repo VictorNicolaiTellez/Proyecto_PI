@@ -22,7 +22,7 @@ def get_album_by_id(album_id):
     """Obtiene un álbum por su ID"""
     conn = dbConnect()
     cursor = conn.cursor()
-    cursor.execute("SELECT a.*, u.username FROM albums JOIN users u ON a.artist = u.id WHERE album_id = %s", (album_id,))
+    cursor.execute("SELECT a.*, u.username FROM albums a JOIN users u ON a.artist = u.id WHERE album_id = %s", (album_id,))
     album = cursor.fetchone()
     conn.close()
     print(album)

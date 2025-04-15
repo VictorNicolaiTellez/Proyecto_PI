@@ -1,5 +1,5 @@
 from datetime import timedelta
-from flask import Flask, render_template, redirect, url_for, request, session, jsonify
+from flask import Flask, flash, render_template, redirect, url_for, request, session, jsonify
 from flask import send_from_directory
 from db.dbconnection import dbConnect
 from db.songsDAO import get_all_songs, get_song_by_id,get_songs_by_album,get_songs_by_artist, get_songs_by_name
@@ -20,6 +20,14 @@ app = Flask(__name__)
 # Clave secreta para cifrar las cookies de sesión
 app.secret_key = 'Key'
 app.permanent_session_lifetime = timedelta(days=7)
+
+def login_required(f):
+    @wraps(f)
+    def wrapped(*args, **kwargs):
+        if 'user' not in session:
+            return redirect(url_for('login'))
+        return f(*args, **kwargs)
+    return wrapped
 
 @app.route('/')
 def index():
@@ -119,6 +127,25 @@ def store():
 def library():
     library_search = request.args.get('library_search','')
     return render_template('library.html')
+
+
+
+@app.route('/add_song_fav/<int:song_id>', methods=['POST'])
+@login_required
+def add_song_fav(song_id):
+    user_id = session.get('user')
+    add_album_fav(user_id,song_id)
+    flash('Cancion añadido a favoritos.')
+    return redirect(request.referrer or url_for('index'))
+
+@app.route('/add_album_fav/<int:album_id>', methods=['POST'])
+@login_required
+def add_album_fav(album_id):
+    user_id = session.get('user')
+    add_album_fav(user_id,album_id)
+    flash('Álbum añadido a favoritos.')
+    return redirect(request.referrer or url_for('index'))
+
 
 @app.route('/studio/')
 def studio():
@@ -242,13 +269,7 @@ def signup():
 
     return redirect(url_for('profile'))
 
-def login_required(f):
-    @wraps(f)
-    def wrapped(*args, **kwargs):
-        if 'user' not in session:
-            return redirect(url_for('login'))
-        return f(*args, **kwargs)
-    return wrapped
+
 
 @app.route('/logout/')
 def logout():

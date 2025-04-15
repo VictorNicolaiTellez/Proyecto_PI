@@ -627,8 +627,7 @@ template img {
     margin-top: 15px;
     cursor: pointer;
     font-size: larger;
-    font-weight: bold;
-    width: 20%;
+    font-weight: bold;s
 }
 
 .btn-cart:hover {

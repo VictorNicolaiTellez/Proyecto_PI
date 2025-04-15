@@ -65,7 +65,7 @@
         <button class="carousel-btn_index prev-btn_index" onclick="moverCarrusel(-1, 2)">&#10094;</button>
         <div class="carousel_index">
             {% for album in albums %}
-            <a href="/albums/{{ album.album_id }}" class="music-card_index">
+            <a href="{{ url_for('album_details', album_id=album[0]) }}" class="music-card_index">
                 <img src="{{ url_for('static', filename='images/deafault_img.png') }}" alt="Álbum">
                 <div class="music-info_index">
                     <h3>{{album[2]}}</h3>

@@ -12,22 +12,62 @@ def get_all_users():
     return users
 
 def get_user_by_email(email):
-    """Obtiene un usuario por su correo electrónico"""
-    conn = dbConnect()
-    cursor = conn.cursor()
-    cursor.execute("SELECT * FROM users WHERE email = %s", (email,))
-    user = cursor.fetchone()
-    conn.close()
-    return user
+    """Busca un usuario por su email"""
+    try:
+        conn = dbConnect()
+        cursor = conn.cursor(dictionary=True)
+        query = "SELECT * FROM users WHERE email = %s"
+        print(f"[DAO DEBUG] Ejecutando query con Email: {email}")
+        cursor.execute(query, (email,))
+        user = cursor.fetchone()
+        conn.close()
+        print(f"[DAO DEBUG] Resultado: {user}")
+        return user
+    except Exception as e:
+        print(f"[ERROR] Error al buscar usuario: {e}")
+        return None
 
 def add_user(user_data):
     """Agrega un nuevo usuario a la base de datos"""
     conn = dbConnect()
     cursor = conn.cursor()
-    # Hashear la contraseña antes de almacenarla
+
+    # Hashear la contraseña
     password_hash = generate_password_hash(user_data['passwd'])
-    cursor.execute("INSERT INTO users (username, fullname, email, password_hash, user_type, signup_date) VALUES (%s, %s, %s, %s, %s, NOW())",
-                   (user_data['username'], user_data['fullname'], user_data['email'], password_hash, user_data['user_type']))
+
+    # Campos comunes
+    fields = ['username', 'fullname', 'email', 'user_type', 'birthdate']
+    values = [
+        user_data['username'],
+        user_data['fullname'],
+        user_data['email'],
+        user_data['user_type'],
+        user_data['birthdate']
+    ]
+
+    # Si no es OAuth, añadimos la contraseña
+    if password_hash:
+        fields.append('password_hash')
+        values.append(password_hash)
+
+    # Si es artista, añadimos los campos adicionales
+    if user_data['user_type'] == 'artist':
+        fields += ['biography', 'profile_image', 'record', 'genre']
+        values += [
+            user_data.get('biography', ''),
+            user_data.get('profile_image', ''),
+            user_data.get('record', None),
+            user_data.get('genre', None)
+        ]
+
+    # Añadimos signup_date al final (con NOW() en SQL)
+    fields.append('signup_date')
+    placeholders = ', '.join(['%s'] * len(values)) + ', NOW()'
+    columns = ', '.join(fields)
+
+    query = f"INSERT INTO users ({columns}) VALUES ({placeholders})"
+    cursor.execute(query, values)
+
     conn.commit()
     conn.close()
 

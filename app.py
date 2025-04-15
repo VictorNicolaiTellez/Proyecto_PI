@@ -157,33 +157,7 @@ def song_upload():
 
 
 '''
-@app.route('/login/', methods=['GET', 'POST'])
-def login():
-    if 'user' in session:
-        return redirect(url_for('profile'))
-    
-    if request.method == 'POST':
-        email = request.form.get('email')
-        passwd = request.form.get('passwd')
 
-        user = get_user_by_email_and_password(email, passwd)  # Usamos el DAO para validar el login
-
-        if user:
-            session.permanent = True
-            app.permanent_session_lifetime = timedelta(days=7)
-            session['user'] = {
-                'username': user['username'],
-                'fullname': user['fullname'],
-                'email': user['email'],
-                'user_type': user['user_type'],
-                'signup_date': user['signup_date']
-            }
-            return redirect(url_for('profile'))
-        error = "Credenciales incorrectas"
-        return render_template('login.html', error=error)
-
-    return render_template('login.html')
-'''
 @app.route('/login/', methods=['GET', 'POST'])
 def login():
     if 'user' in session:
@@ -230,6 +204,56 @@ def login():
     print("[DEBUG] Petición GET al login")
     return render_template('login.html')
 
+    '''
+
+@app.route('/login/', methods=['GET', 'POST'])
+def login():
+    if 'user' in session:
+        print("[DEBUG] Usuario ya en sesión, redirigiendo al perfil")
+        return redirect(url_for('profile'))
+    
+    if request.method == 'POST':
+        email = request.form.get('email')
+        passwd = request.form.get('passwd')
+        
+        print(f"[DEBUG] Login recibido - Email: {email}, Contraseña: {passwd}")
+
+        # Obtener el usuario por email
+        user = get_user_by_email(email)
+
+        if user:
+            # Verificar si la contraseña coincide con el hash almacenado
+            if check_password_hash(user['password_hash'], passwd):
+                print(f"[DEBUG] Usuario encontrado: {user['username']}")
+                session.permanent = True
+                app.permanent_session_lifetime = timedelta(days=7)
+
+                # Estructura de sesión según tipo de usuario
+                user_session = {
+                    'id': user['id'],
+                    'username': user['username'],
+                    'fullname': user['fullname'],
+                    'email': user['email'],
+                    'user_type': user['user_type'],
+                    'birthdate': user['birthdate'].strftime('%Y-%m-%d') if user['birthdate'] else None,
+                    'profile_image': user.get('profile_image') or ''
+                }
+
+                if user['user_type'] == 'artist':
+                    user_session['biography'] = user.get('biography')
+                    user_session['record'] = user.get('record')
+                    user_session['genre'] = user.get('genre')
+
+                session['user'] = user_session
+                return redirect(url_for('profile'))
+
+        print("[DEBUG] Usuario no encontrado o contraseña incorrecta")
+        error = "Credenciales incorrectas"
+        return render_template('login.html', error=error)
+
+    print("[DEBUG] Petición GET al login")
+    return render_template('login.html')
+
 @app.route('/signup/', methods=['GET', 'POST'])
 def signup():
     if request.method == 'GET':
@@ -254,20 +278,34 @@ def signup():
         'email': new_user['email'],
         'passwd': password_hash,
         'user_type': new_user.get('user_type', 'customer'),  # 'customer' por defecto si no se especifica
-        'birthdate': new_user['birthdate']
+        'birthdate': new_user['birthdate'],
+        'biography': new_user.get('biography', ''),
+        'record': new_user.get('record', ''),
+        'genre': new_user.get('genre', '')
     }
 
     add_user(user_data)  # Usamos el DAO para agregar un nuevo usuario
 
+    # Actualizar la sesión con toda la información
     session['user'] = {
         'username': user_data['username'],
         'fullname': user_data['fullname'],
         'email': user_data['email'],
         'user_type': user_data['user_type'],
-        'signup_date': user_data['signup_date']
+        'birthdate': user_data['birthdate'],
     }
 
+    # Si el usuario es artista, añadir los campos extras a la sesión
+    if user_data['user_type'] == 'artist':
+        session['user'].update({
+            'biography': user_data['biography'],
+            'record': user_data['record'],
+            'genre': user_data['genre'],
+        })
+
+    # Redirigir al perfil
     return redirect(url_for('profile'))
+
 
 
 

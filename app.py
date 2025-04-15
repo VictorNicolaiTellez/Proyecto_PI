@@ -6,6 +6,14 @@ from flask import request, session,jsonify
 import json
 from werkzeug.utils import secure_filename
 from flask import send_from_directory
+from db import dbconnection # Importa tu módulo de conexión a la base de datos aquí
+
+from models import album_model
+from models import artist_model
+from models import song_model
+from models import merch_model
+from models import user_model
+
 
 from functools import wraps
 """"
@@ -26,9 +34,9 @@ app.secret_key = 'Key'
 """
 Carga de datos de los archivos JSON al iniciar la API
 """
-with open('static/json/songs.json') as json_file:
-    data_json = json_file.read()
-songs_list = json.loads(data_json)
+#with open('static/json/songs.json') as json_file:
+#data_json = json_file.read()
+#songs_list = json.loads(data_json)
 with open('static/json/artists.json') as json_file:
     data_json = json_file.read()
 artists_list = json.loads(data_json)
@@ -53,7 +61,16 @@ users_artists_list = json.loads(data_json)
 
 @app.route('/')
 def index():
-    return render_template('index.html',songs=songs_list)
+    try:
+        db = dbconnection
+        db.dbConnect()
+        songs_list= db.songs_all() 
+        
+        songs_dict = [song.to_dict() for song in songs_list]
+        print(songs_dict)
+        return render_template('index.html',songs=songs_dict)
+    except Exception as e:
+        return f"Error al obtener canciones: {e}", 500
 
 @app.route("/songs/<id>")
 #def detalle_cancion(id):

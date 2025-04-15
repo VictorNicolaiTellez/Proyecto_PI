@@ -2,6 +2,8 @@
 Database connection
 """
 import mysql.connector as db
+from models import song_model
+# , Artist, Album, Vinyl, CD, Merchandising
 
 from . import pass_hashhmac
 
@@ -28,6 +30,7 @@ def dbConnect():
 
     try:
         connection = db.connect(host=ip, user=user, password=password, database=database_name)
+        print('Connected to the MySQL database')
         return connection
     except:
         print('ERROR: Unable to connect to the MySQL database')
@@ -190,7 +193,45 @@ def songs_all():
         cursor.execute(sql)
         songs = cursor.fetchall()
         cursor.close()
-        return songs
+        
+        rows = []
+        for row in songs:
+            # try:
+            #     if row[1] :
+            #         artist_name=artists_by_id(row[1])
+            #     else:
+            #         if artist_name:
+            #              artist_name = artist_name[0] 
+            #         else:
+            #             artist_name = "Desconocido"
+            #             print("Error: Artist or Album ID is None")
+
+            #     if row[2] :
+            #         album_name=albums_by_id(row[2])
+            #     else:
+            #         if album_name:
+            #              album_name = album_name[0] 
+            #         else:
+            #             album_name = "Desconocido"
+            #             print("Error: Artist or Album ID is None")
+                
+               
+                song = song_model.Song(
+                    id=row[0],
+                    title=row[3],
+                    artist=row[1],  #El nombre del autor
+                    album=row[2],  #El nombre del album
+                    duration=row[4],
+                    audio_file=row[5],
+                    price=float(row[6])  # Convertir Decimal a float si es necesario
+                )
+                rows.append(song)
+                print("Canción creada:", song)  # Imprime el objeto Song creado
+            # except Exception as e:
+            #     print("Error al crear canción:", e)
+        
+        
+        return rows
     except:
         print('ERROR: Unable to obtain all songs')
         return None

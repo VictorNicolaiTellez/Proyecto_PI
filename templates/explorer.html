@@ -26,8 +26,8 @@
             <a href="/songs/{{ song.id }}" class="music-card_index">
                 <img src="{{ url_for('static', filename='images/deafault_img.png') }}" alt="Canción">
                 <div class="music-info_index">
-                    <h3>{{song.name}}</h3>
-                    <p>Álbum: {{song.album}}</p>
+                    <h3>{{song.title}}</h3>
+                    <p>Álbum: {{song.album_title}}</p>
                     <p>Duración: {{song.duration}}</p>
                 </div>
             </a>
@@ -48,7 +48,8 @@
             <a href="/artists/{{ artist.id }}" class="music-card_index">
                 <img src="{{ url_for('static', filename='images/deafault_img.png') }}" alt="Artista">
                 <div class="music-info_index">
-                    <h3>{{artist.name}}</h3>
+                    <h3>{{artist.username}}</h3>
+                    <p>Nombre: {{artist.fullname}}</p>
                     <p>Género común: {{artist.genre}}</p>
                 </div>
             </a>
@@ -61,17 +62,15 @@
 {% if albums %}
     <h2>Álbumes</h2>
     <section class="row_index" data-id="3">
-
         <button class="carousel-btn_index prev-btn_index" onclick="moverCarrusel(-1, 2)">&#10094;</button>
-
         <div class="carousel_index">
             {% for album in albums %}
-            <a href="/albums/{{ album.id }}" class="music-card_index">
+            <a href="/albums/{{ album.album_id }}" class="music-card_index">
                 <img src="{{ url_for('static', filename='images/deafault_img.png') }}" alt="Álbum">
                 <div class="music-info_index">
-                    <h3>{{album.name}}</h3>
-                    <p>Artista: {{album.artist}}</p>
-                    <p>Género común: {{album.genre}}</p>
+                    <h3>{{album[2]}}</h3>
+                    <p>Artista: {{album[6]}}</p>
+                    <p>Fecha de Lanzamiento: {{album[3]}}</p>
                 </div>
             </a>
             {% endfor %}

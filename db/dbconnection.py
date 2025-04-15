@@ -25,8 +25,8 @@ def dbConnect():
     """
     ip = 'localhost'
     user = 'root'
-    password = '123456PI'
-    database_name = 'under_sound_db'
+    password = '123456ABC'
+    database_name = 'undersound'
 
     try:
         connection = db.connect(host=ip, user=user, password=password, database=database_name)

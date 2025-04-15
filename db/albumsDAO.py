@@ -5,7 +5,12 @@ def get_all_albums():
     """Obtiene todos los álbumes"""
     conn = dbConnect()
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM albums")  # Ajusta la consulta según la estructura de tu base de datos
+    cursor.execute("""
+        SELECT a.*, u.username
+        FROM albums a
+        JOIN users u ON a.artist = u.id;
+    """)
+ # Ajusta la consulta según la estructura de tu base de datos
     albums = cursor.fetchall()
     conn.close()
     return albums
@@ -17,7 +22,7 @@ def get_album_by_id(album_id):
     """Obtiene un álbum por su ID"""
     conn = dbConnect()
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM albums WHERE album_id = %s", (album_id,))
+    cursor.execute("SELECT a.*, u.username FROM albums JOIN users u ON a.artist = u.id WHERE album_id = %s", (album_id,))
     album = cursor.fetchone()
     conn.close()
     print(album)
@@ -27,7 +32,7 @@ def get_albums_by_artist(artist_id):
     """Obtiene todos los álbumes de un artista"""
     conn = dbConnect()
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM albums WHERE artist_id = %s", (artist_id,))
+    cursor.execute("SELECT a.*, u.username FROM albums JOIN users u ON a.artist = u.id FROM albums WHERE artist_id = %s", (artist_id,))
     albums = cursor.fetchall()
     conn.close()
     return albums
@@ -64,7 +69,7 @@ def delete_album(album_id):
 def get_albums_by_name(name):
     connection = dbConnect()
     cursor = connection.cursor()
-    query = "SELECT * FROM albums WHERE name LIKE %s"
+    query = "SELECT a.*, u.username FROM albums a JOIN users u ON a.artist = u.id WHERE a.title LIKE %s"
     cursor.execute(query, ('%' + name + '%',))
     result = cursor.fetchall()
     connection.close()

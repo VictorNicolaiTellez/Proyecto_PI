@@ -12,6 +12,7 @@ from werkzeug.utils import secure_filename
 from functools import wraps
 from datetime import timedelta
 from werkzeug.security import generate_password_hash, check_password_hash
+import random
 
 
 app = Flask(__name__)
@@ -23,7 +24,16 @@ app.permanent_session_lifetime = timedelta(days=7)
 @app.route('/')
 def index():
     songs = get_all_songs()
-    return render_template('index.html', songs=songs)
+
+    shuffled = random.sample(songs, k=len(songs))  # Barajamos la lista de canciones
+    carrusel1 = shuffled[0:10]
+    carrusel2 = shuffled[10:20]
+    carrusel3 = shuffled[20:30]
+   
+    return render_template('index.html',  
+    carrusel1=carrusel1,
+    carrusel2=carrusel2,
+    carrusel3=carrusel3)
 
 @app.route("/songs/<id>")
 def songs_details(id):
@@ -83,7 +93,7 @@ def explorer():
     if music_search == '':
         songs = get_all_songs()
         artists = get_all_artists()
-        albums = get_all_albums()
+        albums = get_all_albums() 
         return render_template('explorer.html', songs=songs, artists=artists, albums=albums)
     search = music_search.lower()
     songs_filter = get_songs_by_name(search)
@@ -112,7 +122,13 @@ def library():
 
 @app.route('/studio/')
 def studio():
-    return render_template('studio.html', songs=get_all_songs())
+    return render_template('studio.html')
+
+@app.route('/song_upload/')
+def song_upload():
+    return render_template('song_upload.html')
+
+
 '''
 @app.route('/login/', methods=['GET', 'POST'])
 def login():

@@ -23,10 +23,8 @@
             <a href="/songs/{{ song.id }}" class="music-card_index">
                 <img src="{{ url_for('static', filename='images/deafault_img.png') }}" alt="Musica 1">
                 <div class="music-info_index">
-                    <h3>{{song.name}}</h3>
-                    {% for a in song.artist %}
-                        <p>{{a.name}}</p>
-                    {% endfor %}
+                    <h3>{{song.title}}</h3>
+                    <p>{{song.artist}}</p>
                     <p>Álbum: {{song.album}}</p>
                     <p>Duración: {{song.duration}}</p>
                 </div>
@@ -48,12 +46,10 @@
             <a href="/songs/{{ song.id }}" class="music-card_index">
                 <img src="{{ url_for('static', filename='images/deafault_img.png') }}" alt="Musica 1">
                 <div class="music-info_index">
-                    <h3>{{song.name}}</h3>
-                    {% for a in song.artist %}
-                        <p>{{a.name}}</p>
-                    {% endfor %}
-                    <p>Álbum: {{song.album}}</p>
-                    <p>Duración: {{song.duration}}</p>
+                    <h3>{{song.title or 'Desconocido'}}</h3>
+                    <p>{{song.artist or 'Desconocido'}}</p>
+                    <p>Álbum: {{song.album or 'Desconocido'}}</p>
+                    <p>Duración: {{song.duration or 'Desconocido'}}</p>
                 </div>
             </a>
             {% endfor %}
@@ -73,10 +69,8 @@
             <a href="/songs/{{ song.id }}" class="music-card_index">
                 <img src="{{ url_for('static', filename='images/deafault_img.png') }}" alt="Musica 1">
                 <div class="music-info_index">
-                    <h3>{{song.name}}</h3>
-                    {% for a in song.artist %}
-                        <p>{{a.name}}</p>
-                    {% endfor %}
+                    <h3>{{song.title or 'Desconocido'}}</h3>
+                        <p>{{song.artist}}</p>
                     <p>Álbum: {{song.album}}</p>
                     <p>Duración: {{song.duration}}</p>
                 </div>

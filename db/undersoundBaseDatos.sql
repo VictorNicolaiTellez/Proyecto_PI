@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.40, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.41, for Win64 (x86_64)
 --
--- Host: localhost    Database: undersound
+-- Host: localhost    Database: under_sound_db
 -- ------------------------------------------------------
--- Server version	8.0.40
+-- Server version	8.0.41
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -18,6 +18,7 @@
 --
 -- Table structure for table `albums`
 --
+--
 
 DROP TABLE IF EXISTS `albums`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -30,8 +31,8 @@ CREATE TABLE `albums` (
   `cover` text,
   `price` decimal(5,2) DEFAULT NULL,
   PRIMARY KEY (`album_id`),
-  KEY `artist` (`artist`),
-  CONSTRAINT `albums_ibfk_1` FOREIGN KEY (`artist`) REFERENCES `artists` (`artist_id`)
+  KEY `albums_ibfk_1` (`artist`),
+  CONSTRAINT `albums_ibfk_1` FOREIGN KEY (`artist`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -43,30 +44,6 @@ LOCK TABLES `albums` WRITE;
 /*!40000 ALTER TABLE `albums` DISABLE KEYS */;
 INSERT INTO `albums` VALUES (1,5,'Tribute','2013-10-14','tribute.jpg',9.99),(2,1,'V','2014-08-29','v.jpg',10.99),(3,4,'A Head Full of Dreams','2015-12-04','head_full_dreams.jpg',11.99),(4,3,'Boulevard of Broken Dreams','2004-09-21','broken_dreams.jpg',8.99),(5,1,'Overexposed Track By Track','2012-06-26','overexposed.jpg',9.49),(6,6,'(What\'s The Story) Morning Glory?','1995-10-02','morning_glory.jpg',10.50),(7,2,'Favourite Worst Nightmare','2007-04-23','fwn.jpg',8.75);
 /*!40000 ALTER TABLE `albums` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `artists`
---
-
-DROP TABLE IF EXISTS `artists`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `artists` (
-  `artist_id` int NOT NULL AUTO_INCREMENT,
-  `artist_name` text NOT NULL,
-  PRIMARY KEY (`artist_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `artists`
---
-
-LOCK TABLES `artists` WRITE;
-/*!40000 ALTER TABLE `artists` DISABLE KEYS */;
-INSERT INTO `artists` VALUES (1,'Maroon 5'),(2,'Arctic Monkeys'),(3,'Green Day'),(4,'Coldplay'),(5,'John Newman'),(6,'Oasis'),(7,'Wiz Khalifa');
-/*!40000 ALTER TABLE `artists` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -131,7 +108,6 @@ CREATE TABLE `plays` (
   PRIMARY KEY (`play_id`),
   KEY `username` (`username`),
   KEY `song` (`song`),
-  CONSTRAINT `plays_ibfk_1` FOREIGN KEY (`username`) REFERENCES `users` (`username`),
   CONSTRAINT `plays_ibfk_2` FOREIGN KEY (`song`) REFERENCES `songs` (`song_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -163,7 +139,7 @@ CREATE TABLE `purchases` (
   KEY `username` (`username`),
   KEY `album` (`album`),
   KEY `song` (`song`),
-  CONSTRAINT `purchases_ibfk_1` FOREIGN KEY (`username`) REFERENCES `users` (`username`),
+  CONSTRAINT `purchases_ibfk_1` FOREIGN KEY (`purchase_id`) REFERENCES `users` (`id`),
   CONSTRAINT `purchases_ibfk_2` FOREIGN KEY (`album`) REFERENCES `albums` (`album_id`),
   CONSTRAINT `purchases_ibfk_3` FOREIGN KEY (`song`) REFERENCES `songs` (`song_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -194,9 +170,9 @@ CREATE TABLE `songs` (
   `audio_file` varchar(255) NOT NULL,
   `price` decimal(5,2) DEFAULT NULL,
   PRIMARY KEY (`song_id`),
-  KEY `artist` (`artist`),
   KEY `album` (`album`),
-  CONSTRAINT `songs_ibfk_1` FOREIGN KEY (`artist`) REFERENCES `artists` (`artist_id`),
+  KEY `songs_ibfk_1` (`artist`),
+  CONSTRAINT `songs_ibfk_1` FOREIGN KEY (`artist`) REFERENCES `users` (`id`),
   CONSTRAINT `songs_ibfk_2` FOREIGN KEY (`album`) REFERENCES `albums` (`album_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=83 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -219,16 +195,23 @@ DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `users` (
+  `id` int NOT NULL AUTO_INCREMENT,
   `username` varchar(50) NOT NULL,
   `fullname` varchar(50) NOT NULL,
   `email` varchar(50) NOT NULL,
   `user_type` varchar(50) NOT NULL,
   `password_hash` varchar(50) NOT NULL,
   `signup_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`username`),
+  `biography` text,
+  `profile_image` text,
+  `record` varchar(100) DEFAULT NULL,
+  `genre` varchar(100) DEFAULT NULL,
+  `birthdate` date NOT NULL,
+  PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`),
+  CONSTRAINT `user_type_check` CHECK ((`user_type` in (_utf8mb4'artist',_utf8mb4'customer',_utf8mb4'admin'))),
   CONSTRAINT `users_chk_1` CHECK ((`user_type` in (_utf8mb4'artist',_utf8mb4'customer',_utf8mb4'admin')))
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -237,36 +220,8 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES ('admin01','Laura Gómez','laura.gomez@example.com','admin','hash789','2025-04-14 10:19:09'),('artista01','Ana Torres','ana.torres@example.com','artist','hash123','2025-04-14 10:19:09'),('artista02','Luis Rivera','luis.rivera@example.com','artist','hash321','2025-04-14 10:19:09'),('cliente01','Carlos Pérez','carlos.perez@example.com','customer','hash456','2025-04-14 10:19:09'),('cliente02','Sofía Díaz','sofia.diaz@example.com','customer','hash654','2025-04-14 10:19:09');
+INSERT INTO `users` VALUES (1,'artista01','Ana Torres','ana.torres@example.com','artist','hash123','2025-04-14 21:25:56',NULL,NULL,NULL,NULL,'2000-01-01'),(2,'cliente01','Carlos Pérez','carlos.perez@example.com','customer','hash456','2025-04-14 21:25:56',NULL,'https://upload.wikimedia.org/wikipedia/commons/6/66/The_Leaning_Tower_of_Pisa_SB.jpeg',NULL,NULL,'2000-01-01'),(3,'jotaelfuego','Jota \"El Fuego\"','jota.fuego@email.com','artist','hash888','2025-04-15 11:37:19','Directo desde Barcelona, este referente del rap urbano destaca por sus letras cargadas de crítica social y un flow inconfundible.','https://upload.wikimedia.org/wikipedia/commons/3/3a/Bonfire_in_Kladow_17.04.2011_20-41-54.JPG','Barrio Beats Music','Rap conciencia, Hip-Hop','2000-01-01'),(4,'admin01','Laura Gómez','laura.gomez@example.com','admin','hash789','2025-04-14 21:25:56',NULL,NULL,NULL,NULL,'2000-01-01'),(5,'artista02','Luis Rivera','luis.rivera@example.com','artist','hash321','2025-04-14 21:25:56',NULL,NULL,NULL,NULL,'2000-01-01'),(6,'cliente02','Sofía Díaz','sofia.diaz@example.com','customer','hash654','2025-04-14 21:25:56',NULL,NULL,NULL,NULL,'2000-01-01'),(7,'sofiadelmar','Sofía del Mar','sofia.mar@email.com','artist','hash111','2025-04-15 11:37:17','Desde Cádiz, su voz melódica y emotiva ha conquistado escenarios locales con baladas conmovedoras, preparándose para su esperado álbum debut.','https://img.freepik.com/foto-gratis/hermosa-foto-olas-mar_58702-10670.jpg','Melodia Records','Pop melódico con influencias de Flamenco','2000-01-01');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `users_artists`
---
-
-DROP TABLE IF EXISTS `users_artists`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `users_artists` (
-  `artist_username` varchar(50) DEFAULT NULL,
-  `artist_id` int NOT NULL,
-  `biography` text,
-  `profile_image` text,
-  PRIMARY KEY (`artist_id`),
-  KEY `artist_username` (`artist_username`),
-  CONSTRAINT `users_artists_ibfk_1` FOREIGN KEY (`artist_username`) REFERENCES `users` (`username`),
-  CONSTRAINT `users_artists_ibfk_2` FOREIGN KEY (`artist_id`) REFERENCES `artists` (`artist_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `users_artists`
---
-
-LOCK TABLES `users_artists` WRITE;
-/*!40000 ALTER TABLE `users_artists` DISABLE KEYS */;
-/*!40000 ALTER TABLE `users_artists` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -301,4 +256,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-04-14 12:28:31
+-- Dump completed on 2025-04-15 17:45:52

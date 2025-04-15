@@ -15,8 +15,8 @@
     </form>  
 </div>
 
+<h2>Vinilos</h2>
 {% if vinyls %}
-    <h2>Vinilos</h2>
     <section class="row_index" data-id="1">
 
         <button class="carousel-btn_index prev-btn_index" onclick="moverCarrusel(-1, 0)">&#10094;</button>
@@ -35,10 +35,13 @@
         </div>
         <button class="carousel-btn_index next-btn_index" onclick="moverCarrusel(1, 0)">&#10095;</button>
     </section>
+    {% else %}
+    <p>No hay Vinilos disponibles en este momento.</p>
 {% endif %}
 
+
+<h2>CDs</h2>
 {% if cds %}
-    <h2>CDs</h2>
     <section class="row_index" data-id="2">
 
         <button class="carousel-btn_index prev-btn_index" onclick="moverCarrusel(-1, 1)">&#10094;</button>
@@ -57,10 +60,12 @@
         </div>
         <button class="carousel-btn_index next-btn_index" onclick="moverCarrusel(1, 1)">&#10095;</button>
     </section>
+    {% else %}
+    <p>No hay cd's disponibles en este momento.</p>
 {% endif %}
 
-{% if merchandising %}
-    <h2>Merchandising</h2>
+<h2>Merchandising</h2>
+{% if merchandising %} 
     <section class="row_index" data-id="1">
 
         <button class="carousel-btn_index prev-btn_index" onclick="moverCarrusel(-1, 2)">&#10094;</button>
@@ -79,6 +84,8 @@
         </div>
         <button class="carousel-btn_index next-btn_index" onclick="moverCarrusel(1, 2)">&#10095;</button>
     </section>
+    {% else %}
+    <p>No hay merchandising disponible en este momento.</p>
 {% endif %}
 
 {% endblock %}

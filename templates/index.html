@@ -12,14 +12,14 @@
     <p>La página de los amantes de la música</p>
 </div>
 
-{% if songs %}
+{% if carrusel1 %}
     <h2>Tendencias</h2>
     <section class="row_index" data-id="1">
 
         <button class="carousel-btn_index prev-btn_index" onclick="moverCarrusel(-1, 1)">&#10094;</button>
 
         <div class="carousel_index">
-            {% for song in songs %}
+            {% for song in carrusel1 %}
             <a href="/songs/{{ song.song_id }}" class="music-card_index">
                 <img src="{{ url_for('static', filename='images/deafault_img.png') }}" alt="Musica">
                 <div class="music-info_index">
@@ -36,14 +36,14 @@
     </section>   
 {% endif %}
 
-{% if songs %}
+{% if carrusel2 %}
     <h2>Recomendaciones</h2>
     <section class="row_index" data-id="2">
 
         <button class="carousel-btn_index prev-btn_index" onclick="moverCarrusel(-1, 2)">&#10094;</button>
 
         <div class="carousel_index">
-            {% for song in songs %}
+            {% for song in carrusel2 %}
             <a href="/songs/{{ song.song_id }}" class="music-card_index">
                 <img src="{{ url_for('static', filename='images/deafault_img.png') }}" alt="Musica">
                 <div class="music-info_index">
@@ -60,14 +60,14 @@
     </section>
 {% endif %}
 
-{% if songs %}
+{% if carrusel3 %}
     <h2>Nuevo</h2>
     <section class="row_index" data-id="3">
 
         <button class="carousel-btn_index prev-btn_index" onclick="moverCarrusel(-1, 3)">&#10094;</button>
 
         <div class="carousel_index">
-            {% for song in songs %}
+            {% for song in carrusel3 %}
             <a href="/songs/{{ song.song_id }}" class="music-card_index">
                 <img src="{{ url_for('static', filename='images/deafault_img.png') }}" alt="Musica">
                 <div class="music-info_index">

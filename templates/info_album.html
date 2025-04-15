@@ -1,64 +1,72 @@
 {% extends 'template.html' %}
 
 {% block content %}
-
-    <div class="song-info_index">
-        <img src="{{ url_for('static', filename='images/deafault_img.png') }}" alt="Musica 1">
-        <h3>{{album.name}}</h3>
-        <p> {{album.artist}}</p>
-        <p>Álbum: {{album.genre}}</p>
-        
-    </div>
-
-    <div class="container">
-        </button> <button class="btn btn-cart">
-            <i class="fas fa-shopping-cart"></i> Añadir a Favoritos
-        </button>
-    </div>
-
-    <div class="container-2">
-        <audio controls class="mt-3">
-            <source src="{{ url_for('audio', filename=audio_filename) }}" type="audio/mp3">
-            Tu navegador no soporta el audio.
-        </audio>
-
-        <!-- Media de valoraciones -->
-        <h3 class="mt-3"> 4/5 ⭐</h3> <!-- Actualizar valoracion -->
-    </div>
-        
+<div class="song-info_index">
+    <img src="{{ url_for('static', filename='images/deafault_img.png') }}" alt="Portada del álbum">
     
-    <!-- Botón de calificación -->
-    <form>
-        <label for="rating" class="bold-label">Valorar:</label>
-        <select name="rating" id="rating" class="form-select">
-            <option value="1">1 ⭐</option>
-            <option value="2">2 ⭐</option>
-            <option value="3">3 ⭐</option>
-            <option value="4">4 ⭐</option>
-            <option value="5">5 ⭐</option>
-        </select>
-        <button type="submit" class="form-button">Enviar valoración</button>
-    </form>
+    <!-- Información del álbum -->
+    <h3>{{ album.title }}</h3>
+    <p><strong>Género:</strong> {{ album.genre }}</p>
+    <p><strong>Artista:</strong> 
+        <a href="/artists/{{ album.artist_id }}">{{ album.artist_username }}</a>
+    </p>
+</div>
 
-    <h4 class="mt-4">Comentarios </h4><!--Comentarios ({{ comentarios|length }})-->
-    <ul class="list-group">
-       <!-- {% for comentario in comentarios %}-->
-        <li class="list-group-item">
-            <strong>COMENTARIO</strong>
-            
-        </li>
-        <!-- {% endfor %} -->
+<!-- Lista de canciones del álbum -->
+<div class="song-list">
+    <ul class="artist_index">
+        <h4>Canciones:</h4>
+        {% for song in songs %}
+            <li>
+                <a href="/songs/{{ song.song_id }}">{{ song.title }}</a> –
+                <a href="/artists/{{ song.artist_id }}">{{ song.artist_username }}</a>
+            </li>
+        {% endfor %}
     </ul>
+</div>
 
-    
+<!-- Favoritos -->
+<div class="container">
+    <button class="btn btn-cart">
+        <i class="fas fa-shopping-cart"></i> Añadir a Favoritos
+    </button>
+</div>
 
-    <!-- Formulario para añadir comentario -->
-    <form class="container">
-        <textarea name="comentario" class="form-control" placeholder="Añadir comentario..." required></textarea>
-        <button type="submit" class="form-button">Comentar</button>
-    </form>
-    <hr>
+<!-- Reproductor de audio (puede ser de una preview o primer canción) -->
+{% if songs %}
+<div class="container-2">
+    <audio controls class="mt-3">
+        <source src="{{ url_for('audio', filename=songs[0].audio_file) }}" type="audio/mp3">
+        Tu navegador no soporta el audio.
+    </audio>
+    <h3 class="mt-3"> 4/5 ⭐</h3>
+</div>
+{% endif %}
 
+<!-- Valoración -->
+<form>
+    <label for="rating" class="bold-label">Valorar:</label>
+    <select name="rating" id="rating" class="form-select">
+        <option value="1">1 ⭐</option>
+        <option value="2">2 ⭐</option>
+        <option value="3">3 ⭐</option>
+        <option value="4">4 ⭐</option>
+        <option value="5">5 ⭐</option>
+    </select>
+    <button type="submit" class="form-button">Enviar valoración</button>
+</form>
+
+<!-- Comentarios -->
+<h4 class="mt-4">Comentarios</h4>
+<ul class="list-group">
+    <li class="list-group-item"><strong>COMENTARIO</strong></li>
+</ul>
+
+<form class="container">
+    <textarea name="comentario" class="form-control" placeholder="Añadir comentario..." required></textarea>
+    <button type="submit" class="form-button">Comentar</button>
+</form>
+<hr>
 {% endblock %}
 
 {% block scripts %}

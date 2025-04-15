@@ -1,203 +1,287 @@
-from urllib.parse import unquote
-import os
-from flask import Flask, render_template
-from flask import redirect, url_for
-from flask import request, session,jsonify
-import json
-from werkzeug.utils import secure_filename
+from datetime import timedelta
+from flask import Flask, render_template, redirect, url_for, request, session, jsonify
 from flask import send_from_directory
-
+from db.dbconnection import dbConnect
+from db.songsDAO import get_all_songs, get_song_by_id,get_songs_by_album,get_songs_by_artist, get_songs_by_name
+from db.albumsDAO import get_albums_by_name, get_all_albums, get_album_by_id, get_albums_by_artist, add_album, update_album, delete_album
+from db.vinylsDAO import get_all_vinyls, get_vinyl_by_id, add_vinyl, get_vinyls_by_name, update_vinyl, delete_vinyl
+from db.cdsDAO import get_all_cds, get_cd_by_id, add_cd, get_cds_by_name, update_cd, delete_cd
+from db.merchandisingDAO import get_all_merch, get_merch_by_id,add_merch, get_merchandising_by_name, update_merch, delete_merch
+from db.usersDAO import get_all_users, get_user_by_email, add_user, update_user, get_user_by_email_and_password,get_user_by_username,get_user_by_id,get_all_artists,get_artists_by_name
+from werkzeug.utils import secure_filename
 from functools import wraps
-""""
-FUNCION PARA PROTEGER RUTAS QUE REQUIEREN INICIO DE SESION
-def login_required(f):
-    @wraps(f)
-    def decorated_function(*args, **kwargs):
-        if 'user' not in session:
-            return redirect(url_for('login'))  # Si no hay usuario en sesión, redirige al login
-        return f(*args, **kwargs)
-    return decorated_function
-    
-"""
+from datetime import timedelta
+from werkzeug.security import generate_password_hash, check_password_hash
+
+
 app = Flask(__name__)
+
 # Clave secreta para cifrar las cookies de sesión
 app.secret_key = 'Key'
-
-"""
-Carga de datos de los archivos JSON al iniciar la API
-"""
-with open('static/json/songs.json') as json_file:
-    data_json = json_file.read()
-songs_list = json.loads(data_json)
-with open('static/json/artists.json') as json_file:
-    data_json = json_file.read()
-artists_list = json.loads(data_json)
-with open('static/json/albums.json') as json_file:
-    data_json = json_file.read()
-albums_list = json.loads(data_json)
-with open('static/json/vinyls.json') as json_file:
-    data_json = json_file.read()
-vinyls_list = json.loads(data_json)
-with open('static/json/cds.json') as json_file:
-    data_json = json_file.read()
-cds_list = json.loads(data_json)
-with open('static/json/merchandising.json') as json_file:
-    data_json = json_file.read()
-merchandising_list = json.loads(data_json)
-with open('static/json/users.json') as json_file:
-    data_json = json_file.read()
-users_list = json.loads(data_json)
-with open('static/json/users_artists.json') as json_file:
-    data_json = json_file.read()
-users_artists_list = json.loads(data_json)
+app.permanent_session_lifetime = timedelta(days=7)
 
 @app.route('/')
 def index():
-    return render_template('index.html',songs=songs_list)
+    songs = get_all_songs()
+    return render_template('index.html', songs=songs)
 
 @app.route("/songs/<id>")
-#def detalle_cancion(id):
 def songs_details(id):
-    song = [item for item in songs_list if item["id"] == int(id)]
-    
+    song = get_song_by_id(id)
     if song:
-        audio_filename = "night-detective-226857.mp3"  # El nombre del archivo de audio
-        return render_template("songs.html", song=song[0],audio_filename=audio_filename)
-    return "Cancion no encontrada"-404 
+        album = get_album_by_id(song['album_id'])
+        audio_filename = "night-detective-226857.mp3"  # este es fijo por ahora
+        return render_template("songs.html", song=song, album=album, audio_filename=audio_filename)
+    return "Canción no encontrada", 404 
 
-@app.route("/artists/<id>")
-def artists_details(id):
-    artist = [item for item in artists_list if item["id"] == int(id)]
-    artist_name=artist[0]
-    
-    if artist:
-        artist_id=artist[0]
-        songs_artist = [song for song in songs_list if any(a["id"] == artist_id["id"] for a in song["artist"])]
-        artist_albums = [album for album in albums_list if album["artist"].lower() == artist_name["name"].lower()]
-        return render_template("info_artist.html", artist=artist[0],songs=songs_artist,albums=artist_albums)
-    return "Artista no encontrado"-404 
+@app.route('/artists/<int:artist_id>')
+def artist_details(artist_id):
+    artist = get_user_by_id(artist_id)  # Este ID debe ser el de users.id
+    songs = get_song_by_id(artist_id)
+    albums = get_all_albums()
+    return render_template("info_artist.html", artist=artist, songs=songs, albums=albums)
 
-@app.route("/albums/<id>")
-def albums_details(id):
-    album = [item for item in albums_list if item["id"] == int(id)]
-    
+
+@app.route('/albums/<int:album_id>')
+def album_details(album_id):
+    print(f"album_id recibido: {album_id}")
+    album = get_album_by_id(album_id)
     if album:
-        audio_filename = "night-detective-226857.mp3"  # El nombre del archivo de audio
-        return render_template("info_album.html", album=album[0])
-    return "Álbum no encontrado"-404 
+        songs = get_songs_by_album(album_id)
+        artist = get_user_by_id(album[1])  # si quieres mostrar también el artista
+        return render_template("info_album.html", album=album, songs=songs, artist=artist)
+    return "Álbum no encontrado", 404
 
 @app.route("/vinyls/<id>")
 def vinyls_details(id):
-    vinyl = [item for item in vinyls_list if item["id"] == int(id)]
+    vinyl = get_vinyl_by_id(id)
     if vinyl:
-        return render_template("info_vinil.html", vinyl=vinyl[0])
-    return "Vinilo no encontrado"-404 
-
+        return render_template("info_vinil.html", vinyl=vinyl)
+    return "Vinilo no encontrado", 404 
 
 @app.route("/cds/<id>")
 def cds_details(id):
-    cd = [item for item in cds_list if item["id"] == int(id)]
-
+    cd = get_cd_by_id(id)
     if cd:
-        return render_template("info_cd.html", cd=cd[0])
-    return "CD no encontrado"-404 
+        return render_template("info_cd.html", cd=cd)
+    return "CD no encontrado", 404 
 
 @app.route("/merchandising/<id>")
 def merch_details(id):    
-    merch = [item for item in merchandising_list if item["id"] == int(id)]
-
+    merch = get_merch_by_id(id)
     if merch:
-        return render_template("info_merch.html", merch=merch[0])
-    return "Merchandising no encontrado"-404 
-
+        return render_template("info_merch.html", merch=merch)
+    return "Merchandising no encontrado", 404
 
 @app.route('/audio/<filename>')
 def audio(filename):
     return send_from_directory('audio', filename) 
 
-
 @app.route('/explorer/', methods=["GET"])
 def explorer():
     music_search = request.args.get('music_search','')
     if music_search == '':
-        return render_template('explorer.html', songs=songs_list, artists=artists_list, albums=albums_list)
+        songs = get_all_songs()
+        artists = get_all_artists()
+        albums = get_all_albums()
+        return render_template('explorer.html', songs=songs, artists=artists, albums=albums)
     search = music_search.lower()
-    songs_filter = [item for item in songs_list if search in item["name"].lower()]
-    artists_filter = [item for item in artists_list if search in item["name"].lower()]
-    albums_filter = [item for item in albums_list if search in item["name"].lower()]
+    songs_filter = get_songs_by_name(search)
+    artists_filter = get_artists_by_name(search)
+    albums_filter = get_albums_by_name(search)
     return render_template('explorer.html', songs=songs_filter, artists=artists_filter, albums=albums_filter)
 
 @app.route('/store/', methods=["GET"])
 def store():
     store_search = request.args.get('store_search','')
     if store_search == '':
-        return render_template('store.html', vinyls=vinyls_list, cds=cds_list, merchandising=merchandising_list)
+        vinyls = get_all_vinyls()
+        cds = get_all_cds()
+        merchandising = get_all_merch()
+        return render_template('store.html', vinyls=vinyls, cds=cds, merchandising=merchandising)
     search = store_search.lower()
-    vinyls_filter = [item for item in vinyls_list if search in item["name"].lower()]
-    cds_filter = [item for item in cds_list if search in item["name"].lower()]
-    merchandising_filter = [item for item in merchandising_list if search in item["name"].lower()]
+    vinyls_filter = get_vinyls_by_name(search)
+    cds_filter = get_cds_by_name(search)
+    merchandising_filter = get_merchandising_by_name(search)
     return render_template('store.html', vinyls=vinyls_filter, cds=cds_filter, merchandising=merchandising_filter)
 
 @app.route('/library/', methods=['GET'])
 def library():
     library_search = request.args.get('library_search','')
-
     return render_template('library.html')
 
 @app.route('/studio/')
 def studio():
-    return render_template('studio.html',songs = songs_list)
-
-@app.route('/login/', methods=['GET','POST'])
+    return render_template('studio.html', songs=get_all_songs())
+'''
+@app.route('/login/', methods=['GET', 'POST'])
 def login():
+    if 'user' in session:
+        return redirect(url_for('profile'))
+    
     if request.method == 'POST':
-        usuario = request.form.get('usuario')
-        contraseña = request.form.get('contraseña')
+        email = request.form.get('email')
+        passwd = request.form.get('passwd')
 
-        # Simulación de autenticación (cámbialo con tu lógica real)
-        # if usuario == "admin" and contraseña == "1234":
-        return redirect(url_for('profile'))  # Redirige al perfil
+        user = get_user_by_email_and_password(email, passwd)  # Usamos el DAO para validar el login
 
-       # return "Credenciales incorrectas", 401  # Mensaje de error si falla
+        if user:
+            session.permanent = True
+            app.permanent_session_lifetime = timedelta(days=7)
+            session['user'] = {
+                'username': user['username'],
+                'fullname': user['fullname'],
+                'email': user['email'],
+                'user_type': user['user_type'],
+                'signup_date': user['signup_date']
+            }
+            return redirect(url_for('profile'))
+        error = "Credenciales incorrectas"
+        return render_template('login.html', error=error)
 
+    return render_template('login.html')
+'''
+@app.route('/login/', methods=['GET', 'POST'])
+def login():
+    if 'user' in session:
+        print("[DEBUG] Usuario ya en sesión, redirigiendo al perfil")
+        return redirect(url_for('profile'))
+    
+    if request.method == 'POST':
+        email = request.form.get('email')
+        passwd = request.form.get('passwd')
+        
+        print(f"[DEBUG] Login recibido - Email: {email}, Contraseña: {passwd}")
+
+        user = get_user_by_email_and_password(email, passwd)
+
+        if user:
+            print(f"[DEBUG] Usuario encontrado: {user['username']}")
+            session.permanent = True
+            app.permanent_session_lifetime = timedelta(days=7)
+
+            # Estructura de sesión según tipo de usuario
+            user_session = {
+                'id': user['id'],
+                'username': user['username'],
+                'fullname': user['fullname'],
+                'email': user['email'],
+                'user_type': user['user_type'],
+                'birthdate': user['birthdate'].strftime('%Y-%m-%d') if user['birthdate'] else None,
+                'profile_image': user.get('profile_image') or ''
+                
+            }
+
+            if user['user_type'] == 'artist':
+                user_session['biography'] = user.get('biography')
+                user_session['record'] = user.get('record')
+                user_session['genre'] = user.get('genre')
+
+            session['user'] = user_session
+            return redirect(url_for('profile'))
+
+        print("[DEBUG] Usuario no encontrado o contraseña incorrecta")
+        error = "Credenciales incorrectas"
+        return render_template('login.html', error=error)
+
+    print("[DEBUG] Petición GET al login")
     return render_template('login.html')
 
 @app.route('/signup/', methods=['GET', 'POST'])
 def signup():
     if request.method == 'GET':
         return render_template('signup.html')
-    new_user = request.form
-    dict = {'username':new_user.get('username'), 'fullname':new_user.get('fullname')}
-    if new_user.get('nombre-artistico'):
-        dict.update({'artistname':new_user.get('artistname')})
-        users_artists_list.append(new_user.to_dict())
-        print("------LISTA ARTISTAS USUARIOS------")
-        print(users_artists_list)
-        return render_template('signup.html')
-    users_list.append(new_user.to_dict())
-    print("------LISTA USUARIOS------")
-    print(users_list)
-    return render_template('signup.html')
+    
+    new_user = request.form.to_dict()
 
-@app.route('/studio/song_upload')
-def song_upload():
-    return render_template('song_upload.html')
+    if get_user_by_email(new_user['email']):
+        return render_template('signup.html', error="Este correo ya está registrado")
+    if get_user_by_username(new_user['username']):
+        return render_template('signup.html', error="Este nombre de usuario ya existe")
+
+    if new_user['passwd'] != new_user['confirm-passwd']:
+        return render_template('signup.html', error="Las contraseñas no coinciden")
+
+    # Hash de la contraseña
+    password_hash = generate_password_hash(new_user['passwd'])
+
+    user_data = {
+        'username': new_user['username'],
+        'fullname': new_user['fullname'],
+        'email': new_user['email'],
+        'passwd': password_hash,
+        'user_type': new_user.get('user_type', 'customer'),  # 'customer' por defecto si no se especifica
+        'birthdate': new_user['birthdate']
+    }
+
+    add_user(user_data)  # Usamos el DAO para agregar un nuevo usuario
+
+    session['user'] = {
+        'username': user_data['username'],
+        'fullname': user_data['fullname'],
+        'email': user_data['email'],
+        'user_type': user_data['user_type'],
+        'signup_date': user_data['signup_date']
+    }
+
+    return redirect(url_for('profile'))
+
+def login_required(f):
+    @wraps(f)
+    def wrapped(*args, **kwargs):
+        if 'user' not in session:
+            return redirect(url_for('login'))
+        return f(*args, **kwargs)
+    return wrapped
+
+@app.route('/logout/')
+def logout():
+    session.clear()
+    return redirect(url_for('index'))
 
 @app.route('/profile/')
+@login_required
 def profile():
-    
-    return render_template('user_profile.html')
+    user = session.get('user')
+    return render_template('user_profile.html', user=user)
 
-@app.route('/edit_profile/' ,methods=['GET', 'POST'])
+@app.route('/edit_profile/', methods=['GET', 'POST'])
 def edit_profile():
+    print(session['user'])  # Para depurar y ver qué contiene la sesión
+
+
     if request.method == 'POST':
-    
-        return redirect(url_for('profile'))  # Redirige al perfil
-    
-    return render_template('edit_profile.html')
+        # Obtener los datos del formulario
+        updated_user = {
+            'fullname': request.form['fullname'],
+            'username': request.form['username'],
+            'email': request.form['email'],
+            'birthdate': request.form['birthdate'],
+            'record': request.form.get('record'),
+            'genre': request.form.get('genre')
+        }
+
+        # Si el usuario introdujo una nueva contraseña, la actualizamos
+        new_password = request.form.get('passwd')
+        if new_password:
+            updated_user['password_hash'] = generate_password_hash(new_password)
+        #else:
+            # Si no hay nueva contraseña, usamos la que ya teníamos en sesión
+            #updated_user['password_hash'] = session['user']['password_hash']
+
+        # Mantenemos el tipo de usuario también
+        updated_user['user_type'] = session['user']['user_type']
+
+        # Actualizar la sesión
+        session['user'].update(updated_user)
+
+        # Actualizar en la base de datos
+        update_user(session['user']['id'], session['user'])
+
+        return redirect(url_for('profile'))
+
+    return render_template('edit_profile.html', user=session['user'])
 
 @app.route('/carrito/')
 def carrito():
-    
     return render_template('carrito.html')
-

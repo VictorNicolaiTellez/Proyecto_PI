@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.41, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.40, for Win64 (x86_64)
 --
--- Host: localhost    Database: under_sound_db
+-- Host: localhost    Database: undersound
 -- ------------------------------------------------------
--- Server version	8.0.41
+-- Server version	8.0.40
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -17,7 +17,6 @@
 
 --
 -- Table structure for table `albums`
---
 --
 
 DROP TABLE IF EXISTS `albums`;
@@ -67,6 +66,36 @@ CREATE TABLE `cds` (
 LOCK TABLES `cds` WRITE;
 /*!40000 ALTER TABLE `cds` DISABLE KEYS */;
 /*!40000 ALTER TABLE `cds` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `favourites`
+--
+
+DROP TABLE IF EXISTS `favourites`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `favourites` (
+  `user_id` int NOT NULL AUTO_INCREMENT,
+  `album` int DEFAULT NULL,
+  `song` int DEFAULT NULL,
+  `id_artist` int DEFAULT NULL,
+  PRIMARY KEY (`user_id`),
+  KEY `album` (`album`),
+  KEY `song` (`song`),
+  CONSTRAINT `favourites_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+  CONSTRAINT `favourites_ibfk_2` FOREIGN KEY (`album`) REFERENCES `albums` (`album_id`),
+  CONSTRAINT `favourites_ibfk_3` FOREIGN KEY (`song`) REFERENCES `songs` (`song_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `favourites`
+--
+
+LOCK TABLES `favourites` WRITE;
+/*!40000 ALTER TABLE `favourites` DISABLE KEYS */;
+/*!40000 ALTER TABLE `favourites` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -256,4 +285,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-04-15 17:45:52
+-- Dump completed on 2025-04-16 12:02:07

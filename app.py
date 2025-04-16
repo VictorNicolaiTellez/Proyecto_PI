@@ -8,6 +8,7 @@ from db.vinylsDAO import get_all_vinyls, get_vinyl_by_id, add_vinyl, get_vinyls_
 from db.cdsDAO import get_all_cds, get_cd_by_id, add_cd, get_cds_by_name, update_cd, delete_cd
 from db.merchandisingDAO import get_all_merch, get_merch_by_id,add_merch, get_merchandising_by_name, update_merch, delete_merch
 from db.usersDAO import get_all_users, get_user_by_email, add_user, update_user, get_user_by_email_and_password,get_user_by_username,get_user_by_id,get_all_artists,get_artists_by_name
+from db.favouritesDAO import get_fav_songs,get_fav_albums,get_fav_artists,add_song_fav,add_album_fav,add_artist_fav,get_all_favourites
 from werkzeug.utils import secure_filename
 from functools import wraps
 from datetime import timedelta
@@ -43,7 +44,7 @@ def index():
     carrusel2=carrusel2,
     carrusel3=carrusel3)
 
-@app.route("/songs/<id>")
+@app.route("/songs/<int:id>")
 def songs_details(id):
     song = get_song_by_id(id)
     if song:
@@ -124,26 +125,57 @@ def store():
     return render_template('store.html', vinyls=vinyls_filter, cds=cds_filter, merchandising=merchandising_filter)
 
 @app.route('/library/', methods=['GET'])
+@login_required
 def library():
     library_search = request.args.get('library_search','')
-    return render_template('library.html')
+    user_id = 1 #session.get('user')
+    fav_song_ids = get_fav_songs(user_id)
+    fav_album_ids = get_fav_albums(user_id) 
+    fav_artist_ids = get_fav_artists(user_id)
+        
+    if library_search == '':
+    
+        songs = [get_song_by_id(song_id[0]) for song_id in fav_song_ids]
+        albums = [get_album_by_id(album_id[0]) for album_id in fav_album_ids]
+        artists = [get_user_by_id(artist_id[0]) for artist_id in fav_artist_ids]
+
+        return render_template('explorer.html', songs=songs, artists=artists, albums=albums)
+    else:
+        search = library_search.lower()
+        songs_filter = get_songs_by_name(search)
+        artists_filter = get_artists_by_name(search)
+        albums_filter = get_albums_by_name(search)
+
+        # Filtrar solo los que están en favoritos
+        songs = [s for s in songs_filter if s['id'] in fav_song_ids]
+        artists = [a for a in artists_filter if a['id'] in fav_artist_ids]
+        albums = [a for a in albums_filter if a['id'] in fav_album_ids]
+        return render_template('library.html', songs=songs_filter, artists=artists_filter, albums=albums_filter)
 
 
 
 @app.route('/add_song_fav/<int:song_id>', methods=['POST'])
 @login_required
-def add_song_fav(song_id):
+def song_fav(song_id):
     user_id = session.get('user')
-    add_album_fav(user_id,song_id)
+    add_song_fav(user_id,song_id)
     flash('Cancion añadido a favoritos.')
     return redirect(request.referrer or url_for('index'))
 
 @app.route('/add_album_fav/<int:album_id>', methods=['POST'])
 @login_required
-def add_album_fav(album_id):
+def album_fav(album_id):
     user_id = session.get('user')
     add_album_fav(user_id,album_id)
-    flash('Álbum añadido a favoritos.')
+    flash('Ártista añadido a favoritos.')
+    return redirect(request.referrer or url_for('index'))
+
+@app.route('/add_artist_fav/<int:artist_id>', methods=['POST'])
+@login_required
+def artist_fav(artist_id):
+    user_id = session.get('user')
+    add_artist_fav(user_id,artist_id)
+    flash('Artista añadido a favoritos.')
     return redirect(request.referrer or url_for('index'))
 
 

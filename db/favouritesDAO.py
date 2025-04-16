@@ -28,7 +28,7 @@ def get_fav_albums(user_id):
 def get_fav_artists(user_id):
     conn = dbConnect()
     cursor = conn.cursor()
-    cursor.execute("SELECT artist FROM favourites WHERE user_id = %s AND id_artist IS NOT NULL", (user_id,))
+    cursor.execute("SELECT id_artist FROM favourites WHERE user_id = %s AND id_artist IS NOT NULL", (user_id,))
     fav_artists = cursor.fetchall()
     conn.close()
     return fav_artists
@@ -37,8 +37,8 @@ def add_song_fav(user_id,song_id):
     
     conn = dbConnect()
     cursor = conn.cursor()
-    cursor.execute("INSERT INTO favourites (user_id, album,song,id_artist) VALUES (%s, NULL, %s,%s)",
-                   (user_id, None,song_id,None))
+    cursor.execute("INSERT INTO favourites (user_id,song) VALUES (%s, %s)",
+                   (user_id,song_id))
     conn.commit()
     conn.close()
     
@@ -46,17 +46,17 @@ def add_album_fav(user_id,album_id):
    
     conn = dbConnect()
     cursor = conn.cursor()
-    cursor.execute("INSERT INTO favourites (user_id, album,song,id_artist) VALUES (%s, %s,%s,%s)",
-                   (user_id, album_id,None,None))
+    cursor.execute("INSERT INTO favourites (user_id, album) VALUES (%s, %s)",
+                   (user_id, album_id))
     conn.commit()
     conn.close()
     
-def add_fav_artis(user_id,id_artist):
+def add_artist_fav(user_id,id_artist):
    
     conn = dbConnect()
     cursor = conn.cursor()
-    cursor.execute("INSERT INTO favourites (user_id, album,song) VALUES (%s, %s,%s,%s)",
-                   (user_id, None,None,id_artist))
+    cursor.execute("INSERT INTO favourites (user_id, id_artist) VALUES (%s,%s)",
+                   (user_id, id_artist))
     conn.commit()
     conn.close()
 

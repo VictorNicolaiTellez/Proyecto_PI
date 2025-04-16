@@ -26,9 +26,12 @@
 </div>
 
 <div class="container">
-    <button class="btn btn-cart">
-        <i class="fas fa-heart"></i> Añadir a Favoritos
-    </button>
+    <form action="{{ url_for('artist_fav', artist_id=artist.id) }}" method="post">
+        <button class="btn btn-cart">
+            <i class="fas fa-heart"></i> Añadir a Favoritos
+        </button>
+    </form>
+
 </div>
 
 <hr>

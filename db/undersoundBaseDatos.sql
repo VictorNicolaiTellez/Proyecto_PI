@@ -83,7 +83,7 @@ CREATE TABLE `favourites` (
   `id_artist` int DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `unique_favs` (`user_id`,`album`,`song`,`id_artist`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -92,7 +92,7 @@ CREATE TABLE `favourites` (
 
 LOCK TABLES `favourites` WRITE;
 /*!40000 ALTER TABLE `favourites` DISABLE KEYS */;
-INSERT INTO `favourites` VALUES (1,1,NULL,52,NULL),(2,1,5,NULL,NULL);
+INSERT INTO `favourites` VALUES (3,1,NULL,NULL,1),(1,1,NULL,52,NULL),(2,1,5,NULL,NULL);
 /*!40000 ALTER TABLE `favourites` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -227,7 +227,7 @@ CREATE TABLE `users` (
   `fullname` varchar(50) NOT NULL,
   `email` varchar(50) NOT NULL,
   `user_type` varchar(50) NOT NULL,
-  `password_hash` varchar(50) NOT NULL,
+  `password_hash` varchar(255) DEFAULT NULL,
   `signup_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `biography` text,
   `profile_image` text,
@@ -238,7 +238,7 @@ CREATE TABLE `users` (
   UNIQUE KEY `email` (`email`),
   CONSTRAINT `user_type_check` CHECK ((`user_type` in (_utf8mb4'artist',_utf8mb4'customer',_utf8mb4'admin'))),
   CONSTRAINT `users_chk_1` CHECK ((`user_type` in (_utf8mb4'artist',_utf8mb4'customer',_utf8mb4'admin')))
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -247,7 +247,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'artista01','Ana Torres','ana.torres@example.com','artist','hash123','2025-04-14 21:25:56',NULL,NULL,NULL,NULL,'2000-01-01'),(2,'cliente01','Carlos Pérez','carlos.perez@example.com','customer','hash456','2025-04-14 21:25:56',NULL,'https://upload.wikimedia.org/wikipedia/commons/6/66/The_Leaning_Tower_of_Pisa_SB.jpeg',NULL,NULL,'2000-01-01'),(3,'jotaelfuego','Jota \"El Fuego\"','jota.fuego@email.com','artist','hash888','2025-04-15 11:37:19','Directo desde Barcelona, este referente del rap urbano destaca por sus letras cargadas de crítica social y un flow inconfundible.','https://upload.wikimedia.org/wikipedia/commons/3/3a/Bonfire_in_Kladow_17.04.2011_20-41-54.JPG','Barrio Beats Music','Rap conciencia, Hip-Hop','2000-01-01'),(4,'admin01','Laura Gómez','laura.gomez@example.com','admin','hash789','2025-04-14 21:25:56',NULL,NULL,NULL,NULL,'2000-01-01'),(5,'artista02','Luis Rivera','luis.rivera@example.com','artist','hash321','2025-04-14 21:25:56',NULL,NULL,NULL,NULL,'2000-01-01'),(6,'cliente02','Sofía Díaz','sofia.diaz@example.com','customer','hash654','2025-04-14 21:25:56',NULL,NULL,NULL,NULL,'2000-01-01'),(7,'sofiadelmar','Sofía del Mar','sofia.mar@email.com','artist','hash111','2025-04-15 11:37:17','Desde Cádiz, su voz melódica y emotiva ha conquistado escenarios locales con baladas conmovedoras, preparándose para su esperado álbum debut.','https://img.freepik.com/foto-gratis/hermosa-foto-olas-mar_58702-10670.jpg','Melodia Records','Pop melódico con influencias de Flamenco','2000-01-01');
+INSERT INTO `users` VALUES (1,'artista01','Ana Torres','ana.torres@example.com','artist','hash123','2025-04-14 21:25:56',NULL,NULL,NULL,NULL,'2000-01-01'),(2,'cliente01','Carlos Pérez','carlos.perez@example.com','customer','hash456','2025-04-14 21:25:56',NULL,'https://upload.wikimedia.org/wikipedia/commons/6/66/The_Leaning_Tower_of_Pisa_SB.jpeg',NULL,NULL,'2000-01-01'),(3,'jotaelfuego','Jota \"El Fuego\"','jota.fuego@email.com','artist','hash888','2025-04-15 11:37:19','Directo desde Barcelona, este referente del rap urbano destaca por sus letras cargadas de crítica social y un flow inconfundible.','https://upload.wikimedia.org/wikipedia/commons/3/3a/Bonfire_in_Kladow_17.04.2011_20-41-54.JPG','Barrio Beats Music','Rap conciencia, Hip-Hop','2000-01-01'),(4,'admin01','Laura Gómez','laura.gomez@example.com','admin','hash789','2025-04-14 21:25:56',NULL,NULL,NULL,NULL,'2000-01-01'),(5,'artista02','Luis Rivera','luis.rivera@example.com','artist','hash321','2025-04-14 21:25:56',NULL,NULL,NULL,NULL,'2000-01-01'),(6,'cliente02','Sofía Díaz','sofia.diaz@example.com','customer','hash654','2025-04-14 21:25:56',NULL,NULL,NULL,NULL,'2000-01-01'),(7,'sofiadelmar','Sofía del Mar','sofia.mar@email.com','artist','hash111','2025-04-15 11:37:17','Desde Cádiz, su voz melódica y emotiva ha conquistado escenarios locales con baladas conmovedoras, preparándose para su esperado álbum debut.','https://img.freepik.com/foto-gratis/hermosa-foto-olas-mar_58702-10670.jpg','Melodia Records','Pop melódico con influencias de Flamenco','2000-01-01'),(8,'user','hhb','user1@example.com','customer','scrypt:32768:8:1$mGBd1byaDZYFmhvJ$8cb0660022e21bd4b6dcc7628363224944072dbab51944541f7cf9425f4abee7b8e5a7caff1d837acd0b7039e9e389a4075a1790c05b734684c6c9de39c23ea0','2025-04-17 08:43:51',NULL,NULL,NULL,NULL,'1111-11-11');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -283,4 +283,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-04-16 13:14:13
+-- Dump completed on 2025-04-17 10:48:02

@@ -5,8 +5,8 @@
 
 {% block content %}
 <div class="nav-right">
-    <h1>Tienda de UnderSound</h1>
-    <h2>Busca los productos que quieras adquirir</h2>
+    <h1>Biblioteca de UnderSound</h1>
+    <h2>Busca los productos que has adquirido o guardado como favoritos</h2>
     <form action="{{ url_for('library') }}" method="GET">
         <div class="search">
             <input type="text" name="library_search" placeholder="Canciones, artistas, álbumes...">
@@ -14,9 +14,16 @@
         </div>
     </form>  
 </div>
+<div>
+    <h2>Favoritos</h2>
+    <p>Haz clic en el boton para mostrar u ocultar tus favoritos.</p>
+</div>
+    <button class="dropdown-btn" id="toggleButton"> Mostrar/Ocultar Favoritos </button>
 
+    <div class="dropdown-content" id="carrouselContainer">
+ 
 {% if songs %}
-    <h2>Canciones</h2>
+    <h2>Canciones Favoritas</h2>
     <section class="row_index" data-id="1">
 
         <button class="carousel-btn_index prev-btn_index" onclick="moverCarrusel(-1, 0)">&#10094;</button>
@@ -26,8 +33,8 @@
             <a href="/songs/{{ song.id }}" class="music-card_index">
                 <img src="{{ url_for('static', filename='images/deafault_img.png') }}" alt="Canción">
                 <div class="music-info_index">
-                    <h3>{{song.name}}</h3>
-                    <p>Álbum: {{song.album}}</p>
+                    <h3>{{song.title}}</h3>
+                    <p>Álbum: {{song.album_title}}</p>
                     <p>Duración: {{song.duration}}</p>
                 </div>
             </a>
@@ -38,7 +45,7 @@
 {% endif %}
 
 {% if artists %}
-    <h2>Artistas</h2>
+    <h2>Artistas favoritos</h2>
     <section class="row_index" data-id="2">
 
         <button class="carousel-btn_index prev-btn_index" onclick="moverCarrusel(-1, 1)">&#10094;</button>
@@ -48,7 +55,7 @@
             <a href="/artists/{{ artist.id }}" class="music-card_index">
                 <img src="{{ url_for('static', filename='images/deafault_img.png') }}" alt="Artista">
                 <div class="music-info_index">
-                    <h3>{{artist.name}}</h3>
+                    <h3>{{artist.username}}</h3>
                     <p>Género común: {{artist.genre}}</p>
                 </div>
             </a>
@@ -59,7 +66,7 @@
 {% endif %}
 
 {% if albums %}
-    <h2>Álbumes</h2>
+    <h2>Álbumes favoritos</h2>
     <section class="row_index" data-id="3">
 
         <button class="carousel-btn_index prev-btn_index" onclick="moverCarrusel(-1, 2)">&#10094;</button>
@@ -69,9 +76,9 @@
             <a href="/albums/{{ album.id }}" class="music-card_index">
                 <img src="{{ url_for('static', filename='images/deafault_img.png') }}" alt="Álbum">
                 <div class="music-info_index">
-                    <h3>{{album.name}}</h3>
-                    <p>Artista: {{album.artist}}</p>
-                    <p>Género común: {{album.genre}}</p>
+                    <h3>{{album[2]}}</h3>
+                    <p>Artista: {{album[6]}}</p>
+                    <p>Fecha de Lanzamiento: {{album[3]}}</p>
                 </div>
             </a>
             {% endfor %}
@@ -79,8 +86,27 @@
         <button class="carousel-btn_index next-btn_index" onclick="moverCarrusel(1, 2)">&#10095;</button>
     </section>
 {% endif %}
+</div>
+
+<div>
+    <h2>Compras</h2>
+    <p>Haz clic en el boton para mostrar u ocultar tus favoritos.</p>
+    <p>Si no tienes favoritos, no se mostrará nada.</p>
+</div>
+<button class="dropdown-btn" id="toggleButton"> Mostrar/Ocultar Compras </button>
+
+<div class="dropdown-content" id="carrouselContainer">
+
 {% endblock %}
 
 {% block scripts %}
 <script src="{{ url_for('static', filename='css/carrusel.js')}}" defer></script>
+<script>
+    const toggleButton = document.getElementById('toggleButton');
+    const carrouselContainer = document.getElementById('carrouselContainer');
+
+    toggleButton.addEventListener('click', function () {
+        carrouselContainer.classList.toggle('show');
+    });
+</script>
 {% endblock %}

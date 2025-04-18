@@ -128,7 +128,7 @@ def store():
 @login_required
 def library():
     library_search = request.args.get('library_search','')
-    user_id = 1 #session.get('user')
+    user_id = session.get('user')
     fav_song_ids = get_fav_songs(user_id)
     fav_album_ids = get_fav_albums(user_id) 
     fav_artist_ids = get_fav_artists(user_id)
@@ -139,7 +139,7 @@ def library():
         albums = [get_album_by_id(album_id[0]) for album_id in fav_album_ids]
         artists = [get_user_by_id(artist_id[0]) for artist_id in fav_artist_ids]
 
-        return render_template('explorer.html', songs=songs, artists=artists, albums=albums)
+        return render_template('library.html', songs=songs, artists=artists, albums=albums)
     else:
         search = library_search.lower()
         songs_filter = get_songs_by_name(search)
@@ -337,8 +337,6 @@ def signup():
 
     # Redirigir al perfil
     return redirect(url_for('profile'))
-
-
 
 
 @app.route('/logout/')

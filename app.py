@@ -127,8 +127,14 @@ def store():
 @app.route('/library/', methods=['GET'])
 @login_required
 def library():
+    
     library_search = request.args.get('library_search','')
-    user_id = session.get('user')
+    user_session = session.get('user')
+    
+    user= get_user_by_username(user_session['username'])
+    user_id = user['id']  
+    
+    print(f"[DEBUG] ID de usuario en sesión: {user_id}")
     fav_song_ids = get_fav_songs(user_id)
     fav_album_ids = get_fav_albums(user_id) 
     fav_artist_ids = get_fav_artists(user_id)
@@ -151,8 +157,6 @@ def library():
         artists = [a for a in artists_filter if a['id'] in fav_artist_ids]
         albums = [a for a in albums_filter if a['id'] in fav_album_ids]
         return render_template('library.html', songs=songs_filter, artists=artists_filter, albums=albums_filter)
-
-
 
 @app.route('/add_song_fav/<int:song_id>', methods=['POST'])
 @login_required
@@ -318,8 +322,8 @@ def signup():
 
     add_user(user_data)  # Usamos el DAO para agregar un nuevo usuario
 
-    # Actualizar la sesión con toda la información
     session['user'] = {
+        'id': user_data['id'],  # Asumiendo que el ID se genera al insertar en la base de datos
         'username': user_data['username'],
         'fullname': user_data['fullname'],
         'email': user_data['email'],

@@ -1,35 +1,35 @@
 {% extends 'template.html' %}
 {% block title %}UnderSound - Estudio{% endblock %}
 
-{% block head %}{% endblock %}
-
-{% block content %}
-<header>
+{% block head %}<header>
     <div>
         <h1>Estudio de música</h1>
         <p>Aquí puedes subir tu música como artista, al igual que editarla y consultar estadísticas</p>
-        <div class="buttons">
-            <button class="play-btn">▶ Reproducir</button>
-            <button class="more-info-btn">ℹ Más información</button>
-        </div>
     </div>
 </header>
+{% endblock %}
+
+{% block content %}
+
 <body> 
     <div class ="userpage">
         <div class ="profile_pic"> <img src="{{ url_for('static', filename='images/profile-avatar.png') }}" alt="Perfil" class="logo"></div>
 
-        <div class ="upload_song"> 
-            <a href="{{ url_for('song_upload') }}" class="btn-upload" >+Subir Cancion</a> 
+        <div class ="upload_song">
+            <a href="{{ url_for('song_upload') }}" class="btn-upload" >Subir Cancion</a> 
         </div>
         
         <div class ="my_uploads_list">
             <ul class="listed_songs">
                 {% for song in songs %}
-                <a href="/songs/{{song.id}}" class="song-name-list">
+                <a href="/song_edit/{{ song.song_id }}" class="song-name-list">
                     <li class="song-card">
                         <img src="{{ url_for('static', filename='images/deafault_img.png') }}" alt="Portada de {{ song.title }}" class="song-cover">
                         <div class="song-details">
-                            <h3>{{ song.name }}</h3>
+                                <h3>{{ song.title }}</h3>
+                                <p>{{ song.artist_username }}</p>
+                                <p>Álbum: {{ song.album_title }}</p>
+                                <p>Duración: {{ song.duration }}</p>
                         </div>
                     </li>
                 </a>

@@ -843,18 +843,19 @@ h1.carrito{
 
 /* Estilo para el botón */
 .dropdown-btn {
-    background-color: #007BFF; /* Azul fuerte */
+    background-color: #007BFF;
     color: white;
     padding: 12px 24px;
     font-size: 16px;
     border: none;
     cursor: pointer;
     border-radius: 8px;
-    margin-bottom: 20px;
-    display: inline-block;
+    display: block;          /* Hace que el botón ocupe toda la línea */
+    margin: 0 auto 20px;     /* Centrado horizontal y margen abajo */
     text-align: center;
     transition: background-color 0.3s, transform 0.2s ease-in-out;
 }
+
 
 /* Estilo cuando el botón está en hover */
 .dropdown-btn:hover {
@@ -902,4 +903,196 @@ h1.carrito{
 
 .carousel-btn_index:active {
     background-color: #004085;
+}
+
+
+/*song_upload button*/
+.upload_song {
+    text-align: center; /* Asegura que el contenido dentro de este div esté centrado */
+    margin: 20px 0; /* Para dar algo de espacio alrededor */
+}
+
+.btn-upload {
+    display: inline-block; /* Hace que el enlace se comporte como un bloque pero solo ocupe lo necesario */
+    padding: 10px 25px;
+    background-color: #007BFF;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: background-color 0.3s ease, transform 0.2s ease-in-out;
+}
+
+.btn-upload:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
+
+/*song Upload form*/
+.song-upload {
+    background-color: #f0f8ff;
+    border: 1px solid #cce0ff;
+    border-radius: 12px;
+    padding: 25px 30px;
+    max-width: 600px;
+    margin: 30px auto;
+    box-shadow: 0 4px 12px rgba(0, 88, 179, 0.1);
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.upload-title {
+    text-align: center;
+    color: #004c99;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #003366;
+}
+
+input[type="text"],
+select,
+input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #b3d1ff;
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-size: 15px;
+    background-color: #ffffff;
+}
+
+input[type="checkbox"] {
+    margin-right: 8px;
+}
+
+.btn-login {
+    background-color: #3399ff;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-login:hover {
+    background-color: #267acc;
+}
+
+
+
+/*UPLOAD*/
+
+.song-edit-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.song-edit-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.form-group input, .form-group select {
+    width: 100%;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.form-group input[type="file"] {
+    padding: 0;
+}
+
+.btn-submit {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.btn-submit:hover {
+    background-color: #0056b3;
+}
+
+/*EDITAR SONG CSS*/
+.song-edit-page {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f7faff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.song-edit-page form {
+    background-color: #ffffff;
+    padding: 30px 40px;
+    border-radius: 15px;
+    box-shadow: 0 8px 24px rgba(0, 88, 179, 0.15);
+    max-width: 500px;
+    width: 100%;
+}
+
+.song-edit-page .form-group {
+    margin-bottom: 20px;
+}
+
+.song-edit-page label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+    color: #333;
+}
+
+.song-edit-page input[type="text"] {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid #cbd5e0;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+.song-edit-page input[readonly] {
+    background-color: #f0f0f0;
+    color: #777;
+}
+
+.song-edit-page .btn-login {
+    background-color: #0077ff;
+    color: white;
+    padding: 12px 18px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
 }

@@ -32,10 +32,24 @@ def get_albums_by_artist(artist_id):
     """Obtiene todos los álbumes de un artista"""
     conn = dbConnect()
     cursor = conn.cursor()
-    cursor.execute("SELECT a.*, u.username FROM albums JOIN users u ON a.artist = u.id FROM albums WHERE artist_id = %s", (artist_id,))
+    cursor.execute("SELECT a.*, u.username FROM albums a JOIN users u ON a.artist = u.id WHERE a.artist = %s", (artist_id,))
     albums = cursor.fetchall()
     conn.close()
     return albums
+
+def album_exists_for_artist(title, artist_id):
+    conn = dbConnect()
+    cursor = conn.cursor()
+    # Consultar si el álbum con el título específico ya existe para el artista
+    query = " SELECT id FROM albums a WHERE LOWER(title) = LOWER(%s) AND artist_id = %s"
+    cursor.execute(query, (title, artist_id))
+    result = cursor.fetchone()
+    if result:
+        # Si el álbum existe, devolvemos el ID
+        return result['id']
+    else:
+        # Si el álbum no existe, devolvemos None
+        return None
 
 def add_album(album_data):
     """Agrega un nuevo álbum a la base de datos"""

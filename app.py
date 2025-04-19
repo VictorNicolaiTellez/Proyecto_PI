@@ -1,9 +1,9 @@
-from datetime import timedelta
+from datetime import datetime, timedelta
 from flask import Flask, flash, render_template, redirect, url_for, request, session, jsonify
 from flask import send_from_directory
 from db.dbconnection import dbConnect
-from db.songsDAO import get_all_songs, get_song_by_id,get_songs_by_album,get_songs_by_artist, get_songs_by_name
-from db.albumsDAO import get_albums_by_name, get_all_albums, get_album_by_id, get_albums_by_artist, add_album, update_album, delete_album
+from db.songsDAO import add_song, get_all_songs, get_song_by_id,get_songs_by_album,get_songs_by_artist, get_songs_by_name, update_song
+from db.albumsDAO import album_exists_for_artist, get_albums_by_name, get_all_albums, get_album_by_id, get_albums_by_artist, add_album, update_album, delete_album
 from db.vinylsDAO import get_all_vinyls, get_vinyl_by_id, add_vinyl, get_vinyls_by_name, update_vinyl, delete_vinyl
 from db.cdsDAO import get_all_cds, get_cd_by_id, add_cd, get_cds_by_name, update_cd, delete_cd
 from db.merchandisingDAO import get_all_merch, get_merch_by_id,add_merch, get_merchandising_by_name, update_merch, delete_merch
@@ -134,7 +134,6 @@ def library():
     user= get_user_by_username(user_session['username'])
     user_id = user['id']  
     
-    print(f"[DEBUG] ID de usuario en sesión: {user_id}")
     fav_song_ids = get_fav_songs(user_id)
     fav_album_ids = get_fav_albums(user_id) 
     fav_artist_ids = get_fav_artists(user_id)
@@ -184,12 +183,70 @@ def artist_fav(artist_id):
 
 
 @app.route('/studio/')
+#@login_required
 def studio():
-    return render_template('studio.html')
+    user_session = session.get('user')
+    
+    user= get_user_by_username(user_session['username'])
+    user_id = 1 # user['id']  
+    songs = get_songs_by_artist(user_id)
+    
+    return render_template('studio.html',songs=songs)
 
-@app.route('/song_upload/')
+@app.route('/song_upload/', methods=['GET', 'POST'])
+@login_required
 def song_upload():
+    user_session = session.get('user')
+    user= get_user_by_username(user_session['username'])
+    if request.method == 'POST':
+        new_song = request.form.to_dict()
+ 
+        
+        album_title = new_song.get('album')
+
+        # Paso 1-3: Obtener o crear el álbum y conseguir su ID
+        album_id = album_exists_for_artist(album_title, user['id'])
+        if album_id is None:
+            # Si no existe, lo creamos
+            album_data = {
+                'title': album_title,
+                'artist': user['id'],
+                'genre': new_song.get('genre')
+            }
+            add_album(album_data)
+            # Ahora obtenemos el ID del álbum recién creado 
+            album_id = album_exists_for_artist(album_title, user['id'])
+ 
+        song_data = {
+            'title': new_song.get('song'),
+            'duration': new_song.get('duration'),
+            'audio_file': new_song.get('audio_file'),
+            'price': new_song.get('price'),
+            'album': album_id,  # Usamos el ID del álbum existente o recién creado
+            'artist': user['id']
+        }
+        add_song(song_data)  # Usamos el DAO para agregar una nueva canción
+        
+        return redirect(url_for('studio'))
+
     return render_template('song_upload.html')
+
+@app.route('/song_edit/<int:song_id>', methods=['GET', 'POST'])
+@login_required
+def song_edit(song_id):
+    song = get_song_by_id(song_id)  # Obtener la canción desde la base de datos usando song_id
+    artist= get_user_by_id(song['artist_id'])  # Obtener el artista de la canción
+    if request.method == 'POST':
+        updated_song = {
+            'title': request.form.get('song-title'),
+            'price': request.form.get('price')
+        }
+        # Lógica para actualizar la canción con los nuevos datos
+        update_song(song_id, updated_song)  # Usamos el DAO para actualizar la canción
+        
+        return redirect(url_for('studio'))  # Redirigir después de guardar los cambios
+    
+    return render_template('edit_song.html', song=song,artist=artist)  
 
 
 '''

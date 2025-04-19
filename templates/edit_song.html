@@ -1,0 +1,38 @@
+{% extends 'template.html' %}
+{% block title %}UnderSound - Estudio{% endblock %}
+
+{% block head %}<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Canción</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>{% endblock %}
+
+{% block content %}
+<div class="song-edit-page">
+    <form action="{{ url_for('song_edit', song_id=song.song_id) }}" method="POST">
+        <div class="form-group">
+            <label for="song-title">Título de la Canción:</label>
+            <input type="text" id="song-title" name="song-title" value="{{ song['title'] }}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="artist">Artista:</label>
+            <input type="text" id="artist" value="{{ artist.username }}" readonly>
+        </div>
+
+        <div class="form-group">
+            <label for="duration">Duración:</label>
+            <input type="text" id="duration" value="{{ song['duration'] }}" readonly>
+        </div>
+
+        <div class="form-group">
+            <label for="price">Precio:</label>
+            <input type="text" id="price" name="price" value="{{ song['price'] }}" required>
+        </div>
+
+        <button type="submit" class="btn-login">Guardar Cambios</button>
+    </form>
+
+</div>
+{%endblock%}

@@ -64,19 +64,7 @@ def get_songs_by_artist(artist_id):
     songs = cursor.fetchall()
     conn.close()
     return songs
-'''
-def get_songs_by_artist(artist_id):
-    conn = dbConnect()
-    cursor = conn.cursor(dictionary=True)
-    cursor.execute("""
-        SELECT s.song_id, s.title, s.album AS album_id
-        FROM songs s
-        WHERE s.artist = %s
-    """, (artist_id,))
-    songs = cursor.fetchall()
-    conn.close()
-    return songs
-'''
+
 def get_songs_by_album(album_id):
     conn = dbConnect()
     cursor = conn.cursor()
@@ -157,7 +145,6 @@ def delete_song(song_id):
     cursor.execute("DELETE FROM songs WHERE song_id = %s", (song_id,))
     conn.commit()
     conn.close()
-
 
 def get_songs_by_album(album_id):
     conn = dbConnect()

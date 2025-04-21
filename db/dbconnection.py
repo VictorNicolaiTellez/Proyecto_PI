@@ -3,7 +3,8 @@ Database connection
 """
 import mysql.connector as db
 from models import song_model
-# , Artist, Album, Vinyl, CD, Merchandising
+import os
+
 
 from . import pass_hashhmac
 
@@ -23,10 +24,19 @@ def dbConnect():
     Error
         unable to connect to the MySQL database
     """
+    # Database connection parameters, change by the commented ones if you are using Docker
+    # ip = os.environ.get('DB_HOST', 'localhost')
+    # user = os.environ.get('DB_USER', 'root')
+    # password = os.environ.get('DB_PASSWORD', '')
+    # database_name = os.environ.get('DB_NAME', '')
+    
+    # For local development, uncomment the following lines
     ip = 'localhost'
     user = 'root'
     password = '123456ABC'
     database_name = 'undersound'
+    
+    
 
     try:
         connection = db.connect(host=ip, user=user, password=password, database=database_name)

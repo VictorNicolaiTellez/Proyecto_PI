@@ -1,0 +1,27 @@
+# Ignore Dockerfile and docker-compose override files
+Dockerfile*
+docker-compose.override.*
+
+# Ignore node_modules and npm debug log
+node_modules
+npm-debug.log
+
+# Ignore build and dependency directories
+dist
+build
+.bower_components
+
+# Ignore environment files
+.env
+.env.*
+
+# Ignore IDE and editor files
+*.swp
+*.idea
+*.vscode
+*.sublime-project
+*.sublime-workspace
+
+# Ignore OS generated files
+.DS_Store
+Thumbs.db

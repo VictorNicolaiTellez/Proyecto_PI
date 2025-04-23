@@ -337,7 +337,7 @@ def signup():
     add_user(user_data)  # Usamos el DAO para agregar un nuevo usuario
 
     session['user'] = {
-        #'id': user_data['id'],  # Asumiendo que el ID se genera al insertar en la base de datos
+        'id': user_data['id'],  # Asumiendo que el ID se genera al insertar en la base de datos
         'username': user_data['username'],
         'fullname': user_data['fullname'],
         'email': user_data['email'],
@@ -389,7 +389,6 @@ def firebase_login():
             'user_type': user['user_type'],
             'birthdate': user['birthdate']
         }
-
         return jsonify({'status': 'success'}), 200
 
     except Exception as e:

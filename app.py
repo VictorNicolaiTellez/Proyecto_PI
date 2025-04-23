@@ -11,6 +11,8 @@ from db.merchandisingDAO import get_all_merch, get_merch_by_id,add_merch, get_me
 from db.usersDAO import get_all_users, get_user_by_email, add_user, update_user, get_user_by_email_and_password,get_user_by_username,get_user_by_id,get_all_artists,get_artists_by_name
 from db.favouritesDAO import get_fav_songs,get_fav_albums,get_fav_artists,add_song_fav,add_album_fav,add_artist_fav,get_all_favourites
 
+import firebase_admin
+from firebase_admin import credentials, auth as firebase_auth
 from werkzeug.utils import secure_filename
 from functools import wraps
 from datetime import timedelta
@@ -23,6 +25,9 @@ app = Flask(__name__)
 # Clave secreta para cifrar las cookies de sesión
 app.secret_key = 'Key'
 app.permanent_session_lifetime = timedelta(days=7)
+
+cred = credentials.Certificate("firebase_credentials.json")
+firebase_admin.initialize_app(cred)
 
 def login_required(f):
     @wraps(f)
@@ -251,56 +256,6 @@ def song_edit(song_id):
     return render_template('edit_song.html', song=song,artist=artist)  
 
 
-'''
-
-@app.route('/login/', methods=['GET', 'POST'])
-def login():
-    if 'user' in session:
-        print("[DEBUG] Usuario ya en sesión, redirigiendo al perfil")
-        return redirect(url_for('profile'))
-    
-    if request.method == 'POST':
-        email = request.form.get('email')
-        passwd = request.form.get('passwd')
-        
-        print(f"[DEBUG] Login recibido - Email: {email}, Contraseña: {passwd}")
-
-        user = get_user_by_email_and_password(email, passwd)
-
-        if user:
-            print(f"[DEBUG] Usuario encontrado: {user['username']}")
-            session.permanent = True
-            app.permanent_session_lifetime = timedelta(days=7)
-
-            # Estructura de sesión según tipo de usuario
-            user_session = {
-                'id': user['id'],
-                'username': user['username'],
-                'fullname': user['fullname'],
-                'email': user['email'],
-                'user_type': user['user_type'],
-                'birthdate': user['birthdate'].strftime('%Y-%m-%d') if user['birthdate'] else None,
-                'profile_image': user.get('profile_image') or ''
-                
-            }
-
-            if user['user_type'] == 'artist':
-                user_session['biography'] = user.get('biography')
-                user_session['record'] = user.get('record')
-                user_session['genre'] = user.get('genre')
-
-            session['user'] = user_session
-            return redirect(url_for('profile'))
-
-        print("[DEBUG] Usuario no encontrado o contraseña incorrecta")
-        error = "Credenciales incorrectas"
-        return render_template('login.html', error=error)
-
-    print("[DEBUG] Petición GET al login")
-    return render_template('login.html')
-
-    '''
-
 @app.route('/login/', methods=['GET', 'POST'])
 def login():
     if 'user' in session:
@@ -382,7 +337,7 @@ def signup():
     add_user(user_data)  # Usamos el DAO para agregar un nuevo usuario
 
     session['user'] = {
-        'id': user_data['id'],  # Asumiendo que el ID se genera al insertar en la base de datos
+        #'id': user_data['id'],  # Asumiendo que el ID se genera al insertar en la base de datos
         'username': user_data['username'],
         'fullname': user_data['fullname'],
         'email': user_data['email'],
@@ -401,6 +356,45 @@ def signup():
     # Redirigir al perfil
     return redirect(url_for('profile'))
 
+
+@app.route('/firebase_login/', methods=['POST'])
+def firebase_login():
+    id_token = request.json.get('token')
+    try:
+        decoded_token = firebase_auth.verify_id_token(id_token)
+        email = decoded_token['email']
+        name = decoded_token.get('name', '')
+        
+        # Buscar en tu base de datos local
+        user = get_user_by_email(email)
+        if not user:
+            # Registrar nuevo usuario en tu BD local
+            user_data = {
+                'username': email.split('@')[0],
+                'fullname': name,
+                'email': email,
+                'passwd': '',  # No necesitas password
+                'user_type': 'customer',
+                'birthdate': '2025-04-16',  # Puedes pedirlo después
+            }
+            add_user(user_data)
+            user = get_user_by_email(email)
+
+        # Crear la sesión Flask
+        session['user'] = {
+            'id': user['id'],
+            'username': user['username'],
+            'fullname': user['fullname'],
+            'email': user['email'],
+            'user_type': user['user_type'],
+            'birthdate': user['birthdate']
+        }
+
+        return jsonify({'status': 'success'}), 200
+
+    except Exception as e:
+        print(f"[ERROR] Firebase login: {e}")
+        return jsonify({'status': 'error', 'message': str(e)}), 401
 
 @app.route('/logout/')
 def logout():

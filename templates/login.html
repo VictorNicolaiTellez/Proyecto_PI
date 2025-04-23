@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -38,6 +38,68 @@
         <div class="signup">
             <p>¿No tienes cuenta? <a href="{{ url_for('signup') }}">Regístrate aquí</a></p>
         </div>
+
+        <!-- Login con Google -->
+        <div class="oauth-login">
+            <p>O inicia sesión con:</p>
+            <button id="google-login" class="btn-google" onclick="signInWithGoogle()">Continuar con Google</button>
+        </div>
+
+        
+        
     </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+        import { getAuth, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBqzmQctZkEl0ANSWiru7ZoO7ohGx0wg5U",
+            authDomain: "undersound-cc4a4.firebaseapp.com",
+            projectId: "undersound-cc4a4",
+            storageBucket: "undersound-cc4a4.firebasestorage.app",
+            messagingSenderId: "616072871825",
+            appId: "1:616072871825:web:c189c50fda28bdfab0e430",
+            measurementId: "G-90F42T5J3L"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const provider = new GoogleAuthProvider();
+
+        function signInWithGoogle() {
+            signInWithPopup(auth, provider)
+                .then((result) => {
+                    const user = result.user;
+                    console.log("Usuario autenticado:", user);
+                    return user.getIdToken();
+                })
+                .then((token) => {
+                    return fetch("/firebase_login/", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({ token: token })
+                    });
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === "success") {
+                        window.location.href = "/profile";
+                    } else {
+                        alert("Error en login: " + data.message);
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error al iniciar sesión con Google:", error);
+                    alert("Error al iniciar sesión con Google.");
+                });
+        }
+
+        // Hacemos la función accesible desde el HTML
+        window.signInWithGoogle = signInWithGoogle;
+    </script>
 </body>
 </html>
+

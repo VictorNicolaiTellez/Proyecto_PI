@@ -33,8 +33,8 @@ def dbConnect():
     # For local development, uncomment the following lines
     ip = 'localhost'
     user = 'root'
-    password = '123456ABC'
-    database_name = 'undersound'
+    password = '123456PI'
+    database_name = 'under_sound_db'
     
     
 

@@ -198,7 +198,7 @@ def artist_fav(artist_id):
 
 
 @app.route('/studio/')
-#@login_required
+@login_required
 def studio():
     user_session = session.get('user')
     
@@ -278,6 +278,11 @@ def login():
 
         # Obtener el usuario por email
         user = get_user_by_email(email)
+        
+        print("Contraseña escrita por el usuario:", passwd)
+        print("Contraseña hash guardada:", user['password_hash'])
+        print("Contraseña hash generada:", generate_password_hash(passwd))
+        print("Comparación:", check_password_hash(user['password_hash'],passwd ))
 
         if user:
             # Verificar si la contraseña coincide con el hash almacenado
@@ -345,7 +350,7 @@ def signup():
     add_user(user_data)  # Usamos el DAO para agregar un nuevo usuario
 
     session['user'] = {
-        'id': user_data['id'],  # Asumiendo que el ID se genera al insertar en la base de datos
+       #'id': user_data['id'],  # Asumiendo que el ID se genera al insertar en la base de datos
         'username': user_data['username'],
         'fullname': user_data['fullname'],
         'email': user_data['email'],
@@ -404,6 +409,7 @@ def firebase_login():
         return jsonify({'status': 'error', 'message': str(e)}), 401
 
 @app.route('/logout/')
+@login_required
 def logout():
     session.clear()
     return redirect(url_for('index'))
@@ -415,6 +421,7 @@ def profile():
     return render_template('user_profile.html', user=user)
 
 @app.route('/edit_profile/', methods=['GET', 'POST'])
+@login_required
 def edit_profile():
     print(session['user'])  # Para depurar y ver qué contiene la sesión
 

@@ -167,7 +167,10 @@ def library():
 @app.route('/add_song_fav/<int:song_id>', methods=['POST'])
 @login_required
 def song_fav(song_id):
-    user_id = session.get('user')
+    user_session = session.get('user')
+    user= get_user_by_username(user_session['username'])
+    user_id = user['id'] 
+    
     add_song_fav(user_id,song_id)
     flash('Cancion añadido a favoritos.')
     return redirect(request.referrer or url_for('index'))
@@ -175,7 +178,9 @@ def song_fav(song_id):
 @app.route('/add_album_fav/<int:album_id>', methods=['POST'])
 @login_required
 def album_fav(album_id):
-    user_id = session.get('user')
+    user_session = session.get('user')
+    user= get_user_by_username(user_session['username'])
+    user_id = user['id'] 
     add_album_fav(user_id,album_id)
     flash('Ártista añadido a favoritos.')
     return redirect(request.referrer or url_for('index'))
@@ -183,7 +188,10 @@ def album_fav(album_id):
 @app.route('/add_artist_fav/<int:artist_id>', methods=['POST'])
 @login_required
 def artist_fav(artist_id):
-    user_id = session.get('user')
+    user_session = session.get('user')
+    user= get_user_by_username(user_session['username'])
+    user_id = user['id'] 
+    
     add_artist_fav(user_id,artist_id)
     flash('Artista añadido a favoritos.')
     return redirect(request.referrer or url_for('index'))
@@ -195,7 +203,7 @@ def studio():
     user_session = session.get('user')
     
     user= get_user_by_username(user_session['username'])
-    user_id = 1 # user['id']  
+    user_id = user['id']  
     songs = get_songs_by_artist(user_id)
     
     return render_template('studio.html',songs=songs)

@@ -60,7 +60,6 @@ def add_artist_fav(user_id,id_artist):
     conn.commit()
     conn.close()
 
-
 def delete_fav_song(song_id):
     
     conn = dbConnect()
@@ -84,3 +83,29 @@ def delete_fav_artist(artist_id):
     cursor.execute("DELETE FROM favourites WHERE id_artist = %s", (artist_id,))
     conn.commit()
     conn.close()
+
+def exist_song_fav(user_id,song_id):
+    
+    conn = dbConnect()
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM favourites WHERE user_id = %s AND song = %s", (user_id,song_id))
+    fav = cursor.fetchone()
+    conn.close()
+    return bool(fav)
+
+def exist_album_fav(user_id,album_id):
+    
+    conn = dbConnect()
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM favourites WHERE user_id = %s AND album = %s", (user_id,album_id))
+    fav = cursor.fetchone()
+    conn.close()
+    return bool(fav)
+
+def exist_artist_fav(user_id,id_artist):
+    conn = dbConnect()
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM favourites WHERE user_id = %s AND id_artist = %s", (user_id,id_artist))
+    fav = cursor.fetchone()
+    conn.close()
+    return bool(fav)  

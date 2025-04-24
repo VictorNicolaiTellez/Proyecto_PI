@@ -328,7 +328,7 @@ def signup():
         return render_template('signup.html', error="Las contraseñas no coinciden")
 
     # Hash de la contraseña
-    password_hash = generate_password_hash(new_user['passwd'])
+    password_hash = generate_password_hash(new_user['passwd'], method='pbkdf2:sha256', salt_length=16)
 
     user_data = {
         'username': new_user['username'],
@@ -345,7 +345,6 @@ def signup():
     add_user(user_data)  # Usamos el DAO para agregar un nuevo usuario
 
     session['user'] = {
-        'id': user_data['id'],  # Asumiendo que el ID se genera al insertar en la base de datos
         'username': user_data['username'],
         'fullname': user_data['fullname'],
         'email': user_data['email'],
@@ -383,7 +382,7 @@ def firebase_login():
                 'email': email,
                 'passwd': '',  # No necesitas password
                 'user_type': 'customer',
-                'birthdate': '2025-04-16',  # Puedes pedirlo después
+                'birthdate': '2020-01-01',  
             }
             add_user(user_data)
             user = get_user_by_email(email)

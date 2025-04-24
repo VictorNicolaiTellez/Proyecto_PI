@@ -33,7 +33,7 @@ def add_user(user_data):
     cursor = conn.cursor()
 
     # Hashear la contraseña
-    password_hash = generate_password_hash(user_data['passwd'])
+    password_hash = user_data['passwd']
 
     # Campos comunes
     fields = ['username', 'fullname', 'email', 'user_type', 'birthdate']

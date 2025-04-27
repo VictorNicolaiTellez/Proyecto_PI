@@ -1,17 +1,20 @@
 {% extends 'template.html' %}
 {% block title %}UnderSound - Estudio{% endblock %}
 
-{% block head %}<header>
-    <div>
-        <h1>Estudio de música</h1>
-        <p>Aquí puedes subir tu música como artista, al igual que editarla y consultar estadísticas</p>
-    </div>
-</header>
+{% block head %}
+   
+
 {% endblock %}
 
 {% block content %}
 
 <body> 
+
+    <div>
+        <h1>Estudio de música</h1>
+        <p>Aquí puedes subir tu música como artista, al igual que editarla y consultar estadísticas</p>
+    </div>
+
     <div class ="userpage">
         <div class ="profile_pic"> <img src="{{ url_for('static', filename='images/profile-avatar.png') }}" alt="Perfil" class="logo"></div>
 

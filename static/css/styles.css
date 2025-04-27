@@ -883,6 +883,9 @@ h1.carrito{
 .show {
     display: block;
 }
+.hidden {
+    display: none;
+  }
 
 
 /* Añadir algo de espacio para los carruseles */

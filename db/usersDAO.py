@@ -1,26 +1,26 @@
 # db/usersDAO.py
-from .dbconnection import dbConnect
+from .dbconnection import connection
 from werkzeug.security import generate_password_hash, check_password_hash
 
 def get_all_users():
     """Obtiene todos los usuarios"""
-    conn = dbConnect()
-    cursor = conn.cursor()
+    
+    cursor = connection.cursor()
     cursor.execute("SELECT * FROM users")
     users = cursor.fetchall()
-    conn.close()
+    cursor.close()
     return users
 
 def get_user_by_email(email):
     """Busca un usuario por su email"""
     try:
-        conn = dbConnect()
-        cursor = conn.cursor(dictionary=True)
+        
+        cursor = connection.cursor(dictionary=True)
         query = "SELECT * FROM users WHERE email = %s"
         print(f"[DAO DEBUG] Ejecutando query con Email: {email}")
         cursor.execute(query, (email,))
         user = cursor.fetchone()
-        conn.close()
+        cursor.close()
         print(f"[DAO DEBUG] Resultado: {user}")
         return user
     except Exception as e:
@@ -29,8 +29,8 @@ def get_user_by_email(email):
 
 def add_user(user_data):
     """Agrega un nuevo usuario a la base de datos"""
-    conn = dbConnect()
-    cursor = conn.cursor()
+    
+    cursor = connection.cursor()
 
     # Hashear la contraseña
     password_hash = user_data['passwd']
@@ -68,13 +68,13 @@ def add_user(user_data):
     query = f"INSERT INTO users ({columns}) VALUES ({placeholders})"
     cursor.execute(query, values)
 
-    conn.commit()
-    conn.close()
+    cursor.commit()
+    cursor.close()
 
 def update_user(user_id, user_data):
     """Actualiza los datos de un usuario en la base de datos"""
-    conn = dbConnect()
-    cursor = conn.cursor()
+    
+    cursor = connection.cursor()
 
     # Recuperar el password_hash si no se está actualizando
     if 'password_hash' not in user_data:
@@ -84,7 +84,6 @@ def update_user(user_id, user_data):
             user_data['password_hash'] = result[0]
         else:
             cursor.close()
-            conn.close()
             raise ValueError(f"No se encontró el usuario con id {user_id}")
 
     cursor.execute("""
@@ -97,21 +96,20 @@ def update_user(user_id, user_data):
         user_data['birthdate'], user_id
     ))
 
-    conn.commit()
+    cursor.commit()
     cursor.close()
-    conn.close()
 
 
 def get_user_by_email_and_password(email, password):
     """Busca un usuario por su email y contraseña"""
     try:
-        conn = dbConnect()
-        cursor = conn.cursor(dictionary=True)
+        
+        cursor = connection.cursor(dictionary=True)
         query = "SELECT * FROM users WHERE email = %s AND password_hash = %s"
         print(f"[DAO DEBUG] Ejecutando query con Email: {email} y Password: {password}")
         cursor.execute(query, (email, password))
         user = cursor.fetchone()
-        conn.close()
+        cursor.close()
         print(f"[DAO DEBUG] Resultado: {user}")
         return user
     except Exception as e:
@@ -120,38 +118,38 @@ def get_user_by_email_and_password(email, password):
     
 def get_user_by_username(username):
     """Obtiene un usuario por su nombre de usuario"""
-    conn = dbConnect()
-    cursor = conn.cursor(dictionary=True)
+    
+    cursor = connection.cursor(dictionary=True)
     cursor.execute("SELECT * FROM users WHERE username = %s", (username,))
     user = cursor.fetchone()
-    conn.close()
+    cursor.close()
     return user
 
 def get_user_by_id(user_id):
-    conn = dbConnect()
-    cursor = conn.cursor(dictionary=True)
+    
+    cursor = connection.cursor(dictionary=True)
     cursor.execute("SELECT id, username, fullname, genre FROM users WHERE id = %s", (user_id,))
     user = cursor.fetchone()
-    conn.close()
+    cursor.close()
     return user
 
 
 def get_all_artists():
     """Obtiene todos los usuarios que son artistas."""
-    conn = dbConnect()
-    cursor = conn.cursor(dictionary=True)
+    
+    cursor = connection.cursor(dictionary=True)
     cursor.execute("SELECT id, username, fullname, genre FROM users WHERE user_type = 'artist'")
     artists = cursor.fetchall()
-    conn.close()
+    cursor.close()
     return artists
 
 def get_artists_by_name(name):
     """Busca artistas por nombre o username."""
-    conn = dbConnect()
-    cursor = conn.cursor(dictionary=True)
+    
+    cursor = connection.cursor(dictionary=True)
     cursor.execute("SELECT id, username, fullname, genre FROM users WHERE user_type = 'artist' AND username LIKE %s", ('%' + name + '%',))
     artists = cursor.fetchall()
-    conn.close()
+    cursor.close()
     return artists
 
 

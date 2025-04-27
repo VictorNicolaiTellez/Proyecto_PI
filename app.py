@@ -2,7 +2,6 @@ from datetime import datetime, timedelta
 from flask import Flask, flash, render_template, redirect, url_for, request, session, jsonify
 from flask import send_from_directory
 
-from db.cartDAO import add_cd_to_cart, add_merch_to_cart, add_song_to_cart, add_vinyl_to_cart, delete_cart_cd, delete_cart_merch, delete_cart_song, delete_cart_vinyl, get_cart_cds, get_cart_merch, get_cart_songs, get_cart_vinyls
 from db.dbconnection import dbConnect
 from db.songsDAO import add_song, get_all_songs, get_song_by_id,get_songs_by_album,get_songs_by_artist, get_songs_by_name, update_song
 from db.albumsDAO import album_exists_for_artist, get_albums_by_name, get_all_albums, get_album_by_id, get_albums_by_artist, add_album, update_album, delete_album
@@ -461,111 +460,6 @@ def edit_profile():
 @app.route('/carrito/')
 @login_required
 def carrito():
-    user_session = session.get('user')
-    user= get_user_by_username(user_session['username'])
-    user_id = user['id'] 
+   
     
-    # Obtener productos del carrito
-    vinyls = [get_vinyl_by_id(id[0]) for id in get_cart_vinyls(user_id)]
-    cds = [get_cd_by_id(id[0]) for id in get_cart_cds(user_id)]
-    merch = [get_merch_by_id(id[0]) for id in get_cart_merch(user_id)]
-    songs = [get_song_by_id(id(0)) for id in get_cart_songs(user_id)]
-    
-    # Calcular totales
-    total_vinyls = sum(v['price'] for v in vinyls)
-    total_cds = sum(c['price'] for c in cds)
-    total_merch = sum(m['price'] for m in merch)
-    total_songs = sum(s['price'] for s in songs)
-    
-    subtotal = total_vinyls + total_cds + total_merch + total_songs
-    shipping = 5.99 if subtotal > 0 else 0  # Coste de envío fijo
-    total = subtotal + shipping
-    
-    return render_template('carrito.html', 
-                         vinyls=vinyls,
-                         cds=cds,
-                         merch=merch,
-                         songs=songs,
-                         subtotal=subtotal,
-                         shipping=shipping,
-                         total=total)
-
-@app.route('/add_vinyl_cart/<int:vinyl_id>', methods=['POST'])
-@login_required
-def vinyl_cart(vinyl_id):
-    user_session = session.get('user')
-    user= get_user_by_username(user_session['username'])
-    user_id = user['id']
-    add_vinyl_to_cart(user_id, vinyl_id)
-    flash('Vinilo añadido al carrito.')
-    return redirect(request.referrer or url_for('carrito'))
-
-@app.route('/add_cd_cart/<int:cd_id>', methods=['POST'])
-@login_required
-def cd_cart(cd_id):
-    user_session = session.get('user')
-    user= get_user_by_username(user_session['username'])
-    user_id = user['id']
-    add_cd_to_cart(user_id, cd_id)
-    flash('CD añadido al carrito.')
-    return redirect(request.referrer or url_for('carrito'))
-
-@app.route('/add_merch_cart/<int:merch_id>', methods=['POST'])
-@login_required
-def merch_cart(merch_id):
-    user_session = session.get('user')
-    user= get_user_by_username(user_session['username'])
-    user_id = user['id']
-    add_merch_to_cart(user_id, merch_id)
-    flash('Producto de merchandising añadido al carrito.')
-    return redirect(request.referrer or url_for('carrito'))
-
-@app.route('/add_song_cart/<int:song_id>', methods=['POST'])
-@login_required
-def song_cart(song_id):
-    user_session = session.get('user')
-    user= get_user_by_username(user_session['username'])
-    user_id = user['id']
-    add_song_to_cart(user_id, song_id)
-    flash('Producto de merchandising añadido al carrito.')
-    return redirect(request.referrer or url_for('carrito'))
-
-@app.route('/remove_vinyl_cart/<int:vinyl_id>', methods=['POST'])
-@login_required
-def remove_vinyl_cart(vinyl_id):
-    user_session = session.get('user')
-    user= get_user_by_username(user_session['username'])
-    user_id = user['id']
-    delete_cart_vinyl(user_id, vinyl_id, 'vinyl')
-    flash('Vinilo eliminado del carrito.')
-    return redirect(url_for('carrito'))
-
-@app.route('/remove_cd_cart/<int:cd_id>', methods=['POST'])
-@login_required
-def remove_cd_cart(cd_id):
-    user_session = session.get('user')
-    user= get_user_by_username(user_session['username'])
-    user_id = user['id']
-    delete_cart_cd(user_id, cd_id, 'cd')
-    flash('Vinilo eliminado del carrito.')
-    return redirect(url_for('carrito'))
-
-@app.route('/remove_merch_cart/<int:merch_id>', methods=['POST'])
-@login_required
-def remove_merch_cart(merch_id):
-    user_session = session.get('user')
-    user= get_user_by_username(user_session['username'])
-    user_id = user['id']
-    delete_cart_merch(user_id, merch_id, 'merch')
-    flash('Vinilo eliminado del carrito.')
-    return redirect(url_for('carrito'))
-
-@app.route('/remove_song_cart/<int:song_id>', methods=['POST'])
-@login_required
-def remove_song_cart(song_id):
-    user_session = session.get('user')
-    user= get_user_by_username(user_session['username'])
-    user_id = user['id']
-    delete_cart_song(user_id, song_id, 'song')
-    flash('Vinilo eliminado del carrito.')
-    return redirect(url_for('carrito'))
+    return render_template()

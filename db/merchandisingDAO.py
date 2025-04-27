@@ -25,7 +25,7 @@ def add_merch(merch_data):
     cursor = connection.cursor()
     cursor.execute("INSERT INTO merchandising (name, type, price, stock) VALUES (%s, %s, %s, %s)",
                    (merch_data['name'], merch_data['type'], merch_data['price'], merch_data['stock']))
-    cursor.commit()
+    connection.commit()
     cursor.close()
 
 def update_merch(merch_id, merch_data):
@@ -37,7 +37,7 @@ def update_merch(merch_id, merch_data):
         SET name = %s, type = %s, price = %s, stock = %s
         WHERE id = %s
     """, (merch_data['name'], merch_data['type'], merch_data['price'], merch_data['stock'], merch_id))
-    cursor.commit()
+    connection.commit()
     cursor.close()
 
 def delete_merch(merch_id):
@@ -45,7 +45,7 @@ def delete_merch(merch_id):
     
     cursor = connection.cursor()
     cursor.execute("DELETE FROM merchandising WHERE id = %s", (merch_id,))
-    cursor.commit()
+    connection.commit()
     cursor.close()
 
 def get_merchandising_by_name(name):

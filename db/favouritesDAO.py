@@ -35,11 +35,10 @@ def get_fav_artists(user_id):
 
 def add_song_fav(user_id,song_id):
     
-    
     cursor = connection.cursor()
     cursor.execute("INSERT INTO favourites (user_id,song) VALUES (%s, %s)",
                    (user_id,song_id))
-    cursor.commit()
+    connection.commit()
     cursor.close()
     
 def add_album_fav(user_id,album_id):
@@ -48,7 +47,7 @@ def add_album_fav(user_id,album_id):
     cursor = connection.cursor()
     cursor.execute("INSERT INTO favourites (user_id, album) VALUES (%s, %s)",
                    (user_id, album_id))
-    cursor.commit()
+    connection.commit()
     cursor.close()
     
 def add_artist_fav(user_id,id_artist):
@@ -57,31 +56,31 @@ def add_artist_fav(user_id,id_artist):
     cursor = connection.cursor()
     cursor.execute("INSERT INTO favourites (user_id, id_artist) VALUES (%s,%s)",
                    (user_id, id_artist))
-    cursor.commit()
+    connection.commit()
     cursor.close()
 
-def delete_fav_song(song_id):
+def delete_fav_song(user_id, song_id):
     
     
     cursor = connection.cursor()
-    cursor.execute("DELETE FROM favourites WHERE song_id = %s", (song_id,))
-    cursor.commit()
+    cursor.execute("DELETE FROM favourites WHERE user_id = %s AND song = %s", (user_id, song_id))
+    connection.commit()
     cursor.close()
     
-def delete_fav_album(album_id):
+def delete_fav_album(user_id, album_id):
    
     
     cursor = connection.cursor()
-    cursor.execute("DELETE FROM favourites WHERE album_id = %s", (album_id,))
-    cursor.commit()
+    cursor.execute("DELETE FROM favourites WHERE user_id = %s AND album = %s", (user_id, album_id))
+    connection.commit()
     cursor.close()
 
-def delete_fav_artist(artist_id):
+def delete_fav_artist(user_id, artist_id):
    
     
     cursor = connection.cursor()
-    cursor.execute("DELETE FROM favourites WHERE id_artist = %s", (artist_id,))
-    cursor.commit()
+    cursor.execute("DELETE FROM favourites WHERE user_id = %s AND id_artist = %s", (user_id, artist_id))
+    connection.commit()
     cursor.close()
 
 def exist_song_fav(user_id,song_id):

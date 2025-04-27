@@ -25,7 +25,7 @@ def add_cd(cd_data):
     cursor = connection.cursor()
     cursor.execute("INSERT INTO cds (name, artist_id, release_date, genre, price) VALUES (%s, %s, %s, %s, %s)",
                    (cd_data['name'], cd_data['artist_id'], cd_data['release_date'], cd_data['genre'], cd_data['price']))
-    cursor.commit()
+    connection.commit()
     cursor.close()
 
 def update_cd(cd_id, cd_data):
@@ -37,7 +37,7 @@ def update_cd(cd_id, cd_data):
         SET name = %s, artist_id = %s, release_date = %s, genre = %s, price = %s
         WHERE id = %s
     """, (cd_data['name'], cd_data['artist_id'], cd_data['release_date'], cd_data['genre'], cd_data['price'], cd_id))
-    cursor.commit()
+    connection.commit()
     cursor.close()
 
 def delete_cd(cd_id):
@@ -45,7 +45,7 @@ def delete_cd(cd_id):
      
     cursor = connection.cursor()
     cursor.execute("DELETE FROM cds WHERE id = %s", (cd_id,))
-    cursor.commit()
+    connection.commit()
     cursor.close()
 
 def get_cds_by_name(name):

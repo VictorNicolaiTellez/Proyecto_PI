@@ -9,7 +9,7 @@ from db.vinylsDAO import get_all_vinyls, get_vinyl_by_id, add_vinyl, get_vinyls_
 from db.cdsDAO import get_all_cds, get_cd_by_id, add_cd, get_cds_by_name, update_cd, delete_cd
 from db.merchandisingDAO import get_all_merch, get_merch_by_id,add_merch, get_merchandising_by_name, update_merch, delete_merch
 from db.usersDAO import get_all_users, get_user_by_email, add_user, update_user, get_user_by_email_and_password,get_user_by_username,get_user_by_id,get_all_artists,get_artists_by_name
-from db.favouritesDAO import get_fav_songs,get_fav_albums,get_fav_artists,add_song_fav,add_album_fav,add_artist_fav,get_all_favourites
+from db.favouritesDAO import * # get_fav_songs,get_fav_albums,get_fav_artists,add_song_fav,add_album_fav,add_artist_fav,get_all_favourites
 
 import firebase_admin
 from firebase_admin import credentials, auth as firebase_auth
@@ -171,8 +171,12 @@ def song_fav(song_id):
     user= get_user_by_username(user_session['username'])
     user_id = user['id'] 
     
-    add_song_fav(user_id,song_id)
-    flash('Cancion añadido a favoritos.')
+    if exist_song_fav(user_id, song_id) == False:
+        add_song_fav(user_id,song_id)
+        flash('Cancion añadida a favoritos.')
+    else:
+        delete_fav_song(user_id, song_id)
+        flash('Cancion eliminada de favoritos.')
     return redirect(request.referrer or url_for('index'))
 
 @app.route('/add_album_fav/<int:album_id>', methods=['POST'])
@@ -180,9 +184,14 @@ def song_fav(song_id):
 def album_fav(album_id):
     user_session = session.get('user')
     user= get_user_by_username(user_session['username'])
-    user_id = user['id'] 
-    add_album_fav(user_id,album_id)
-    flash('Ártista añadido a favoritos.')
+    user_id = user['id']
+
+    if exist_album_fav(user_id, album_id) == False:
+        add_album_fav(user_id,album_id)
+        flash('Álbum añadido a favoritos.')
+    else:
+        delete_fav_album(user_id, album_id)
+        flash('Álbum eliminado de favoritos.')
     return redirect(request.referrer or url_for('index'))
 
 @app.route('/add_artist_fav/<int:artist_id>', methods=['POST'])
@@ -192,8 +201,12 @@ def artist_fav(artist_id):
     user= get_user_by_username(user_session['username'])
     user_id = user['id'] 
     
-    add_artist_fav(user_id,artist_id)
-    flash('Artista añadido a favoritos.')
+    if exist_artist_fav(user_id, artist_id) == False:
+        add_artist_fav(user_id,artist_id)
+        flash('Artista añadido a favoritos.')
+    else:
+        delete_fav_artist(user_id,artist_id)
+        flash('Artista eliminado de favoritos.')
     return redirect(request.referrer or url_for('index'))
 
 

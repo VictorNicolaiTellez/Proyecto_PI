@@ -11,7 +11,7 @@ def get_all_albums():
     """)
  # Ajusta la consulta según la estructura de tu base de datos
     albums = cursor.fetchall()
-    connection.close()
+    cursor.close()
     return albums
 
 def get_album_by_id(album_id):
@@ -55,7 +55,7 @@ def add_album(album_data):
     cursor =  connection.cursor()
     cursor.execute("INSERT INTO albums (name, artist_id, release_date, genre) VALUES (%s, %s, %s, %s)",
                    (album_data['name'], album_data['artist_id'], album_data['release_date'], album_data['genre']))
-    cursor.commit()
+    connection.commit()
     cursor.close()
 
 def update_album(album_id, album_data):
@@ -67,14 +67,14 @@ def update_album(album_id, album_data):
         SET name = %s, artist_id = %s, release_date = %s, genre = %s
         WHERE id = %s
     """, (album_data['name'], album_data['artist_id'], album_data['release_date'], album_data['genre'], album_id))
-    cursor.commit()
+    connection.commit()
     cursor.close()
 
 def delete_album(album_id):
     """Elimina un álbum de la base de datos"""
     cursor =  connection.cursor()
     cursor.execute("DELETE FROM albums WHERE id = %s", (album_id,))
-    cursor.commit()
+    connection.commit()
     cursor.close()
 
 def get_albums_by_name(name):

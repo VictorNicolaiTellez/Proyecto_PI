@@ -68,7 +68,7 @@ def add_user(user_data):
     query = f"INSERT INTO users ({columns}) VALUES ({placeholders})"
     cursor.execute(query, values)
 
-    cursor.commit()
+    connection.commit()
     cursor.close()
 
 def update_user(user_id, user_data):
@@ -96,7 +96,7 @@ def update_user(user_id, user_data):
         user_data['birthdate'], user_id
     ))
 
-    cursor.commit()
+    connection.commit()
     cursor.close()
 
 
@@ -118,7 +118,7 @@ def get_user_by_email_and_password(email, password):
     
 def get_user_by_username(username):
     """Obtiene un usuario por su nombre de usuario"""
-    
+
     cursor = connection.cursor(dictionary=True)
     cursor.execute("SELECT * FROM users WHERE username = %s", (username,))
     user = cursor.fetchone()

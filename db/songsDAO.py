@@ -89,7 +89,7 @@ def add_song(song_data):
         song_data.get('price')  # puede ser NULL
     )
     cursor.execute(query, values)
-    cursor.commit()
+    connection.commit()
     cursor.close()
 
 def get_songs_by_name(title):
@@ -136,14 +136,14 @@ def update_song(song_id, song_data):
         song_id
     )
     cursor.execute(query, values)
-    cursor.commit()
+    connection.commit()
     cursor.close()
 
 def delete_song(song_id):
     
     cursor = connection.cursor()
     cursor.execute("DELETE FROM songs WHERE song_id = %s", (song_id,))
-    cursor.commit()
+    connection.commit()
     cursor.close()
 
 def get_songs_by_album(album_id):

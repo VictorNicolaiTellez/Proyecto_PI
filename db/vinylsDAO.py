@@ -25,7 +25,7 @@ def add_vinyl(vinyl_data):
     cursor = connection.cursor()
     cursor.execute("INSERT INTO vinyls (name, artist_id, release_date, genre, price) VALUES (%s, %s, %s, %s, %s)",
                    (vinyl_data['name'], vinyl_data['artist_id'], vinyl_data['release_date'], vinyl_data['genre'], vinyl_data['price']))
-    cursor.commit()
+    connection.commit()
     cursor.close()
 
 def update_vinyl(vinyl_id, vinyl_data):
@@ -37,7 +37,7 @@ def update_vinyl(vinyl_id, vinyl_data):
         SET name = %s, artist_id = %s, release_date = %s, genre = %s, price = %s
         WHERE id = %s
     """, (vinyl_data['name'], vinyl_data['artist_id'], vinyl_data['release_date'], vinyl_data['genre'], vinyl_data['price'], vinyl_id))
-    cursor.commit()
+    connection.commit()
     cursor.close()
 
 def delete_vinyl(vinyl_id):
@@ -45,7 +45,7 @@ def delete_vinyl(vinyl_id):
     
     cursor = connection.cursor()
     cursor.execute("DELETE FROM vinyls WHERE id = %s", (vinyl_id,))
-    cursor.commit()
+    connection.commit()
     cursor.close()
 
 

@@ -480,16 +480,16 @@ def carrito():
     user_id = user['id'] 
     
     # Obtener productos del carrito
-    vinyls = [get_vinyl_by_id(vinyl_id[0], user_id) for vinyl_id in get_cart_vinyls(user_id)]
-    cds = [get_cd_by_id(cd_id[0], user_id) for cd_id in get_cart_cds(user_id)]
-    merch = [get_merch_by_id(merch_id[0], user_id) for merch_id in get_cart_merch(user_id)]
-    songs = [get_song_by_id(song_id[0], user_id) for song_id in get_cart_songs(user_id)]
+    vinyls = [get_vinyl_by_id(vinyl_id[0]) for vinyl_id in get_cart_vinyls(user_id)]
+    cds = [get_cd_by_id(cd_id[0]) for cd_id in get_cart_cds(user_id)]
+    merch = [get_merch_by_id(merch_id[0]) for merch_id in get_cart_merch(user_id)]
+    songs = [get_song_by_id(song_id[0]) for song_id in get_cart_songs(user_id)]
     
     # Calcular totales
     total_vinyls = sum(v['price']*v['quantity'] for v in vinyls)
     total_cds = sum(c['price']*c['quantity'] for c in cds)
     total_merch = sum(m['price']*m['quantity'] for m in merch)
-    total_songs = sum(s['price']*s['quantity'] for s in songs)
+    total_songs = sum(s['price'] for s in songs)
     
     subtotal = total_vinyls + total_cds + total_merch + total_songs
     shipping = Decimal('5.99') if subtotal > 0 else Decimal(0)  # Coste de envío fijo

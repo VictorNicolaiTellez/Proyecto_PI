@@ -97,6 +97,33 @@ INSERT INTO `favourites` VALUES (3,1,NULL,NULL,1),(1,1,NULL,52,NULL),(2,1,5,NULL
 UNLOCK TABLES;
 
 --
+-- Table structure for table `cart`
+--
+
+DROP TABLE IF EXISTS `cart`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `cart` (
+  `id` int AUTO_INCREMENT,
+  `product_id` int NOT NULL,
+  `user_id` int NOT NULL,
+  `product_type` VARCHAR(10) NOT NULL CHECK (product_type IN ('vinyl', 'cd', 'merch', 'song')),
+  `quantity` int NOT NULL DEFAULT 1,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `unique_cart_item` (`user_id`, `product_id`, `product_type`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `cart`
+--
+
+LOCK TABLES `cart` WRITE;
+/*!40000 ALTER TABLE `cart` DISABLE KEYS */;
+/*!40000 ALTER TABLE `cart` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `merchandising`
 --
 

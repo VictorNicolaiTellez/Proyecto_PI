@@ -5,51 +5,131 @@
     <div class="container_carrito">
         <h1 class="carrito">Tu carrito de compras</h1>    
         <div class="objetos_carrito">
+            {% if vinyls %}
+            <h2>Vinilos</h2>
+            {% for vinyl in vinyls %}
             <div class="obj_carrito">
                 <img src="{{ url_for('static', filename='images/deafault_img.png') }}" alt="Producto" class="item-image">
                 <div class="detalles">
-                    <h3> Camiseta Dark Side</h3>
-                    <p>Camiseta</p>
-                    <p>25.9€</p>
+                    <h3>{{vinyl.name}}</h3>
+                    <!--<p>{{vinyl.artist}}</p>-->
+                    <p>{{vinyl.price}}€</p> 
                     <div class="control_cantidad">
-                        <button class="btn_cantidad">-</button>
-                        <input type="number" value="1" min="1" class="input_cantidad">
-                        <button class="btn_cantidad">+</button>
+                        <form action="/actualizar_cantidad" method="POST">
+                            <input type="hidden" name="product_id" value="{{vinyl.vinyl_id}}">
+                            <input type="hidden" name="product_type" value="vinyl">
+                            <button type="submit" name="action" class="btn_cantidad" value="decrementar">-</button>
+                            <input type="number" name="quantity" value= {{vinyl.quantity}} min="1" class="input_cantidad" readonly>
+                            <button type="submit" name="action" class="btn_cantidad" value="incrementar">+</button>
+                        </form>
                     </div>
                 </div>
-                <button class="form-button"> Eliminar </button>
+                <form action="{{ url_for('remove_vinyl_cart', vinyl_id=vinyl.vinyl_id) }}" method="POST">
+                    <button type="submit" class="form-button">Eliminar</button>
+                </form>
             </div>
+            {% endfor %}
+            {% endif %}
 
+            {% if cds %}
+            <h2>CDs</h2>
+            {% for cd in cds %}
             <div class="obj_carrito">
                 <img src="{{ url_for('static', filename='images/deafault_img.png') }}" alt="Producto" class="item-image">
                 <div class="detalles">
-                    <h3> Camiseta Dark Side</h3>
-                    <p>Camiseta</p>
-                    <p>25.9€</p>
+                    <h3>{{cd.name}}</h3>
+                    <!--<p>{{cd.artist}}</p>-->
+                    <p>{{cd.price}}€</p>
                     <div class="control_cantidad">
-                        <button class="btn_cantidad">-</button>
-                        <input type="number" value="1" min="1" class="input_cantidad">
-                        <button class="btn_cantidad">+</button>
+                        <form action="/actualizar_cantidad" method="POST">
+                            <input type="hidden" name="product_id" value="{{cd.cd_id}}">
+                            <input type="hidden" name="product_type" value="cd">
+                            <button type="submit" name="action" class="btn_cantidad" value="decrementar">-</button>
+                            <input type="number" name="quantity" value= {{cd.quantity}} min="1" class="input_cantidad" readonly>
+                            <button type="submit" name="action" class="btn_cantidad" value="incrementar">+</button>
+                        </form>
                     </div>
                 </div>
-                <button class="form-button"> Eliminar </button>
+                <form action="{{ url_for('remove_cd_cart', cd_id=cd.cd_id) }}" method="POST">
+                    <button type="submit" class="form-button">Eliminar</button>
+                </form>
             </div>
+            {% endfor %}
+            {% endif %}
+
+            {% if merch %}
+            <h2>Merch</h2>
+            {% for m in merch %}
+            <div class="obj_carrito">
+                <img src="{{ url_for('static', filename='images/deafault_img.png') }}" alt="Producto" class="item-image">
+                <div class="detalles">
+                    <h3>{{m.name}}</h3>
+                    <p>{{m.merchandising_type}}</p>
+                    <p>{{m.price}}€</p>
+                    <div class="control_cantidad">
+                        <form action="/actualizar_cantidad" method="POST">
+                            <input type="hidden" name="product_id" value="{{m.merch_id}}">
+                            <input type="hidden" name="product_type" value="merch">
+                            <button type="submit" name="action" class="btn_cantidad" value="decrementar">-</button>
+                            <input type="number" name="quantity" value= {{m.quantity}} min="1" class="input_cantidad" readonly>
+                            <button type="submit" name="action" class="btn_cantidad" value="incrementar">+</button>
+                        </form>
+                    </div>
+                </div>
+                <form action="{{ url_for('remove_merch_cart', merch_id=merch.merch_id) }}" method="POST">
+                    <button type="submit" class="form-button">Eliminar</button>
+                </form>
+            </div>
+            {% endfor %}
+            {% endif %}
+
+            {% if songs %}
+            <h2>Canciones</h2>
+            {% for song in songs %}
+            <div class="obj_carrito">
+                <img src="{{ url_for('static', filename='images/deafault_img.png') }}" alt="Producto" class="item-image">
+                <div class="detalles">
+                    <h3>{{song.title}}</h3>
+                    <p><a href="/artists/{{ song.artist_id }}">{{ song.artist_username }}</a></p>
+                    <p>{{song.price}}€</p>
+                    <div class="control_cantidad">
+                        <form action="/actualizar_cantidad" method="POST">
+                            <input type="hidden" name="product_id" value="{{song.song_id}}">
+                            <input type="hidden" name="product_type" value="song">
+                            <button type="submit" name="action" class="btn_cantidad" value="decrementar">-</button>
+                            <input type="number" name="quantity" value= {{song.quantity}} min="1" class="input_cantidad" readonly>
+                            <button type="submit" name="action" class="btn_cantidad" value="incrementar">+</button>
+                        </form>
+                        
+                    </div>
+                </div>
+                <form action="{{ url_for('remove_song_cart', song_id=song.song_id) }}" method="POST">
+                    <button type="submit" class="form-button">Eliminar</button>
+                </form>
+            </div>
+            {% endfor %}
+            {% endif %}
         </div>
+
         <div class="resumen_carrito">
             <div class="linea_resumen">
                 <span>Subtotal:</span>
-                <span>$51.8</span>
+                <span>{{ "%.2f"|format(subtotal) }}€</span>
             </div>
             <div class="linea_resumen">
                 <span>Envío:</span>
-                <span>$5.99</span>
+                <span>{{ "%.2f"|format(shipping) }}€</span>
             </div>
             <div class="linea_resumen total">
                 <span>Total:</span>
-                <span>$57.79</span>
+                <span>{{ "%.2f"|format(total) }}€</span>
             </div>
-            
+
+            {% if not vinyls and not cds and not merch and not songs %}
+            <button class="checkout-btn" disabled>Proceder al Pago</button>
+            {% else %}
             <button class="checkout-btn">Proceder al Pago</button>
+            {% endif %}
         </div>
     </div>
 

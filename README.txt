@@ -42,6 +42,13 @@ Disponible en la carpeta db del proyecto
 5. Asegurarse  de marcar la base de datos undersounds como destino.
 6. Clic en Start Import para comenzar la carga de datos.
 
+## 🔒 Firebase
+Antes de poder ejecutar la aplicación, hay que tener en cuenta que hay un fichero el cual no se ha podido subir correctamente al GitHub.
+Este fichero existe, aunque se encuentre vacío de contenido. 'firebase_credentials.json' contiene los secretos de Firebase para esta aplicación.
+Aunque sea una aplicación para un proyecto universitario, GitHub no permite subir archivos que contengan secretos a repositorios PÚBLICOS,
+por lo que nos vemos obligados a compartir este documento a la hora de subir la entrega en una carpeta junto con el código del proyecto
+y su correspondiente programación.
+
 ## ▶️ Ejecución de la aplicación
 python run.py
 #Accedemos a la siguiente dirección para poder visualizar la pagina

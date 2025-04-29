@@ -10,6 +10,8 @@ from db.cdsDAO import get_all_cds, get_cd_by_id, add_cd, get_cds_by_name, update
 from db.merchandisingDAO import get_all_merch, get_merch_by_id,add_merch, get_merchandising_by_name, update_merch, delete_merch
 from db.usersDAO import get_all_users, get_user_by_email, add_user, update_user, get_user_by_email_and_password,get_user_by_username,get_user_by_id,get_all_artists,get_artists_by_name
 from db.favouritesDAO import * # get_fav_songs,get_fav_albums,get_fav_artists,add_song_fav,add_album_fav,add_artist_fav,get_all_favourites
+from db.cartDAO import get_cart_items,  get_cart_cds, get_cart_merch, get_cart_songs, get_cart_vinyls, add_vinyl_to_cart, add_cd_to_cart, add_merch_to_cart, add_song_to_cart, delete_cart_vinyl, delete_cart_cd, delete_cart_merch, delete_cart_song, get_cart_quantity, update_cart_quantity
+from decimal import Decimal;
 
 import firebase_admin
 from firebase_admin import credentials, auth as firebase_auth
@@ -473,6 +475,135 @@ def edit_profile():
 @app.route('/carrito/')
 @login_required
 def carrito():
-   
+    user_session = session.get('user')
+    user= get_user_by_username(user_session['username'])
+    user_id = user['id'] 
     
-    return render_template()
+    # Obtener productos del carrito
+    vinyls = [get_vinyl_by_id(vinyl_id[0], user_id) for vinyl_id in get_cart_vinyls(user_id)]
+    cds = [get_cd_by_id(cd_id[0], user_id) for cd_id in get_cart_cds(user_id)]
+    merch = [get_merch_by_id(merch_id[0], user_id) for merch_id in get_cart_merch(user_id)]
+    songs = [get_song_by_id(song_id[0], user_id) for song_id in get_cart_songs(user_id)]
+    
+    # Calcular totales
+    total_vinyls = sum(v['price']*v['quantity'] for v in vinyls)
+    total_cds = sum(c['price']*c['quantity'] for c in cds)
+    total_merch = sum(m['price']*m['quantity'] for m in merch)
+    total_songs = sum(s['price']*s['quantity'] for s in songs)
+    
+    subtotal = total_vinyls + total_cds + total_merch + total_songs
+    shipping = Decimal('5.99') if subtotal > 0 else Decimal(0)  # Coste de envío fijo
+    total = subtotal + shipping
+    
+    return render_template('carrito.html', 
+                         vinyls=vinyls,
+                         cds=cds,
+                         merch=merch,
+                         songs=songs,
+                         subtotal=subtotal,
+                         shipping=shipping,
+                         total=total)
+
+@app.route('/add_vinyl_cart/<int:vinyl_id>', methods=['POST'])
+@login_required
+def vinyl_cart(vinyl_id):
+    user_session = session.get('user')
+    user= get_user_by_username(user_session['username'])
+    user_id = user['id']
+    add_vinyl_to_cart(user_id, vinyl_id)
+    flash('Vinilo añadido al carrito.')
+    return redirect(request.referrer or url_for('carrito'))
+
+@app.route('/add_cd_cart/<int:cd_id>', methods=['POST'])
+@login_required
+def cd_cart(cd_id):
+    user_session = session.get('user')
+    user= get_user_by_username(user_session['username'])
+    user_id = user['id']
+    add_cd_to_cart(user_id, cd_id)
+    flash('CD añadido al carrito.')
+    return redirect(request.referrer or url_for('carrito'))
+
+@app.route('/add_merch_cart/<int:merch_id>', methods=['POST'])
+@login_required
+def merch_cart(merch_id):
+    user_session = session.get('user')
+    user= get_user_by_username(user_session['username'])
+    user_id = user['id']
+    add_merch_to_cart(user_id, merch_id)
+    flash('Producto de merchandising añadido al carrito.')
+    return redirect(request.referrer or url_for('carrito'))
+
+@app.route('/add_song_cart/<int:song_id>', methods=['POST'])
+@login_required
+def song_cart(song_id):
+    user_session = session.get('user')
+    user= get_user_by_username(user_session['username'])
+    user_id = user['id']
+    add_song_to_cart(user_id, song_id)
+    flash('Producto de merchandising añadido al carrito.')
+    return redirect(request.referrer or url_for('carrito'))
+
+@app.route('/remove_vinyl_cart/<int:vinyl_id>', methods=['POST'])
+@login_required
+def remove_vinyl_cart(vinyl_id):
+    user_session = session.get('user')
+    user= get_user_by_username(user_session['username'])
+    user_id = user['id']
+    delete_cart_vinyl(vinyl_id)
+    flash('Vinilo eliminado del carrito.')
+    return redirect(url_for('carrito'))
+
+@app.route('/remove_cd_cart/<int:cd_id>', methods=['POST'])
+@login_required
+def remove_cd_cart(cd_id):
+    user_session = session.get('user')
+    user= get_user_by_username(user_session['username'])
+    user_id = user['id']
+    delete_cart_cd(cd_id)
+    flash('Vinilo eliminado del carrito.')
+    return redirect(url_for('carrito'))
+
+@app.route('/remove_merch_cart/<int:merch_id>', methods=['POST'])
+@login_required
+def remove_merch_cart(merch_id):
+    user_session = session.get('user')
+    user= get_user_by_username(user_session['username'])
+    user_id = user['id']
+    delete_cart_merch(merch_id)
+    flash('Vinilo eliminado del carrito.')
+    return redirect(url_for('carrito'))
+
+@app.route('/remove_song_cart/<int:song_id>', methods=['POST'])
+@login_required
+def remove_song_cart(song_id):
+    user_session = session.get('user')
+    user= get_user_by_username(user_session['username'])
+    user_id = user['id']
+    delete_cart_song(song_id)
+    flash('Vinilo eliminado del carrito.')
+    return redirect(url_for('carrito'))
+
+@app.route('/actualizar_cantidad', methods=['POST'])
+@login_required
+def actualizar_cantidad():
+    user_session = session.get('user')
+    user = get_user_by_username(user_session['username'])
+    user_id = user['id']
+
+    product_id = request.form.get('product_id')
+    product_type = request.form.get('product_type')
+    action = request.form.get('action')  # "incrementar" o "decrementar"
+    current_quantity = int(request.form.get('quantity'))
+
+    # Calcular nueva cantidad
+    new_quantity = current_quantity
+    if action == "incrementar":
+        new_quantity += 1
+    elif action == "decrementar" and current_quantity > 1:
+        new_quantity -= 1
+
+    # Actualizar la base de datos
+    update_cart_quantity(new_quantity, user_id, product_id, product_type)
+
+    return redirect(url_for('carrito'))

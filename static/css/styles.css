@@ -768,6 +768,18 @@ h1.carrito{
     border-bottom: 1px solid #eee;
 }
 
+.obj_carrito a{
+    font-size: 18px;
+    font-weight: bold; /* Resaltar el artista */
+    text-decoration: none; /* Borrar subrayado */
+    color: #007bff;
+}
+.obj_carrito a:hover{
+    transform: scale(1.05);
+    color: #0562c5;
+    z-index: 2;
+}
+
 .detalles{
     flex-grow: 1;
 }
@@ -837,6 +849,11 @@ h1.carrito{
 
 .checkout-btn:hover {
     background:#0056b3 ;
+}
+
+.checkout-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
 }
 
 /*Fin Carrito*/

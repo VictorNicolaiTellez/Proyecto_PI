@@ -10,40 +10,36 @@ from . import pass_hashhmac
 
 def dbConnect():
     """Generates a connection with the MySQL database
-
     Returns
     -------
-
     connection : PooledMySQLConnection
         a pooled connection to the MySQL database
-
-
     Raises
     ------
-
     Error
         unable to connect to the MySQL database
     """
     # Database connection parameters, change by the commented ones if you are using Docker
-    # ip = os.environ.get('DB_HOST', 'localhost')
-    # user = os.environ.get('DB_USER', 'root')
-    # password = os.environ.get('DB_PASSWORD', '')
-    # database_name = os.environ.get('DB_NAME', '')
+    ip = os.environ.get('DB_HOST', 'db')
+    user = os.environ.get('DB_USER', 'root')
+    password = os.environ.get('DB_PASSWORD', '123456ABC')
+    database_name = os.environ.get('DB_NAME', 'undersound')
+    port = int(os.getenv('DB_PORT', 3306))
     
-    # For local development, uncomment the following lines
-    ip = 'localhost'
-    user = 'root'
-    password = '123456ABC'
-    database_name = 'undersound'
+    # # For local development, uncomment the following lines
+    # ip = 'localhost'
+    # user = 'root'
+    # password = '123456ABC'
+    # database_name = 'undersound'
     
     
 
     try:
-        connection = db.connect(host=ip, user=user, password=password, database=database_name)
+        connection = db.connect(host=ip, user=user, password=password, database=database_name, port=port)
         print('Connected to the MySQL database')
         return connection
-    except:
-        print('ERROR: Unable to connect to the MySQL database')
+    except db.Error as err:
+        print(f'❌ ERROR: Unable to connect to the MySQL database: {err}')
         return None
 
 def dbSignUp(username:str, fullname:str, email:str, user_type:str, password:str, password_verify:str):

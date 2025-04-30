@@ -1,37 +1,43 @@
-version: '3.8'
 
 services:
   # Contenedor para la aplicación Flask
   app:
     build:
-      context: ./PROYECTO_PI  # Carpeta donde se encuentra tu proyecto
+      context: ./   
       dockerfile: Dockerfile  # Asegúrate de tener un Dockerfile en la raíz de tu proyecto
     container_name: undersound_app
+    depends_on:
+      - db
     environment:
       - DB_HOST=db  # Nombre del contenedor de la base de datos (reemplaza localhost por db)
       - DB_USER=root
       - DB_PASSWORD=123456ABC
       - DB_NAME=undersound
+      - DB_PORT=3306  # Puerto de la base de datos
     volumes:
-      - ./PROYECTO_PI:/app  # Montar la carpeta del proyecto al contenedor
+      - .:/app  # Montar la carpeta del proyecto al contenedor
     ports:
       - "5000:5000"  # Exponer el puerto 5000 para acceder a la app Flask
     networks:
-      - app-network  # Red para la aplicación Flask
+      - app_network  # Red para la aplicación Flask
+    restart: always  # Reiniciar el contenedor si se detiene
 
   # Contenedor para la base de datos MySQL
   db:
-    image: mysql:5.7
+    image: mysql:8.0  # Imagen de MySQL
     container_name: undersounds_db
     environment:
       - MYSQL_ROOT_PASSWORD=123456ABC
       - MYSQL_DATABASE=undersound
     volumes:
       - db_data:/var/lib/mysql  # Persistencia de datos de MySQL
+      - ./db/undersoundBaseDatos.sql:/docker-entrypoint-initdb.d/undersoundBaseDatos.sql # Script de inicialización
     ports:
-      - "3306:3306"  # Exponer el puerto 3306 para la base de datos
+      - "3307:3306"  # Exponer el puerto 3306 para la base de datos7
+    expose:
+      - "3306"  # Exponer el puerto 3306 para la base de datos
     networks:
-      - app-network  # Red para la base de datos MySQL
+      - app_network  # Red para la base de datos MySQL
 
 # Volúmenes para persistir los datos de la base de datos
 volumes:
@@ -40,7 +46,8 @@ volumes:
 
 # Redes
 networks:
-  app-network:
-    driver: bridge  # Red interna para la comunicación entre los contenedores
+  app_network:
+    driver: bridge 
+    name: app_network 
 
 

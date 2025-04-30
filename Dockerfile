@@ -3,20 +3,25 @@ FROM python:3.13-alpine
 # Establecer directorio de trabajo
 WORKDIR /app
 
-# Instalar dependencias del sistema (incluyendo el cliente MySQL)
-RUN apk update && apk add --no-cache mysql-client
+# Instalar dependencias del sistema necesarias
+RUN apk update && apk add --no-cache mysql-client netcat-openbsd
 
-# Copiar requerimientos e instalar dependencias Python
+# Copiar script de espera antes del COPY general
+COPY wait-for-it.sh /app/wait-for-it.sh
+RUN chmod +x /app/wait-for-it.sh
+
+# Copiar el resto de los archivos
 COPY . .
 
 # Instalar dependencias de Python
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Establecer variables de entorno para Flask
+# Establecer variables de entorno
 ENV FLASK_APP=run.py
 
-# Exponer el puerto 5000
+# Exponer el puerto de Flask
 EXPOSE 5000
 
-# Ejecutar la aplicación
-CMD ["python", "run.py"]
+# Ejecutar el script de espera antes de arrancar la app
+ENTRYPOINT ["sh", "/app/wait-for-it.sh"]
+

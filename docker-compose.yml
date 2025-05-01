@@ -3,41 +3,39 @@ services:
   # Contenedor para la aplicación Flask
   app:
     build:
-      context: ./   
-      dockerfile: Dockerfile  # Asegúrate de tener un Dockerfile en la raíz de tu proyecto
+      context: ./
+      dockerfile: Dockerfile
     container_name: undersound_app
     depends_on:
       - db
     environment:
-      - DB_HOST=db  # Nombre del contenedor de la base de datos (reemplaza localhost por db)
+      - DB_HOST=db
       - DB_USER=root
       - DB_PASSWORD=123456ABC
       - DB_NAME=undersound
-      - DB_PORT=3306  # Puerto de la base de datos
-    volumes:
-      - .:/app  # Montar la carpeta del proyecto al contenedor
+      - DB_PORT=3306
     ports:
-      - "5000:5000"  # Exponer el puerto 5000 para acceder a la app Flask
+      - "5000:5000"
     networks:
-      - app_network  # Red para la aplicación Flask
-    restart: always  # Reiniciar el contenedor si se detiene
+      - app_network
+    restart: always
 
   # Contenedor para la base de datos MySQL
   db:
-    image: mysql:8.0  # Imagen de MySQL
+    image: mysql:8.0
     container_name: undersounds_db
     environment:
       - MYSQL_ROOT_PASSWORD=123456ABC
       - MYSQL_DATABASE=undersound
     volumes:
-      - db_data:/var/lib/mysql  # Persistencia de datos de MySQL
-      - ./db/undersoundBaseDatos.sql:/docker-entrypoint-initdb.d/undersoundBaseDatos.sql # Script de inicialización
+      - db_data:/var/lib/mysql
+      - ./db/undersoundBaseDatos.sql:/docker-entrypoint-initdb.d/undersoundBaseDatos.sql
     ports:
-      - "3307:3306"  # Exponer el puerto 3306 para la base de datos7
+      - "3307:3306"
     expose:
-      - "3306"  # Exponer el puerto 3306 para la base de datos
+      - "3306"
     networks:
-      - app_network  # Red para la base de datos MySQL
+      - app_network
 
 # Volúmenes para persistir los datos de la base de datos
 volumes:
@@ -47,7 +45,5 @@ volumes:
 # Redes
 networks:
   app_network:
-    driver: bridge 
-    name: app_network 
-
-
+    driver: bridge
+    name: app_network

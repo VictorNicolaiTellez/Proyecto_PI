@@ -6,12 +6,9 @@ WORKDIR /app
 # Instalar dependencias del sistema necesarias
 RUN apk update && apk add --no-cache mysql-client netcat-openbsd
 
-# Copiar script de espera antes del COPY general
-COPY wait-for-it.sh /app/wait-for-it.sh
-RUN chmod +x /app/wait-for-it.sh
 
 # Copiar el resto de los archivos
-COPY . .
+COPY . /app
 
 # Instalar dependencias de Python
 RUN pip install --no-cache-dir -r requirements.txt

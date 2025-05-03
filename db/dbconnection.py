@@ -20,7 +20,7 @@ def dbConnect():
         unable to connect to the MySQL database
     """
     # Database connection parameters, change by the commented ones if you are using Docker
-    ip = os.environ.get('DB_HOST', 'db')
+    ip = os.environ.get('DB_HOST', 'localhost')
     user = os.environ.get('DB_USER', 'root')
     password = os.environ.get('DB_PASSWORD', '123456ABC')
     database_name = os.environ.get('DB_NAME', 'undersound')

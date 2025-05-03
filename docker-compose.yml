@@ -22,14 +22,15 @@ services:
 
   # Contenedor para la base de datos MySQL
   db:
-    image: mysql:8.0
+    build:
+      context: ./
+      dockerfile: Dockerfile.db  # Apunta a tu Dockerfile de MySQL
     container_name: undersounds_db
     environment:
       - MYSQL_ROOT_PASSWORD=123456ABC
       - MYSQL_DATABASE=undersound
     volumes:
       - db_data:/var/lib/mysql
-      - ./db/undersoundBaseDatos.sql:/docker-entrypoint-initdb.d/undersoundBaseDatos.sql
     ports:
       - "3307:3306"
     expose:
